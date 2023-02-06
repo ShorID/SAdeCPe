@@ -13,13 +13,17 @@ const CustomNav = (props) => {
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#" className="CustomNav-link">Capacitaciones</NavLink>
+          <NavLink href="#" className="CustomNav-link">
+            Capacitaciones
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#" className="CustomNav-link">Organizaciones</NavLink>
+          <NavLink href="#" className="CustomNav-link">
+            Organizaciones
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink disabled href="#" className="CustomNav-link">
+          <NavLink href="#" className="CustomNav-link">
             Solicitar Capacitacion
           </NavLink>
         </NavItem>
