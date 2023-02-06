@@ -1,4 +1,18 @@
+@import "./TitleBlock.css";
+@import "./CustomNavbar.css";
+@import "./CustomNav.css";
+@import "./CustomCarousel.css";
+@import "./Link.css";
+@import "./CustomButton.css";
+@import "./TextSection.css";
+@import "./OrganizationCard.css";
+@import "./Footer.css";
+@import "./Login.css";
+
 :root {
+  --main-color: #f86409;
+  --base-color: #232f3f;
+  --secundary-color: #382b2b;
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
@@ -81,18 +95,12 @@
 
 html,
 body {
-  max-width: 100vw;
   overflow-x: hidden;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: var(--background-end-rgb)
 }
 
 a {

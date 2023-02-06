@@ -1,0 +1,16 @@
+.Footer{
+    background-color: var(--base-color);
+    padding: 4rem 0;
+    width: 100%;
+}
+
+.Footer-links{
+    display: flex;
+    flex-direction: column;
+}
+.Footer .Link{
+    color: white;
+}
+.Footer .Link:hover{
+    color: var(--main-color);
+}

@@ -1,0 +1,16 @@
+.TextSection{
+    background-color: var(--base-color);
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+    width: 100%;
+}
+.TextSection-title{
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+.TextSection-description{
+    max-width: 1000px;
+    margin: auto;
+}

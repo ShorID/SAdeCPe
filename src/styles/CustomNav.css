@@ -1,0 +1,12 @@
+.CustomNav {
+  background-color: var(--secundary-color);
+  width: 100%;
+}
+
+.CustomNav-link{
+  color: white;
+  border-radius: 0 !important;
+}
+.CustomNav-link:hover{
+  color: var(--main-color);
+}

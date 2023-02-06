@@ -1,0 +1,14 @@
+.Login{
+    border-radius: 5px;
+    margin: 4rem 0;
+
+    box-shadow: 0 0 18px 5px rgb(0 0 0 / 10%);
+    padding: 2.7rem 3rem 5rem 3rem !important;
+}
+
+.Login-title{
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}

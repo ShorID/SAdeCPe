@@ -1,0 +1,10 @@
+.CustomNavbar{
+  width: 100%;
+  max-height: 81px;
+  background-color: var(--main-color);
+  padding: 0;
+}
+.CustomNavbar-logo{
+  padding-top: 0;
+  padding-bottom: 0;
+}

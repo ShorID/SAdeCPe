@@ -1,0 +1,16 @@
+.CustomButton{
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+    color: white;
+    text-transform: uppercase;
+}
+.CustomButton.light{
+    background-color: white !important;
+    border-color: var(--main-color) !important;
+    color: var(--main-color);
+}
+.CustomButton:hover{
+    background-color: var(--base-color) !important;
+    border-color: var(--base-color) !important;
+    color: white;
+}

@@ -1,0 +1,14 @@
+.TitleBlock {
+  align-items: center;
+  border-bottom: 2px solid var(--base-color);
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0rem;
+  width: 100%;
+}
+.TitleBlock-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--base-color);
+  padding-bottom: 0.5rem;
+}

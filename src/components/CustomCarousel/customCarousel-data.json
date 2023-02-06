@@ -1,0 +1,20 @@
+[
+    {
+      "src": "https://picsum.photos/id/123/1200/600",
+      "altText": "Esto es una capacitacion 1",
+      "caption": "Capacitacion 1",
+      "key": 1
+    },
+    {
+      "src": "https://picsum.photos/id/456/1200/600",
+      "altText": "Esto es una capacitacion 2",
+      "caption": "Capacitacion 2",
+      "key": 2
+    },
+    {
+      "src": "https://picsum.photos/id/678/1200/600",
+      "altText": "Esto es una capacitacion 3",
+      "caption": "Capacitacion 3",
+      "key": 3
+    }
+  ]
