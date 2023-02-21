@@ -7,6 +7,10 @@
   color: white;
   border-radius: 0 !important;
 }
-.CustomNav-link:hover{
-  color: var(--main-color);
+.CustomNav-link.active{
+  background-color: var(--main-color) !important;
+}
+.CustomNav-link:hover,
+.CustomNav-link:active{
+  color: var(--main-color) !important;
 }

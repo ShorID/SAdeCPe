@@ -8,6 +8,7 @@
 @import "./OrganizationCard.css";
 @import "./Footer.css";
 @import "./Login.css";
+@import "./AdminLayout.css";
 
 :root {
   --main-color: #f86409;

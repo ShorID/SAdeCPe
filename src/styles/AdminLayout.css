@@ -1,0 +1,4 @@
+.AdminLayout-link.active{
+    background-color: var(--secundary-color);
+    border-color: var(--secundary-color);
+}
