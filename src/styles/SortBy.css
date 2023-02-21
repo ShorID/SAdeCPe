@@ -1,0 +1,17 @@
+.SortBy-btn {
+    pointer-events: none;
+  padding-right: 0;
+}
+.SortBy-caret {
+  padding-left: var(--spacing-8);
+}
+.SortBy-btn,
+.SortBy-caret,
+.SortBy-btn:hover,
+.SortBy-caret:hover,
+.SortBy-caret:active,
+.SortBy-caret:focus {
+  background-color: transparent;
+  border-color: transparent;
+  color: inherit;
+}

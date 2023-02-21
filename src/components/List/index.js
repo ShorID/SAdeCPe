@@ -5,7 +5,7 @@ import ListContext from "@/contexts/list-context";
 
 const List = (props) => {
   return (
-    <Card>
+    <Card className="List">
       <ListContext.Consumer>
         {(ctx) =>
           typeof props.children === "function"

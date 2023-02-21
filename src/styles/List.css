@@ -1,0 +1,16 @@
+.List{
+    margin: 1rem;
+}
+.List-header{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--secundary-color);
+    padding: var(--spacing-8) var(--spacing-16);
+}
+.List-title{
+    margin: 0;
+    font-weight: bold;
+}
