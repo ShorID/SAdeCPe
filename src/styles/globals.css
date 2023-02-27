@@ -11,6 +11,7 @@
 @import "./AdminLayout.css";
 @import "./List.css";
 @import "./SortBy.css";
+@import "./ListOptions.css";
 
 :root {
   --main-color: #f86409;

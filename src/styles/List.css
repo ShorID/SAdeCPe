@@ -1,5 +1,5 @@
 .List{
-    margin: 1rem;
+    margin: 1rem 0;
 }
 .List-header{
     align-items: center;
@@ -9,6 +9,10 @@
 
     border-bottom: 1px solid var(--secundary-color);
     padding: var(--spacing-8) var(--spacing-16);
+}
+.List-headerOptions{
+    display: flex;
+    justify-items: end;
 }
 .List-title{
     margin: 0;

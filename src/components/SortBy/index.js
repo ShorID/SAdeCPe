@@ -17,11 +17,11 @@ const sortbyOptions = [
 
 const SortBy = (props) => {
   return (
-    <UncontrolledDropdown group>
-      <Button className="SortBy-btn">
+    <UncontrolledDropdown group className="SortBy">
+      <div className="SortBy-label">
         Ordernar por:
-      </Button>
-      <DropdownToggle caret className="SortBy-caret">
+      </div>
+      <DropdownToggle caret color="link" className="SortBy-caret">
         {sortbyOptions[0].label}
       </DropdownToggle>
       <DropdownMenu>

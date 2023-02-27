@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { CardBody, CardTitle } from "reactstrap";
 import SortBy from "../SortBy"
+import ListOptions from "./ListOptions";
 
 const ListHeader = (props) => {
   return (
@@ -9,6 +10,7 @@ const ListHeader = (props) => {
       <CardTitle tag="div" className="List-title">{props.title}</CardTitle>
       <div className="List-headerOptions">
         <SortBy />
+        <ListOptions />
       </div>
     </CardBody>
   );

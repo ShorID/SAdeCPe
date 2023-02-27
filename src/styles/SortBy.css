@@ -1,13 +1,16 @@
-.SortBy-btn {
-    pointer-events: none;
+.SortBy{
+  align-items: center;
+  display: flex;
+}
+.SortBy-label {
+  pointer-events: none;
   padding-right: 0;
+  font-weight: bolder;
 }
 .SortBy-caret {
   padding-left: var(--spacing-8);
 }
-.SortBy-btn,
 .SortBy-caret,
-.SortBy-btn:hover,
 .SortBy-caret:hover,
 .SortBy-caret:active,
 .SortBy-caret:focus {

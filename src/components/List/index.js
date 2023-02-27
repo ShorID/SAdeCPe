@@ -2,10 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card } from "reactstrap";
 import ListContext from "@/contexts/list-context";
+import classNames from "classnames";
 
 const List = (props) => {
   return (
-    <Card className="List">
+    <Card className={classNames("List",props.className)}>
       <ListContext.Consumer>
         {(ctx) =>
           typeof props.children === "function"
@@ -17,6 +18,8 @@ const List = (props) => {
   );
 };
 
-List.propTypes = {};
+List.propTypes = {
+  className: PropTypes.string
+};
 
 export default List;

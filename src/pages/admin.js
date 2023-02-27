@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Layout from '@/components/Layout'
 import AdminLayout from '@/components/Layout/AdminLayout'
 import TitleBlock from '@/components/TitleBlock'
 import CustomInput from '@/components/CustomInput'
