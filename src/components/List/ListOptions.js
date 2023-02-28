@@ -18,7 +18,7 @@ const ListOptions = (props) => {
         color="link"
         className="ListOptions-btn"
       >
-        <Tooltip tooltip="wtf" TagName="span">{<Icon name="faEllipsisVertical" />}</Tooltip>
+        <Tooltip tooltip="Opciones de la lista"><Icon name="faEllipsisVertical" /></Tooltip>
       </Button>
       <UncontrolledPopover
         placement="bottom"
