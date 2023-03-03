@@ -1,0 +1,11 @@
+.TrainingListItem{
+    align-items: stretch;
+    display: flex;
+}
+.TrainingListItem-avatar{
+    height: 1.5rem;
+    margin-right: 1rem;
+    object-fit: contain;
+    object-position: center;
+    width: 1.5rem;
+}

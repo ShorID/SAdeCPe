@@ -1,3 +1,6 @@
+.AdminLayout .list-group{
+    border-radius: var(--border-radius);
+}
 .AdminLayout-link.active{
     background-color: var(--secundary-color);
     border-color: var(--secundary-color);

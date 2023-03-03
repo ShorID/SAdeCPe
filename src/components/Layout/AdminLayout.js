@@ -7,7 +7,7 @@ const AdminLayout = (props) => {
   return (
     <Layout>
       <Row className="my-4">
-        <Col md="3">
+        <Col md="3" className="AdminLayout">
           <ListGroup className="mb-4">
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
               Bienvenido!

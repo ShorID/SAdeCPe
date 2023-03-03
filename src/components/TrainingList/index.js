@@ -4,6 +4,7 @@ import List from "../List";
 import ListHeader from "../List/ListHeader";
 import ListBody from "../List/ListBody";
 import ListFooter from "../List/ListFooter";
+import TrainingListItem from "./TrainingListItem";
 
 const TrainingList = (props) => {
   return (
@@ -15,9 +16,10 @@ const TrainingList = (props) => {
               title="Capacitaciones"
               subTitle="Lista de capacitaciones"
             >
-              prueba
             </ListHeader>
-            <ListBody>prueba</ListBody>
+            <ListBody>
+              <TrainingListItem  />
+            </ListBody>
             <ListFooter>prueba</ListFooter>
           </>
         );

@@ -1,5 +1,6 @@
 .List{
     margin-bottom: 1rem;
+    border-radius: var(--border-radius);
 }
 .List-header{
     align-items: center;
