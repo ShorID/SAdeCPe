@@ -7,17 +7,26 @@ import {
   InputGroupText,
   Label,
 } from "reactstrap";
+import Icon from "../Icon";
+import Clickable from "../Clickable";
 
 const CustomCheck = (props) => {
   const { id, label, variant = "form" } = props;
   const [isChecked, setIsChecked] = React.useState(props.checked);
 
-  const handleChange = () => setIsChecked((prev) => !prev);
+  const handleCheck = () => setIsChecked((prev) => !prev);
 
   if (variant === "group")
     return (
       <InputGroup>
         {label && <InputGroupText>{label}</InputGroupText>}
+        <Clickable onClick={handleCheck}>
+          <img className="CustomCheck" alt="select item" src={isChecked? "checkboxFilled.svg" : "checkboxEmpty.svg"} />
+          {/* <Icon
+            name={isChecked ? "faSquareCheck" : "faSquare"}
+            className="CustomCheck"
+          /> */}
+        </Clickable>
         <Input
           placeholder={props.placeholder}
           type="checkbox"
@@ -26,10 +35,17 @@ const CustomCheck = (props) => {
         />
       </InputGroup>
     );
+
   return (
     <FormGroup>
       {label && <Label for={id}>{label}</Label>}
-      <Icon />
+      <Clickable onClick={handleCheck}>
+        {/* <Icon
+          name={isChecked ? "faSquareCheck" : "faSquare"}
+          className="CustomCheck"
+        /> */}
+        <img className="CustomCheck" alt="select item" src={isChecked? "checkboxFilled.svg" : "checkboxEmpty.svg"} />
+      </Clickable>
       <Input type="checkbox" checked={isChecked} className="d-none" />
     </FormGroup>
   );

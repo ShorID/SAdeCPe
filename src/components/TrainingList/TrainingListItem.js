@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Text from "../Text";
+import CustomCheck from "../CustomCheck";
 
 const TrainingListItem = (props) => {
   return (
     <div className="TrainingListItem">
+      <CustomCheck />
       <img
         className="TrainingListItem-avatar"
         src={props.avatar}
