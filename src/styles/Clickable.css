@@ -1,0 +1,14 @@
+.Clickable {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: inherit;
+  outline: inherit;
+  padding: 0;
+}
+
+.Clickable.disabled {
+  pointer-events: none;
+}

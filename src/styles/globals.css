@@ -13,6 +13,7 @@
 @import "./SortBy.css";
 @import "./ListOptions.css";
 @import "./TrainingListItem.css";
+@import "./Clickable.css";
 
 :root {
   --main-color: #f86409;
