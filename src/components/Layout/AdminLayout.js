@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Layout from ".";
 import { Badge, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import Text from "../Text";
 
 const AdminLayout = (props) => {
   return (
@@ -10,46 +11,54 @@ const AdminLayout = (props) => {
         <Col md="3" className="AdminLayout">
           <ListGroup className="mb-4">
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Bienvenido!
+              <Text>Bienvenido!</Text>
             </ListGroupItem>
           </ListGroup>
           <ListGroup className="mb-4">
-            <ListGroupItem action active href="#" tag="a" className="AdminLayout-link">
-              Capacitaciones
+            <ListGroupItem
+              action
+              active
+              href="#"
+              tag="a"
+              className="AdminLayout-link"
+            >
+              <Text>Capacitaciones</Text>
             </ListGroupItem>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Organizaciones
+              <Text>Organizaciones</Text>
             </ListGroupItem>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Centros de Capacitacion
+              <Text>Centros de Capacitacion</Text>
             </ListGroupItem>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Capacitadores
+              <Text>Capacitadores</Text>
             </ListGroupItem>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Horarios
+              <Text>Horarios</Text>
             </ListGroupItem>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Estados
+              <Text>Estados</Text>
             </ListGroupItem>
           </ListGroup>
           <ListGroup className="mb-4">
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Empleados
+              <Text>Empleados</Text>
             </ListGroupItem>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Cargos
+              <Text>Cargos</Text>
             </ListGroupItem>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Departamentos
+              <Text>Departamentos</Text>
             </ListGroupItem>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Solicitudes <Badge pill>3</Badge>
+              <Text>
+                Solicitudes <Badge pill>3</Badge>
+              </Text>
             </ListGroupItem>
           </ListGroup>
           <ListGroup>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
-              Cerrar Sesion
+              <Text>Cerrar Sesion</Text>
             </ListGroupItem>
           </ListGroup>
         </Col>

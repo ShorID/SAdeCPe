@@ -1,33 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Button,
-  PopoverBody,
-  PopoverHeader,
-  UncontrolledPopover,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledDropdown,
 } from "reactstrap";
 import Icon from "../Icon";
 import Tooltip from "../Tooltip";
+import Text from "../Text";
 
 const ListOptions = (props) => {
   return (
     <>
-      <Button
-        id="FixedID_ListOptions"
-        type="button"
-        color="link"
-        className="ListOptions-btn"
-      >
-        <Tooltip tooltip="Opciones de la lista"><Icon name="faEllipsisVertical" /></Tooltip>
-      </Button>
-      <UncontrolledPopover
-        placement="bottom"
-        target="FixedID_ListOptions"
-        trigger="legacy"
-      >
-        <PopoverHeader>List Options</PopoverHeader>
-        <PopoverBody>Aqui se mostraran las opciones de la lista</PopoverBody>
-      </UncontrolledPopover>
+      <UncontrolledDropdown group>
+        <DropdownToggle color="link" className="SortBy-caret">
+          <Tooltip tooltip="Opciones de la lista">
+            <Icon name="faEllipsisVertical" />
+          </Tooltip>
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem header><Text>Opciones de lista</Text></DropdownItem>
+          <DropdownItem>
+            <Icon name="faPlus" />
+            <Text className="mx-2">Crear nuevo registro</Text>
+          </DropdownItem>
+          <DropdownItem>
+            <Icon name="faFileExport" />
+            <Text className="mx-2">Exportar lista</Text>
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
     </>
   );
 };

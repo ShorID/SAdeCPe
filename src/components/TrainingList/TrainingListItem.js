@@ -8,8 +8,6 @@ import CustomButton from "../CustomButton";
 import Icon from "../Icon";
 import Clickable from "../Clickable";
 import Tooltip from "../Tooltip";
-import CustomAccordion from "../CustomAccordion";
-import CustomAccordionItem from "../CustomAccordion/CustomAccordionItem";
 
 const TrainingListItem = (props) => {
   return (
@@ -41,11 +39,7 @@ const TrainingListItem = (props) => {
             </CustomButton>
           </div>
         </div>
-        <CustomAccordion>
-          <CustomAccordionItem header={<ScheduleBadges />}>
-            wtf perro
-          </CustomAccordionItem>
-        </CustomAccordion>
+        <ScheduleBadges />
       </div>
     </div>
   );

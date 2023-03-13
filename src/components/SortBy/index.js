@@ -7,6 +7,9 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
 } from "reactstrap";
+import Text from "../Text";
+import Icon from "../Icon";
+import Tooltip from "../Tooltip";
 
 const sortbyOptions = [
   { label: "A-Z", value: "character_desc" },
@@ -16,22 +19,29 @@ const sortbyOptions = [
 ];
 
 const SortBy = (props) => {
+  const [selected, setSelected] = React.useState();
+
+  const handleSelect = (newSelect) => () => setSelected(newSelect);
+
   return (
     <UncontrolledDropdown group className="SortBy">
-      <div className="SortBy-label">
-        Ordernar por:
-      </div>
-      <DropdownToggle caret color="link" className="SortBy-caret">
-        {sortbyOptions[0].label}
+      <DropdownToggle color="link" className="SortBy-caret">
+        <Tooltip tooltip="Ordenar">
+          <Text>
+            <Icon name="faBarsStaggered" /> {selected && selected.label}
+          </Text>
+        </Tooltip>
       </DropdownToggle>
       <DropdownMenu>
-        <DropdownItem header>Header</DropdownItem>
-        <DropdownItem>Some Action</DropdownItem>
-        <DropdownItem text>Dropdown Item Text</DropdownItem>
-        <DropdownItem disabled>Action (disabled)</DropdownItem>
-        <DropdownItem divider />
+        <DropdownItem header>Ordernar por</DropdownItem>
         {sortbyOptions.map((item, key) => (
-          <DropdownItem key={`SortBy-option-${key}`}>{item.label}</DropdownItem>
+          <DropdownItem
+            key={`SortBy-option-${key}`}
+            onClick={handleSelect(item)}
+            active={selected?.value === item.value}
+          >
+            {item.label}
+          </DropdownItem>
         ))}
       </DropdownMenu>
     </UncontrolledDropdown>

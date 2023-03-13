@@ -1,0 +1,27 @@
+.Text {
+  font-size: 1rem;
+}
+h1.Text {
+  font-size: 2rem;
+}
+h2.Text {
+  font-size: 1.75rem;
+}
+h3.Text {
+  font-size: 1.625rem;
+}
+h4.Text {
+  font-size: 1.5rem;
+}
+h5.Text {
+  font-size: 1.375rem;
+}
+div.Text {
+  font-size: 1.25rem;
+}
+p.Text {
+  font-size: 1.125rem;
+}
+.Text-bold {
+  font-weight: bold;
+}

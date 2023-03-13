@@ -11,6 +11,7 @@ import {
   getRandomText,
 } from "@/services/common";
 import DefaultDataProvider from "../DefaultDataProvider";
+import ListSearcher from "../List/ListSearcher";
 
 const defaultItems = () => {
   const arrayWidth = getRandomInt(20);
@@ -18,7 +19,7 @@ const defaultItems = () => {
   for (let index = 0; index < arrayWidth; index++) {
     items.push({
       avatar: getRandomAvatar(),
-      title: getRandomText({words: 10, min: 10, max: 10}),
+      title: getRandomText({min: 10, max: 30}),
       completed: !!(getRandomInt(2) - 1),
     });
   }
@@ -35,6 +36,7 @@ const TrainingList = (props) => {
               title="Capacitaciones"
               subTitle="Lista de capacitaciones"
             ></ListHeader>
+            <ListSearcher />
             <ListBody>
               <DefaultDataProvider getDefaultProps={defaultItems}>
                 {(data) =>

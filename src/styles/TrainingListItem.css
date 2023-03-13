@@ -8,6 +8,7 @@
     width: 100%;
 }
 .TrainingListItem-mainInfo{
+    align-items: flex-start;
     display: flex;
     width: 100%;
 }
@@ -17,7 +18,7 @@
     margin-left: auto;
 }
 .TrainingListItem-options .btn{
-    width: 110px;
+    width: 120px;
 }
 .TrainingListItem-avatar{
     height: 1.5rem;

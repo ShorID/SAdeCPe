@@ -9,10 +9,10 @@ const getDefaultProps = () => ({
 });
 
 const Text = (props) => {
-  const { TagName = "span", className } = props;
+  const { TagName = "span", className, bold } = props;
 
   return (
-    <TagName className={classnames("Text", className)}>
+    <TagName className={classnames("Text", bold && "Text-bold", className)}>
       <DefaultDataProvider getDefaultProps={getDefaultProps}>
         {(defaultData) => props.text || props.children || defaultData?.text}
       </DefaultDataProvider>
@@ -34,6 +34,7 @@ Text.propTypes = {
   ]),
   className: PropTypes.string,
   text: PropTypes.string,
+  bold: PropTypes.bool,
 };
 
 export default Text;
