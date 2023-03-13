@@ -7,8 +7,8 @@ import {
   InputGroupText,
   Label,
 } from "reactstrap";
-import Icon from "../Icon";
 import Clickable from "../Clickable";
+import Tooltip from "../Tooltip";
 
 const CustomCheck = (props) => {
   const { id, label, variant = "form" } = props;
@@ -16,44 +16,49 @@ const CustomCheck = (props) => {
 
   const handleCheck = () => setIsChecked((prev) => !prev);
 
-  if (variant === "group")
-    return (
-      <InputGroup>
-        {label && <InputGroupText>{label}</InputGroupText>}
-        <Clickable onClick={handleCheck}>
-          <img className="CustomCheck" alt="select item" src={isChecked? "checkboxFilled.svg" : "checkboxEmpty.svg"} />
-          {/* <Icon
-            name={isChecked ? "faSquareCheck" : "faSquare"}
-            className="CustomCheck"
-          /> */}
-        </Clickable>
-        <Input
-          placeholder={props.placeholder}
-          type="checkbox"
-          checked={isChecked}
-          className="d-none"
-        />
-      </InputGroup>
-    );
+  const inputLabel =
+    variant === "group"
+      ? label && <InputGroupText>{label}</InputGroupText>
+      : label && <Label for={id}>{label}</Label>;
 
-  return (
-    <FormGroup>
-      {label && <Label for={id}>{label}</Label>}
-      <Clickable onClick={handleCheck}>
-        {/* <Icon
-          name={isChecked ? "faSquareCheck" : "faSquare"}
+  const inputIcon = (
+    <Tooltip
+      tooltip={
+        isChecked ? "Deseleccionar?" : "Seleccionar?"
+      }
+    >
+      <Clickable onClick={handleCheck} className={props.className}>
+        <img
           className="CustomCheck"
-        /> */}
-        <img className="CustomCheck" alt="select item" src={isChecked? "checkboxFilled.svg" : "checkboxEmpty.svg"} />
+          alt="select item"
+          src={isChecked ? "checkboxFilled.svg" : "checkboxEmpty.svg"}
+        />
       </Clickable>
-      <Input type="checkbox" checked={isChecked} className="d-none" />
-    </FormGroup>
+      <Input
+        placeholder={props.placeholder}
+        type="checkbox"
+        checked={isChecked}
+        className="d-none"
+      />
+    </Tooltip>
   );
+
+  const InputWrapper = variant === "group" ? InputGroup : FormGroup;
+
+  const input = (
+    <InputWrapper>
+      {inputLabel}
+      {inputIcon}
+    </InputWrapper>
+  );
+
+  return input;
 };
 
 CustomCheck.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
+  className: PropTypes.string,
   variant: PropTypes.oneOf(["form", "group"]),
   checked: PropTypes.boolean,
 };

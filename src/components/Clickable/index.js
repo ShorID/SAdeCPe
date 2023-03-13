@@ -24,8 +24,8 @@ const Clickable = React.forwardRef(function Clickable(props, ref) {
 Clickable.propTypes = {
   disabled: PropTypes.boolean,
   className: PropTypes.string,
-  onClick: PropTypes.function,
-  onBlur: PropTypes.function,
+  onClick: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 export default Clickable;

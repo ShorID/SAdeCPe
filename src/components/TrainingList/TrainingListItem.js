@@ -2,20 +2,50 @@ import React from "react";
 import PropTypes from "prop-types";
 import Text from "../Text";
 import CustomCheck from "../CustomCheck";
+import classNames from "classnames";
+import ScheduleBadges from "../ScheduleBadges";
+import CustomButton from "../CustomButton";
+import Icon from "../Icon";
+import Clickable from "../Clickable";
+import Tooltip from "../Tooltip";
+import CustomAccordion from "../CustomAccordion";
+import CustomAccordionItem from "../CustomAccordion/CustomAccordionItem";
 
 const TrainingListItem = (props) => {
   return (
-    <div className="TrainingListItem">
+    <div className={classNames("TrainingListItem", props.className)}>
       <CustomCheck />
-      <img
-        className="TrainingListItem-avatar"
-        src={props.avatar}
-        alt={props.title}
-      />
-      <div className="TrainingListItem-title">
-        <Text>
-            {props.title}
-        </Text>
+      <div className="TrainingListItem-content">
+        <div className="TrainingListItem-mainInfo">
+          <img
+            className="TrainingListItem-avatar"
+            src={props.avatar}
+            alt={props.title}
+          />
+          <div className="TrainingListItem-title">
+            <Text>{props.title}</Text>
+          </div>
+          <div className="TrainingListItem-options">
+            <Clickable className="mx-2">
+              <Tooltip tooltip="Editar?" placement="right">
+                <Icon name="faEdit" size="md2" />
+              </Tooltip>
+            </Clickable>
+            <CustomButton
+              btnColor={props.completed ? "success" : "secondary"}
+              btnSize="sm"
+              btnOutline
+              withoutCustom
+            >
+              {`Completado${props.completed ? "" : "?"}`}
+            </CustomButton>
+          </div>
+        </div>
+        <CustomAccordion>
+          <CustomAccordionItem header={<ScheduleBadges />}>
+            wtf perro
+          </CustomAccordionItem>
+        </CustomAccordion>
       </div>
     </div>
   );
@@ -28,6 +58,8 @@ TrainingListItem.defaultProps = {
 TrainingListItem.propTypes = {
   avatar: PropTypes.string,
   title: PropTypes.string,
+  completed: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default TrainingListItem;

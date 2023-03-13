@@ -1,6 +1,23 @@
 .TrainingListItem{
     align-items: stretch;
     display: flex;
+    margin-bottom: 1rem;
+}
+.TrainingListItem-content{
+    margin-left: .5rem;
+    width: 100%;
+}
+.TrainingListItem-mainInfo{
+    display: flex;
+    width: 100%;
+}
+.TrainingListItem-options{
+    align-items: center;
+    display: flex;
+    margin-left: auto;
+}
+.TrainingListItem-options .btn{
+    width: 110px;
 }
 .TrainingListItem-avatar{
     height: 1.5rem;

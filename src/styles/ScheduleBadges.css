@@ -1,0 +1,6 @@
+@import "./ScheduleBadge.css";
+
+.ScheduleBadges{
+    margin-top: 1rem;
+    display: flex;
+}

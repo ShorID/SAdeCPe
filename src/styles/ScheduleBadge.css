@@ -1,0 +1,13 @@
+.ScheduleBadge {
+  border: 1px solid var(--unselected-color);
+  background-color: var(--unselected-color);
+  border-radius: 5px;
+  height: 0.5rem;
+  width: 1rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+.ScheduleBadge.completed {
+  border: 1px solid var(--selection-color);
+  background-color: var(--selection-color);
+}
