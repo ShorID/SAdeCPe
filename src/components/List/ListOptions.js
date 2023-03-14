@@ -20,7 +20,9 @@ const ListOptions = (props) => {
           </Tooltip>
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem header><Text>Opciones de lista</Text></DropdownItem>
+          <DropdownItem header>
+            <Text>Opciones de lista</Text>
+          </DropdownItem>
           <DropdownItem>
             <Icon name="faPlus" />
             <Text className="mx-2">Crear nuevo registro</Text>

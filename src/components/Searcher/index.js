@@ -1,13 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Input } from 'reactstrap'
+import React from "react";
+import PropTypes from "prop-types";
+import { Input } from "reactstrap";
 
-const Searcher = props => {
+const Searcher = (props) => {
   return (
-    <Input bsSize="sm" type="search"></Input>
-  )
-}
+    <Input
+      bsSize="sm"
+      type="search"
+      className="Searcher"
+      placeholder="Buscar..."
+    />
+  );
+};
 
-Searcher.propTypes = {}
+Searcher.propTypes = {};
 
-export default Searcher
+export default Searcher;

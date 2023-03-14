@@ -20,9 +20,11 @@
 .TrainingListItem-options .btn{
     width: 120px;
 }
+.TrainingListItem-avatarWrapper{
+    margin-right: 1rem;
+}
 .TrainingListItem-avatar{
     height: 1.5rem;
-    margin-right: 1rem;
     object-fit: contain;
     object-position: center;
     width: 1.5rem;

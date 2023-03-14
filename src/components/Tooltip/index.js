@@ -11,10 +11,13 @@ const Tooltip = (props) => {
 
   return (
     <React.Fragment>
-      <TagName className={className} ref={wrapperRef} id={uniqId}>
+      <TagName className={className} ref={wrapperRef} id={uniqId} style={{ lineHeight: "initial" }}>
         {props.children}
       </TagName>
-      <RSTooltip target={uniqId} placement={props.placement || "bottom"}>
+      <RSTooltip
+        target={uniqId}
+        placement={props.placement || "bottom"}
+      >
         {tooltip}
       </RSTooltip>
     </React.Fragment>

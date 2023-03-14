@@ -33,7 +33,9 @@ const SortBy = (props) => {
         </Tooltip>
       </DropdownToggle>
       <DropdownMenu>
-        <DropdownItem header>Ordernar por</DropdownItem>
+        <DropdownItem header>
+          <Text>Ordernar por</Text>
+        </DropdownItem>
         {sortbyOptions.map((item, key) => (
           <DropdownItem
             key={`SortBy-option-${key}`}

@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import { CardBody } from "reactstrap";
 
 const ListBody = (props) => {
-  return <CardBody>{props.children}</CardBody>;
+  return <CardBody className={props.className}>{props.children}</CardBody>;
 };
 
-ListBody.propTypes = {};
+ListBody.propTypes = {
+  className: PropTypes.string
+};
 
 export default ListBody;

@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import Text from "../Text";
 import CustomCheck from "../CustomCheck";
 import classNames from "classnames";
-import ScheduleBadges from "../ScheduleBadges";
 import CustomButton from "../CustomButton";
 import Icon from "../Icon";
 import Clickable from "../Clickable";
 import Tooltip from "../Tooltip";
+import TrainingListItemSchedule from "./TrainingListItemSchedule";
 
 const TrainingListItem = (props) => {
   return (
@@ -15,11 +15,16 @@ const TrainingListItem = (props) => {
       <CustomCheck />
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
-          <img
-            className="TrainingListItem-avatar"
-            src={props.avatar}
-            alt={props.title}
-          />
+          <Tooltip
+            tooltip="Organizacion Logo"
+            className="TrainingListItem-avatarWrapper"
+          >
+            <img
+              className="TrainingListItem-avatar"
+              src={props.avatar}
+              alt={props.title}
+            />
+          </Tooltip>
           <div className="TrainingListItem-title">
             <Text>{props.title}</Text>
           </div>
@@ -39,7 +44,7 @@ const TrainingListItem = (props) => {
             </CustomButton>
           </div>
         </div>
-        <ScheduleBadges />
+        <TrainingListItemSchedule data={props.sessions} />
       </div>
     </div>
   );
@@ -54,6 +59,7 @@ TrainingListItem.propTypes = {
   title: PropTypes.string,
   completed: PropTypes.bool,
   className: PropTypes.string,
+  sessions: PropTypes.array,
 };
 
 export default TrainingListItem;

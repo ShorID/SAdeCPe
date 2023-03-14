@@ -8,6 +8,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding: var(--spacing-8) var(--spacing-16);
+    border-bottom: 1px;
 }
 .List-headerOptions{
     display: flex;
