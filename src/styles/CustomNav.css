@@ -2,7 +2,9 @@
   background-color: var(--secundary-color);
   width: 100%;
 }
-
+.CustomNav-end{
+  margin-left: auto;
+}
 .CustomNav-link{
   color: white;
   border-radius: 0 !important;

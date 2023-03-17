@@ -2,8 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import classNames from "classnames";
+import Icon from "../Icon";
+import { useRouter } from "next/router";
 
 const CustomNav = (props) => {
+  const router = useRouter();
   return (
     <div className="CustomNav">
       <Nav pills className={classNames("container", "CustomNav")}>
@@ -27,6 +30,13 @@ const CustomNav = (props) => {
             Solicitar Capacitacion
           </NavLink>
         </NavItem>
+        {router.pathname !== "/login" && (
+          <NavItem className="CustomNav-end">
+            <NavLink href="/login" className="CustomNav-link">
+              <Icon name="faArrowRightFromBracket" /> Acceder
+            </NavLink>
+          </NavItem>
+        )}
       </Nav>
     </div>
   );

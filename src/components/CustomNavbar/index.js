@@ -6,9 +6,6 @@ import Icon from "../Icon";
 import { useRouter } from "next/router";
 
 const CustomNavbar = (props) => {
-  const router = useRouter();
-  const toLogin = () => router.push("/login");
-
   return (
     <Navbar className="CustomNavbar" container="lg">
       <NavbarBrand href="/" className="CustomNavbar-logo">
@@ -21,11 +18,6 @@ const CustomNavbar = (props) => {
           }}
         />
       </NavbarBrand>
-      {router.pathname !== "/login" && (
-        <CustomButton variant="light" className="ml-auto" onClick={toLogin}>
-          Acceder <Icon name="faArrowRightFromBracket" />
-        </CustomButton>
-      )}
     </Navbar>
   );
 };

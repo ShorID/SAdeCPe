@@ -4,6 +4,7 @@ import Layout from ".";
 import { Badge, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 import Text from "../Text";
 import { useRouter } from "next/router";
+import Link from "../Link";
 
 const links = {
   block1: [
@@ -31,12 +32,12 @@ const AdminLayout = (props) => {
     linkArray.map((item) => (
       <ListGroupItem
         action
-        href={item.link}
-        tag="a"
         className="AdminLayout-link"
         active={router.asPath === item.link}
       >
-        <Text>{item.label}</Text>
+        <Link to={item.link} withoutClass>
+          <Text>{item.label}</Text>
+        </Link>
       </ListGroupItem>
     ));
 
@@ -49,9 +50,7 @@ const AdminLayout = (props) => {
               <Text>Bienvenido!</Text>
             </ListGroupItem>
           </ListGroup>
-          <ListGroup className="mb-4">
-            {renderLinks(links.block1)}
-          </ListGroup>
+          <ListGroup className="mb-4">{renderLinks(links.block1)}</ListGroup>
           <ListGroup className="mb-4">
             {renderLinks(links.block2)}
             <ListGroupItem

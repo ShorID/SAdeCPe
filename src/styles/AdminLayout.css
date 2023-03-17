@@ -1,6 +1,13 @@
 .AdminLayout .list-group{
     border-radius: var(--border-radius);
 }
+.AdminLayout-link a{
+    display: block;
+    height: 100%;
+}
+.AdminLayout-link a:hover{
+    color: inherit;
+}
 .AdminLayout-link.active{
     background-color: var(--secundary-color);
     border-color: var(--secundary-color);
