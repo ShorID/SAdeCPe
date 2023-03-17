@@ -5,8 +5,41 @@ import { Badge, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 import Text from "../Text";
 import { useRouter } from "next/router";
 
+const links = {
+  block1: [
+    { label: "Capacitaciones", link: "/admin" },
+    { label: "Organizaciones", link: "/admin/organizaciones" },
+    {
+      label: "Centros de Capacitacion",
+      link: "/admin/centros-de-capacitacion",
+    },
+    { label: "Capacitadores", link: "/admin/capacitadores" },
+    { label: "Horarios", link: "/admin/horarios" },
+    { label: "Estados", link: "/admin/estados" },
+  ],
+  block2: [
+    { label: "Empleados", link: "/admin/empleados" },
+    { label: "Cargos", link: "/admin/cargos" },
+    { label: "Departamentos", link: "/admin/departamentos" },
+  ],
+};
+
 const AdminLayout = (props) => {
-  const router = useRouter()
+  const router = useRouter();
+
+  const renderLinks = (linkArray = []) =>
+    linkArray.map((item) => (
+      <ListGroupItem
+        action
+        href={item.link}
+        tag="a"
+        className="AdminLayout-link"
+        active={router.asPath === item.link}
+      >
+        <Text>{item.label}</Text>
+      </ListGroupItem>
+    ));
+
   return (
     <Layout>
       <Row className="my-4">
@@ -17,87 +50,16 @@ const AdminLayout = (props) => {
             </ListGroupItem>
           </ListGroup>
           <ListGroup className="mb-4">
-            <ListGroupItem
-              action
-              href="/admin"
-              tag="a"
-              className="AdminLayout-link"
-              active={router.asPath}
-              
-            >
-              <Text>Capacitaciones</Text>
-            </ListGroupItem>
-            <ListGroupItem
-              action
-              href="/admin/organizaciones"
-              tag="a"
-              className="AdminLayout-link"
-            >
-              <Text>Organizaciones</Text>
-            </ListGroupItem>
-            <ListGroupItem
-              action
-              href="/admin/centros-de-capacitacion"
-              tag="a"
-              className="AdminLayout-link"
-            >
-              <Text>Centros de Capacitacion</Text>
-            </ListGroupItem>
-            <ListGroupItem
-              action
-              href="/admin/capacitadores"
-              tag="a"
-              className="AdminLayout-link"
-            >
-              <Text>Capacitadores</Text>
-            </ListGroupItem>
-            <ListGroupItem
-              action
-              href="/admin/horarios"
-              tag="a"
-              className="AdminLayout-link"
-            >
-              <Text>Horarios</Text>
-            </ListGroupItem>
-            <ListGroupItem
-              action
-              href="/admin/estados"
-              tag="a"
-              className="AdminLayout-link"
-            >
-              <Text>Estados</Text>
-            </ListGroupItem>
+            {renderLinks(links.block1)}
           </ListGroup>
           <ListGroup className="mb-4">
-            <ListGroupItem
-              action
-              href="/admin/empleados"
-              tag="a"
-              className="AdminLayout-link"
-            >
-              <Text>Empleados</Text>
-            </ListGroupItem>
-            <ListGroupItem
-              action
-              href="/admin/cargos"
-              tag="a"
-              className="AdminLayout-link"
-            >
-              <Text>Cargos</Text>
-            </ListGroupItem>
-            <ListGroupItem
-              action
-              href="/admin/departamentos"
-              tag="a"
-              className="AdminLayout-link"
-            >
-              <Text>Departamentos</Text>
-            </ListGroupItem>
+            {renderLinks(links.block2)}
             <ListGroupItem
               action
               href="/admin/solicitudes"
               tag="a"
               className="AdminLayout-link"
+              active={"/admin/solicitudes" === router.asPath}
             >
               <Text>
                 Solicitudes <Badge pill>3</Badge>
