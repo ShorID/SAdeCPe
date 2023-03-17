@@ -46,9 +46,9 @@ const CustomCheck = (props) => {
   const InputWrapper = variant === "group" ? InputGroup : FormGroup;
 
   const input = (
-    <InputWrapper>
-      {inputLabel}
+    <InputWrapper className={props.wrapperClass}>
       {inputIcon}
+      {inputLabel}
     </InputWrapper>
   );
 
@@ -59,6 +59,7 @@ CustomCheck.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
   className: PropTypes.string,
+  wrapperClass: PropTypes.string,
   variant: PropTypes.oneOf(["form", "group"]),
   checked: PropTypes.boolean,
 };

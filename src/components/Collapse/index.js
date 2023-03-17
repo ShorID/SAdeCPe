@@ -10,12 +10,17 @@ const Collapse = (props) => {
   const toggle = () => setIsOpen((prev) => !prev);
   return (
     <>
-      <Clickable onClick={toggle} className={classNames("d-flex align-items-center", props.className)}>
-        {props.header}
-        <Icon name={isOpen ? "faAngleUp" : "faAngleDown"} />
-      </Clickable>
+      {!props.manual && (
+        <Clickable
+          onClick={toggle}
+          className={classNames("d-flex align-items-center", props.className)}
+        >
+          {props.header}
+          <Icon name={isOpen ? "faAngleUp" : "faAngleDown"} />
+        </Clickable>
+      )}
       <RSCollapse
-        isOpen={isOpen}
+        isOpen={isOpen || props.isOpen}
         onEntering={props.onEntering}
         onEntered={props.onEntered}
         onExiting={props.onExiting}
@@ -35,6 +40,8 @@ Collapse.propTypes = {
   onExiting: PropTypes.func,
   onExited: PropTypes.func,
   className: PropTypes.string,
+  manual: PropTypes.bool,
+  isOpen: PropTypes.bool,
 };
 
 export default Collapse;

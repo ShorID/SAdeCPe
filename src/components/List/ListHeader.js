@@ -4,6 +4,7 @@ import { CardBody, CardTitle } from "reactstrap";
 import SortBy from "../SortBy";
 import ListOptions from "./ListOptions";
 import Text from "../Text";
+import Icon from "../Icon";
 
 const ListHeader = (props) => {
   return (
@@ -12,6 +13,7 @@ const ListHeader = (props) => {
         <Text>{props.title}</Text>
       </CardTitle>
       <div className="List-headerOptions">
+        <Icon />
         <SortBy />
         <ListOptions />
       </div>

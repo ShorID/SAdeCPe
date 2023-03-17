@@ -19,6 +19,7 @@
 @import "./ScheduleBadges.css";
 @import "./Icon.css";
 @import "./Text.css";
+@import "./ListSelection.css";
 
 :root {
   --main-color: #f86409;

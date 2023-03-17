@@ -14,6 +14,7 @@ import {
 import DefaultDataProvider from "../DefaultDataProvider";
 import ListSearcher from "../List/ListSearcher";
 import moment from "moment";
+import ListSelection from "../List/ListSelection";
 
 const getDefaultSessions = () => {
   const arrayWidth = getRandomInt(10);
@@ -69,7 +70,7 @@ const TrainingList = (props) => {
           }
         </DefaultDataProvider>
       </ListBody>
-      <ListFooter>prueba</ListFooter>
+      <ListFooter>footer</ListFooter>
     </List>
   );
 };

@@ -23,9 +23,9 @@ export const ListProvider = ({ children, formId = "" }) => {
       }}
     >
       {children}
-      <Drawers header="wtf" isOpen={openForm} toggle={onOpenForm}>
-            wadaheeeeeel
-          </Drawers>
+      <Drawers header="Drawer" isOpen={openForm} toggle={onOpenForm}>
+        Drawer content
+      </Drawers>
     </ListContext.Provider>
   );
 };

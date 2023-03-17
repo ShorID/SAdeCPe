@@ -1,0 +1,26 @@
+.ListSelection{
+    display: block;
+    position: relative;
+    width: 100%;
+    border: 1px red solid;
+    padding-bottom: 0;
+}
+.ListSelection-btn{
+    position: absolute;
+    position: absolute;
+    right: 5%;
+    top: -13px;
+}
+
+.ListSelection-btn svg:first-of-type{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.ListSelection-btn svg:last-of-type{
+    color: white;
+    position: relative;
+}
