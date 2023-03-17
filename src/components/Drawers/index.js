@@ -4,7 +4,7 @@ import { Offcanvas, OffcanvasBody, OffcanvasHeader } from "reactstrap";
 
 const Drawers = (props) => {
   return (
-    <Offcanvas direction="end" toggle={props.toggle} isOpen={props.isOpen}>
+    <Offcanvas direction="end" toggle={props.toggle} isOpen={props.isOpen} className="w-50">
       <OffcanvasHeader toggle={props.toggle}>{props.header}</OffcanvasHeader>
       <OffcanvasBody>{props.children}</OffcanvasBody>
     </Offcanvas>

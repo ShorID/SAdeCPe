@@ -56,26 +56,20 @@ const defaultItems = () => {
 const TrainingList = (props) => {
   return (
     <List>
-      {(ctx) => {
-        return (
-          <>
-            <ListHeader
-              title="Capacitaciones"
-              subTitle="Lista de capacitaciones"
-            ></ListHeader>
-            <ListSearcher />
-            <ListBody>
-              <DefaultDataProvider getDefaultProps={defaultItems}>
-                {(data) =>
-                  Array.isArray(data) &&
-                  data.map((item) => <TrainingListItem {...item} />)
-                }
-              </DefaultDataProvider>
-            </ListBody>
-            <ListFooter>prueba</ListFooter>
-          </>
-        );
-      }}
+      <ListHeader
+        title="Capacitaciones"
+        subTitle="Lista de capacitaciones"
+      ></ListHeader>
+      <ListSearcher />
+      <ListBody>
+        <DefaultDataProvider getDefaultProps={defaultItems}>
+          {(data) =>
+            Array.isArray(data) &&
+            data.map((item) => <TrainingListItem {...item} />)
+          }
+        </DefaultDataProvider>
+      </ListBody>
+      <ListFooter>prueba</ListFooter>
     </List>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {
   DropdownItem,
@@ -9,8 +9,10 @@ import {
 import Icon from "../Icon";
 import Tooltip from "../Tooltip";
 import Text from "../Text";
+import ListContext from "@/contexts/list-context";
 
 const ListOptions = (props) => {
+  const { onOpenForm } = useContext(ListContext)
   return (
     <>
       <UncontrolledDropdown group>
@@ -23,7 +25,7 @@ const ListOptions = (props) => {
           <DropdownItem header>
             <Text>Opciones de lista</Text>
           </DropdownItem>
-          <DropdownItem>
+          <DropdownItem onClick={onOpenForm}>
             <Icon name="faPlus" />
             <Text className="mx-2">Crear nuevo registro</Text>
           </DropdownItem>
