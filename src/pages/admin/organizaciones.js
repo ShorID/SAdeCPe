@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import AdminLayout from '@/components/Layout/AdminLayout'
+import DefaultList from '@/components/DefaultList'
 
 const Organizations = props => {
   return (
     <AdminLayout>
-        Organizations
+        <DefaultList title='Organizaciones' />
     </AdminLayout>
   )
 }

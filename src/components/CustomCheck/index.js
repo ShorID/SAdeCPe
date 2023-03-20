@@ -31,7 +31,7 @@ const CustomCheck = (props) => {
         <img
           className="CustomCheck"
           alt="select item"
-          src={isChecked ? "checkboxFilled.svg" : "checkboxEmpty.svg"}
+          src={isChecked ? "/checkboxFilled.svg" : "/checkboxEmpty.svg"}
         />
       </Clickable>
       <Input

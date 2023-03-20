@@ -14,7 +14,8 @@ import {
 import DefaultDataProvider from "../DefaultDataProvider";
 import ListSearcher from "../List/ListSearcher";
 import moment from "moment";
-import ListSelection from "../List/ListSelection";
+import Pagination from "../Pagination";
+import CustomPagination from "../Pagination";
 
 const getDefaultSessions = () => {
   const arrayWidth = getRandomInt(10);
@@ -70,7 +71,9 @@ const TrainingList = (props) => {
           }
         </DefaultDataProvider>
       </ListBody>
-      <ListFooter>footer</ListFooter>
+      <ListFooter>
+        <CustomPagination />
+      </ListFooter>
     </List>
   );
 };

@@ -1,3 +1,4 @@
+import CustomInput from "@/components/CustomInput";
 import Drawers from "@/components/Drawers";
 import React, { createContext, useState } from "react";
 
@@ -24,7 +25,9 @@ export const ListProvider = ({ children, formId = "" }) => {
     >
       {children}
       <Drawers header="Drawer" isOpen={openForm} toggle={onOpenForm}>
-        Drawer content
+        <CustomInput label="Titulo" />
+        <CustomInput label="Descripcion" />
+        <CustomInput label="Fecha de creacion" />
       </Drawers>
     </ListContext.Provider>
   );

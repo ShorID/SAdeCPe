@@ -4,7 +4,7 @@ import { CardBody } from 'reactstrap'
 
 const ListFooter = props => {
   return (
-    <CardBody>{props.children}</CardBody>
+    <CardBody className='pb-0'>{props.children}</CardBody>
   )
 }
 

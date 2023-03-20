@@ -21,7 +21,7 @@ const ListOptions = (props) => {
             <Icon name="faEllipsisVertical" />
           </Tooltip>
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu className="py-1">
           <DropdownItem header>
             <Text>Opciones de lista</Text>
           </DropdownItem>
@@ -32,6 +32,11 @@ const ListOptions = (props) => {
           <DropdownItem>
             <Icon name="faFileExport" />
             <Text className="mx-2">Exportar lista</Text>
+          </DropdownItem>
+          <DropdownItem divider/>
+          <DropdownItem>
+            <Icon name="faBorderAll" />
+            <Text className="mx-2">Seleccionar todos</Text>
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
