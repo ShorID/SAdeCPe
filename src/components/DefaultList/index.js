@@ -30,7 +30,7 @@ const defaultItems = () => {
 const DefaultList = ({
   title = "",
   listId = "training",
-  formId = "training",
+  formId,
   getDefaultItems,
 }) => {
   const RowComponent = rowsTypes["training"];

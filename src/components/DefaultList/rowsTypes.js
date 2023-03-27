@@ -1,5 +1,7 @@
 import TrainingListItem from "../TrainingListItem";
+import StateRows from "./StateRows";
 
 export default {
-    "training": TrainingListItem
+    "training": TrainingListItem,
+    "states": StateRows,
 }

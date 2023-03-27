@@ -6,7 +6,7 @@ import DefaultList from '@/components/DefaultList'
 const States = props => {
   return (
     <AdminLayout>
-        <DefaultList title='Estados' />
+        <DefaultList title='Estados' listId='states' />
     </AdminLayout>
   )
 }

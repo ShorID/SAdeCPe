@@ -25,7 +25,7 @@ export const ListProvider = ({ children, formId = "" }) => {
       }}
     >
       {children}
-      {Drawer && <Drawer isOpen={openForm} toggle={onOpenForm} />}
+      {Drawer && <Drawer isOpen={openForm} toggle={onOpenForm} isCreating />}
     </ListContext.Provider>
   );
 };

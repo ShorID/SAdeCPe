@@ -5,6 +5,7 @@ config.autoAddCss = false;
 import "@/styles/globals.css";
 import moment from "moment";
 import "moment/locale/es";
+import "react-datepicker/dist/react-datepicker.css";
 import React from "react";
 
 export default function App({ Component, pageProps }) {
