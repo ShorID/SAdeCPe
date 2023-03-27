@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import List from "../List";
 import ListHeader from "../List/ListHeader";
 import DefaultDataProvider from "../DefaultDataProvider";
-import TrainingListItem from "../TrainingList/TrainingListItem";
 import ListFooter from "../List/ListFooter";
 import CustomPagination from "../Pagination";
 import ListSearcher from "../List/ListSearcher";
 import ListBody from "../List/ListBody";
-import { getRandomAvatar, getRandomInt, getRandomText } from "@/services/common";
+import {
+  getRandomAvatar,
+  getRandomInt,
+  getRandomText,
+} from "@/services/common";
+import rowsTypes from "./rowsTypes";
 
 const defaultItems = () => {
   const arrayWidth = getRandomInt(20);
@@ -23,16 +27,23 @@ const defaultItems = () => {
   return items;
 };
 
-const DefaultList = ({ title = "", getDefaultProps = () => [] }) => {
+const DefaultList = ({
+  title = "",
+  listId = "training",
+  formId = "training",
+  getDefaultItems,
+}) => {
+  const RowComponent = rowsTypes["training"];
   return (
-    <List>
+    <List formId={formId || listId}>
       <ListHeader title={title}></ListHeader>
       <ListSearcher />
       <ListBody>
-        <DefaultDataProvider getDefaultProps={defaultItems}>
+        <DefaultDataProvider getDefaultProps={getDefaultItems || defaultItems}>
           {(data) =>
             Array.isArray(data) &&
-            data.map((item) => <TrainingListItem {...item} />)
+            RowComponent &&
+            data.map((item) => <RowComponent {...item} />)
           }
         </DefaultDataProvider>
       </ListBody>
@@ -43,6 +54,10 @@ const DefaultList = ({ title = "", getDefaultProps = () => [] }) => {
   );
 };
 
-DefaultList.propTypes = {};
+DefaultList.propTypes = {
+  getDefaultItems: PropTypes.func,
+  formId: PropTypes.string,
+  listId: PropTypes.string,
+};
 
 export default DefaultList;

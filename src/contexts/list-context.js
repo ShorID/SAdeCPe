@@ -1,6 +1,5 @@
-import CustomInput from "@/components/CustomInput";
-import Drawers from "@/components/Drawers";
 import React, { createContext, useState } from "react";
+import drawerTypes from "@/components/Drawers/drawerTypes";
 
 const ListContext = createContext({
   searchVal: "",
@@ -15,6 +14,8 @@ export const ListProvider = ({ children, formId = "" }) => {
   const onChangeSearch = ({ target: { value } }) => setSearchVal(value);
   const onOpenForm = () => setOpenForm((prev) => !prev);
 
+  const Drawer = drawerTypes[formId];
+
   return (
     <ListContext.Provider
       value={{
@@ -24,11 +25,7 @@ export const ListProvider = ({ children, formId = "" }) => {
       }}
     >
       {children}
-      <Drawers header="Drawer" isOpen={openForm} toggle={onOpenForm}>
-        <CustomInput label="Titulo" />
-        <CustomInput label="Descripcion" />
-        <CustomInput label="Fecha de creacion" />
-      </Drawers>
+      {Drawer && <Drawer isOpen={openForm} toggle={onOpenForm} />}
     </ListContext.Provider>
   );
 };

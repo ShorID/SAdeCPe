@@ -6,18 +6,17 @@ import classNames from "classnames";
 
 const List = (props) => {
   return (
-    <Card className={classNames("List",props.className)}>
-      <ListProvider>
-        <>
-        {props.children}
-        </>
+    <Card className={classNames("List", props.className)}>
+      <ListProvider formId={props.formId}>
+        <>{props.children}</>
       </ListProvider>
     </Card>
   );
 };
 
 List.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  formId: PropTypes.string,
 };
 
 export default List;

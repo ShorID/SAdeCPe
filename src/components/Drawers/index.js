@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Offcanvas, OffcanvasBody, OffcanvasHeader } from "reactstrap";
 
-const Drawers = (props) => {
+const Drawer = (props) => {
   return (
     <Offcanvas direction="end" toggle={props.toggle} isOpen={props.isOpen} className="w-50">
       <OffcanvasHeader toggle={props.toggle}>{props.header}</OffcanvasHeader>
@@ -11,10 +11,10 @@ const Drawers = (props) => {
   );
 };
 
-Drawers.propTypes = {
+Drawer.propTypes = {
   isOpen: PropTypes.bool,
   toggle: PropTypes.func,
   header: PropTypes.node,
 };
 
-export default Drawers;
+export default Drawer;
