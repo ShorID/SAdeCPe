@@ -29,11 +29,12 @@ const AdminLayout = (props) => {
   const router = useRouter();
 
   const renderLinks = (linkArray = []) =>
-    linkArray.map((item) => (
+    linkArray.map((item, key) => (
       <ListGroupItem
         action
         className="AdminLayout-link"
         active={router.asPath === item.link}
+        key={key}
       >
         <Link to={item.link} withoutClass>
           <Text>{item.label}</Text>

@@ -32,20 +32,28 @@ const DefaultList = ({
   listId = "training",
   formId,
   getDefaultItems,
+  items,
 }) => {
-  const RowComponent = rowsTypes["training"];
+  const RowComponent = rowsTypes[listId];
   return (
     <List formId={formId || listId}>
       <ListHeader title={title}></ListHeader>
       <ListSearcher />
       <ListBody>
-        <DefaultDataProvider getDefaultProps={getDefaultItems || defaultItems}>
-          {(data) =>
-            Array.isArray(data) &&
-            RowComponent &&
-            data.map((item) => <RowComponent {...item} />)
-          }
-        </DefaultDataProvider>
+        {Array.isArray(items) ? (
+          RowComponent &&
+          items.map((item, key) => <RowComponent key={key} {...item} />)
+        ) : (
+          <DefaultDataProvider
+            getDefaultProps={getDefaultItems || defaultItems}
+          >
+            {(data) =>
+              Array.isArray(data) &&
+              RowComponent &&
+              data.map((item, key) => <RowComponent key={key} {...item} />)
+            }
+          </DefaultDataProvider>
+        )}
       </ListBody>
       <ListFooter>
         <CustomPagination />
@@ -58,6 +66,7 @@ DefaultList.propTypes = {
   getDefaultItems: PropTypes.func,
   formId: PropTypes.string,
   listId: PropTypes.string,
+  items: PropTypes.array,
 };
 
 export default DefaultList;

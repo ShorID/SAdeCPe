@@ -61,7 +61,7 @@ CustomCheck.propTypes = {
   className: PropTypes.string,
   wrapperClass: PropTypes.string,
   variant: PropTypes.oneOf(["form", "group"]),
-  checked: PropTypes.boolean,
+  checked: PropTypes.bool,
 };
 
 export default CustomCheck;

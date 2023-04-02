@@ -1,5 +1,5 @@
 .Text {
-  font-size: 1rem;
+  font-size: var(--text-size-md);
 }
 h1.Text {
   font-size: 2rem;
@@ -24,4 +24,14 @@ p.Text {
 }
 .Text-bold {
   font-weight: bold;
+}
+
+.Text-size-sm {
+  font-size: var(--text-size-sm);
+}
+.Text-size-md {
+  font-size: var(--text-size-md);
+}
+.Text-size-lg {
+  font-size: var(--text-size-lg);
 }

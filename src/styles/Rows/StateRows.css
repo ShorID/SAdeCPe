@@ -1,0 +1,11 @@
+.StateRows-color {
+  display: block;
+  height: 1.3rem;
+  min-height: 1.3rem;
+  min-width: 0.5rem;
+  width: 0.5rem;
+}
+
+.StateRows-avatarWrapper {
+  margin-right: 0.5rem;
+}

@@ -1,8 +1,14 @@
 import React from "react";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import DefaultList from "@/components/DefaultList";
-import { getRandomAvatar, getRandomDate, getRandomInt, getRandomText } from "@/services/common";
+import {
+  getRandomAvatar,
+  getRandomDate,
+  getRandomInt,
+  getRandomText,
+} from "@/services/common";
 import moment from "moment";
+import fetcher from "@/services/fetcher";
 
 const getDefaultSessions = () => {
   const arrayWidth = getRandomInt(10);
@@ -43,6 +49,12 @@ const defaultItems = () => {
 };
 
 const Admin = (props) => {
+  React.useEffect(() => {
+    fetcher.post(
+      "/departament/delete/4"
+    );
+  }, []);
+
   return (
     <AdminLayout>
       <DefaultList

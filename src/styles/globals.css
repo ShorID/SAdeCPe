@@ -20,6 +20,7 @@
 @import "./Icon.css";
 @import "./Text.css";
 @import "./ListSelection.css";
+@import "./Rows/Rows.css";
 
 :root {
   --main-color: #f86409;
@@ -70,6 +71,10 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+  --text-size-sm: 0.80rem;
+  --text-size-md: 1rem;
+  --text-size-lg: 1.80rem;
 }
 
 * {

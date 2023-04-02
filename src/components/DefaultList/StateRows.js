@@ -6,30 +6,28 @@ import Tooltip from "../Tooltip";
 import Text from "../Text";
 import Clickable from "../Clickable";
 import Icon from "../Icon";
-import { getRandomColor } from "@/services/common";
+import { Badge } from "reactstrap";
 
 const StateRows = (props) => {
-  const randColor = getRandomColor();
   return (
     <div
       className={classNames("TrainingListItem", props.className)}
-      style={{ borderBottom: `1px solid ${randColor}` }}
+      style={{ borderBottom: `1px solid ${props.color}` }}
     >
       <CustomCheck />
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
-          <Tooltip
-            tooltip="Organizacion Logo"
-            className="TrainingListItem-avatarWrapper"
-          >
-            <img
-              className="TrainingListItem-avatar"
-              src={props.avatar}
-              alt={props.title}
-            />
+          <Tooltip tooltip={props.color} className="StateRows-avatarWrapper">
+            <span
+              className="StateRows-color"
+              style={{ backgroundColor: props.color }}
+            ></span>
           </Tooltip>
           <div className="TrainingListItem-title">
-            <Text>{props.title}</Text>
+            <Text bold>{props.name}</Text>{" - "}
+            <Badge color="primary">
+              <Text size="sm">Para capacitaciones</Text>
+            </Badge>
           </div>
           <div className="TrainingListItem-options">
             <Clickable className="mx-2">
@@ -38,6 +36,9 @@ const StateRows = (props) => {
               </Tooltip>
             </Clickable>
           </div>
+        </div>
+        <div className="d-block">
+          <Text size="sm">{props.description}</Text>
         </div>
       </div>
     </div>
