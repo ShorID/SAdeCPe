@@ -49,12 +49,6 @@ const defaultItems = () => {
 };
 
 const Admin = (props) => {
-  React.useEffect(() => {
-    fetcher.post(
-      "/departament/delete/4"
-    );
-  }, []);
-
   return (
     <AdminLayout>
       <DefaultList

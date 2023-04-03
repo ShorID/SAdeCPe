@@ -6,6 +6,7 @@ const Clickable = React.forwardRef(function Clickable(props, ref) {
   return (
     <button
       ref={ref}
+      id={props.id}
       className={classNames(
         "Clickable",
         props.disabled && "disabled",
@@ -24,6 +25,7 @@ const Clickable = React.forwardRef(function Clickable(props, ref) {
 Clickable.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  id: PropTypes.string,
   onClick: PropTypes.func,
   onBlur: PropTypes.func,
 };

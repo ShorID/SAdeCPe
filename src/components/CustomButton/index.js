@@ -16,6 +16,7 @@ const CustomButton = (props) => {
       outline={props.btnOutline}
       size={props.btnSize}
       onClick={props.onClick}
+      type={props.type}
     >
       <Text>{props.text || props.children}</Text>
     </Button>
@@ -28,6 +29,7 @@ CustomButton.propTypes = {
   onClick: PropTypes.func,
   variant: PropTypes.string,
   btnColor: PropTypes.string,
+  type: PropTypes.string,
   btnSize: PropTypes.oneOf(["sm","md","lg"]),
   btnOutline: PropTypes.bool,
   withoutCustom: PropTypes.bool,

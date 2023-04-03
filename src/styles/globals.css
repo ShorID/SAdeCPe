@@ -21,6 +21,8 @@
 @import "./Text.css";
 @import "./ListSelection.css";
 @import "./Rows/Rows.css";
+@import "./Drawer.css";
+@import "./CustomInput.css";
 
 :root {
   --main-color: #f86409;
@@ -96,6 +98,10 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.ml-auto{
+  margin-left: auto !important;
 }
 
 @media (prefers-color-scheme: dark) {
