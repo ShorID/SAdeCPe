@@ -52,7 +52,7 @@ const Admin = (props) => {
   return (
     <AdminLayout>
       <DefaultList
-        title="Capaciaciones"
+        title="Capacitaciones"
         listId="training"
         getDefaultItems={defaultItems}
       />
