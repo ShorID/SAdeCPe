@@ -10,7 +10,7 @@ const Departments = (props) => {
       <DefaultList
         title="Departamentos"
         listId="departments"
-        items={props.data.data}
+        items={props.data}
       />
     </AdminLayout>
   );

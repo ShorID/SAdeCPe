@@ -30,9 +30,9 @@ const DepartmentDrawer = (props) => {
       method: "POST",
       data: {
         ...formData,
-        creationDate: moment(formData.creationDate).format("yyyy-mm-dd"),
+        creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
       },
-    });
+    }).then(({ data }) => data?.id && props.toggle());
   };
 
   return (
@@ -42,42 +42,43 @@ const DepartmentDrawer = (props) => {
       footer={
         <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
       }
+      form={{
+        validated,
+        onSubmit: handleSubmit,
+      }}
     >
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <CustomInput
-          label="Nombre"
-          name="name"
-          onChange={handleChange}
-          required
-        />
-        <CustomInput
-          label="Descripcion"
-          type="textarea"
-          onChange={handleChange}
-          name="description"
-          required
-        />
-        <CustomInput
-          label="Activo"
-          type="switch"
-          role="switch"
-          name="active"
-          value={formData.active}
-          onChange={() =>
-            setFormData((prev) => ({ ...prev, active: !prev.active }))
-          }
-          required
-        />
-        <DateInput
-          label="Fecha de Creacion"
-          value={formData.creationDate}
-          onChange={handleChange}
-          disabled
-          name="creationDate"
-          required
-        />
-        <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
-      </Form>
+      <CustomInput
+        label="Nombre"
+        name="name"
+        onChange={handleChange}
+        required
+      />
+      <CustomInput
+        label="Descripcion"
+        type="textarea"
+        onChange={handleChange}
+        name="description"
+        required
+      />
+      <CustomInput
+        label="Activo"
+        type="switch"
+        role="switch"
+        name="active"
+        value={formData.active}
+        onChange={() =>
+          setFormData((prev) => ({ ...prev, active: !prev.active }))
+        }
+        required
+      />
+      <DateInput
+        label="Fecha de Creacion"
+        value={formData.creationDate}
+        onChange={handleChange}
+        disabled
+        name="creationDate"
+        required
+      />
     </Drawer>
   );
 };

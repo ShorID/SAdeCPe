@@ -7,8 +7,14 @@ import Text from "../Text";
 import Clickable from "../Clickable";
 import Icon from "../Icon";
 import { Badge } from "reactstrap";
+import fetcher from "@/services/fetcher";
 
 const StateRows = (props) => {
+  const handleDelete = () =>
+    fetcher({
+      url: "/state/delete/" + props.id,
+      method: "DELETE",
+    });
   return (
     <div
       className={classNames("TrainingListItem", props.className)}
@@ -24,15 +30,21 @@ const StateRows = (props) => {
             ></span>
           </Tooltip>
           <div className="TrainingListItem-title">
-            <Text bold>{props.name}</Text>{" - "}
+            <Text bold>{props.name}</Text>
+            {" - "}
             <Badge color="primary">
-              <Text size="sm">Para capacitaciones</Text>
+              <Text size="sm">{props.typeState.nameType}</Text>
             </Badge>
           </div>
           <div className="TrainingListItem-options">
             <Clickable className="mx-2">
               <Tooltip tooltip="Editar?" placement="right">
                 <Icon name="faEdit" size="md2" />
+              </Tooltip>
+            </Clickable>
+            <Clickable className="mx-2" onClick={handleDelete}>
+              <Tooltip tooltip="Eliminar?" placement="right">
+                <Icon name="faTrash" size="md2" />
               </Tooltip>
             </Clickable>
           </div>

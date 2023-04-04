@@ -40,9 +40,9 @@ const DefaultList = ({
       <ListHeader title={title}></ListHeader>
       <ListSearcher />
       <ListBody>
-        {Array.isArray(items) ? (
+        {Array.isArray(items?.data) ? (
           RowComponent &&
-          items.map((item, key) => <RowComponent key={key} {...item} />)
+          items.data.map((item, key) => <RowComponent key={key} {...item} />)
         ) : (
           <DefaultDataProvider
             getDefaultProps={getDefaultItems || defaultItems}

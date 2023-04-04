@@ -1,8 +1,11 @@
-.Drawer{
-    width: 50rem !important;
+.Drawer {
+  width: 50rem !important;
 }
-.Drawer-footer{
-    margin-top: auto;
-    flex-grow: initial;
-    background-color: var(--base-color);
+.Drawer-footer {
+  margin-top: auto;
+  flex-grow: initial;
+  background-color: var(--base-color);
+}
+.Drawer-form {
+  display: contents;
 }

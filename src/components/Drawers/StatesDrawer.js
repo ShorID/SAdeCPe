@@ -36,8 +36,11 @@ const StatesDrawer = (props) => {
     fetcher({
       url: "/state/create",
       method: "POST",
-      data: {...formData, creationDate: moment(formData.creationDate).format("yyyy-mm-dd")},
-    });
+      data: {
+        ...formData,
+        creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
+      },
+    }).then(({ data }) => data?.id && props.toggle());
   };
 
   return (
@@ -47,66 +50,70 @@ const StatesDrawer = (props) => {
       footer={
         <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
       }
+      form={{
+        validated,
+        onSubmit: handleSubmit,
+      }}
     >
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <CustomInput
-          label="Nombre"
-          name="name"
-          onChange={handleChange}
-          required
-        />
-        <CustomInput
-          label="Descripcion"
-          type="textarea"
-          onChange={handleChange}
-          name="description"
-          required
-        />
-        <CustomInput
-          label="Activo"
-          type="switch"
-          role="switch"
-          name="active"
-          value={formData.active}
-          onChange={() =>
-            setFormData((prev) => ({ ...prev, active: !prev.active }))
-          }
-          required
-        />
-        <DateInput
-          label="Fecha de Creacion"
-          value={formData.creationDate}
-          onChange={handleChange}
-          disabled
-          name="creationDate"
-          required
-        />
-        <CustomInput
-          label="Tipo de estado"
-          type="select"
-          name="stateType"
-          onChange={handleChange}
-          required
-        >
-          {Array.isArray(stateTypes) &&
-            stateTypes.map((item) => (
-              <option value={item.id} key={item.id}>
-                {item.stateType}
-              </option>
-            ))}
-        </CustomInput>
-        <ColorPicker
-          label="Escoge un color para identificar tu estado"
-          onChange={handleChange}
-          name="color"
-          required
-        />
-        <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
-      </Form>
+      <CustomInput
+        label="Nombre"
+        name="name"
+        onChange={handleChange}
+        required
+      />
+      <CustomInput
+        label="Descripcion"
+        type="textarea"
+        onChange={handleChange}
+        name="description"
+        required
+      />
+      <CustomInput
+        label="Activo"
+        type="switch"
+        role="switch"
+        name="active"
+        value={formData.active}
+        onChange={() =>
+          setFormData((prev) => ({ ...prev, active: !prev.active }))
+        }
+        required
+      />
+      <DateInput
+        label="Fecha de Creacion"
+        value={formData.creationDate}
+        onChange={handleChange}
+        disabled
+        name="creationDate"
+        required
+      />
+      <CustomInput
+        label="Tipo de estado"
+        type="select"
+        name="stateType"
+        onChange={handleChange}
+        required
+      >
+        <option></option>
+        {Array.isArray(stateTypes) &&
+          stateTypes.map((item) => (
+            <option value={item.id} key={item.id}>
+              {item.nameType}
+            </option>
+          ))}
+      </CustomInput>
+      <ColorPicker
+        label="Escoge un color para identificar tu estado"
+        onChange={handleChange}
+        name="color"
+        required
+      />
     </Drawer>
   );
 };
 
-StatesDrawer.propTypes = {};
+StatesDrawer.propTypes = {
+  toggle: PropTypes.func,
+};
 
 export default StatesDrawer;

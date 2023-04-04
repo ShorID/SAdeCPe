@@ -5,12 +5,13 @@ import DefaultList from "@/components/DefaultList";
 import fetcher from "@/services/fetcher";
 
 const EmployeesPosition = (props) => {
+  console.log("prro", props)
   return (
     <AdminLayout>
       <DefaultList
         title="Cargos"
         listId="employeesPosition"
-        items={props.data.data}
+        items={props.data}
       />
     </AdminLayout>
   );

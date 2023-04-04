@@ -13,7 +13,7 @@ const States = (props) => {
 
 States.getInitialProps = async () => {
   const data = await fetcher({
-    url: "/state",
+    url: "/state/list",
   }).then((res) => res.data);
   return { data };
 };

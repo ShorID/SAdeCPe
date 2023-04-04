@@ -11,6 +11,7 @@ import moment from "moment";
 const EmployeesPositionDrawer = (props) => {
   const [formData, setFormData] = React.useState({
     active: true,
+    manager: false,
     creationDate: new Date(),
   });
   const [validated, setValidated] = React.useState([]);
@@ -37,9 +38,9 @@ const EmployeesPositionDrawer = (props) => {
       method: "POST",
       data: {
         ...formData,
-        creationDate: moment(formData.creationDate).format("yyyy-mm-dd"),
+        creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
       },
-    });
+    }).then(({ data }) => data?.id && props.toggle());
   };
 
   return (
@@ -49,8 +50,11 @@ const EmployeesPositionDrawer = (props) => {
       footer={
         <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
       }
+      form={{
+        validated,
+        onSubmit: handleSubmit,
+      }}
     >
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <CustomInput
           label="Nombre"
           name="name"
@@ -80,6 +84,7 @@ const EmployeesPositionDrawer = (props) => {
           type="switch"
           role="switch"
           name="manager"
+          value={formData.manager}
           onChange={() =>
             setFormData((prev) => ({ ...prev, manager: !prev.active }))
           }
@@ -107,8 +112,6 @@ const EmployeesPositionDrawer = (props) => {
           name="creationDate"
           required
         />
-        <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
-      </Form>
     </Drawer>
   );
 };
