@@ -7,7 +7,11 @@ import fetcher from "@/services/fetcher";
 const Departments = (props) => {
   return (
     <AdminLayout>
-      <DefaultList title="Departamentos" listId="departments" items={props.data.data} />
+      <DefaultList
+        title="Departamentos"
+        listId="departments"
+        items={props.data.data}
+      />
     </AdminLayout>
   );
 };
