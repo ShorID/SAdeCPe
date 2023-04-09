@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import ListContext from "@/contexts/list-context";
 
 const CustomPagination = (props) => {
+  const listContext = useContext(ListContext);
+
+  console.log("prro", listContext.listItems);
+
+  const handleChangePage = (newPage) => () => listContext.setPage(newPage);
+
+  const renderPageLink = () => {
+    const pages = [];
+    for (let index = 0; index < listContext.listItems.pageCount; index++) {
+      const currentPage = index + 1;
+      pages.push(
+        <PaginationItem>
+          <PaginationLink
+            onClick={handleChangePage(currentPage)}
+            // href={`#${currentPage}`}
+          >
+            {currentPage}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+    return pages;
+  };
+  if (!listContext.listItems) return null;
+
   return (
     <Pagination>
       <PaginationItem>
@@ -11,21 +37,7 @@ const CustomPagination = (props) => {
       <PaginationItem>
         <PaginationLink href="#" previous />
       </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">1</PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">2</PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">3</PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">4</PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">5</PaginationLink>
-      </PaginationItem>
+      {renderPageLink()}
       <PaginationItem>
         <PaginationLink href="#" next />
       </PaginationItem>
@@ -37,7 +49,7 @@ const CustomPagination = (props) => {
 };
 
 CustomPagination.propTypes = {
-    totalPages: PropTypes.number,
+  totalPages: PropTypes.number,
 };
 
 export default CustomPagination;

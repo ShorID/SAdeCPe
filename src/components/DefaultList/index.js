@@ -13,6 +13,7 @@ import {
   getRandomText,
 } from "@/services/common";
 import rowsTypes from "./rowsTypes";
+import ListContext, { ListProvider } from "@/contexts/list-context";
 
 const defaultItems = () => {
   const arrayWidth = getRandomInt(20);
@@ -33,27 +34,34 @@ const DefaultList = ({
   formId,
   getDefaultItems,
   items,
+  endpoint,
 }) => {
   const RowComponent = rowsTypes[listId];
   return (
-    <List formId={formId || listId}>
+    <List formId={formId || listId} endpoint={endpoint}>
       <ListHeader title={title}></ListHeader>
       <ListSearcher />
       <ListBody>
-        {Array.isArray(items?.data) ? (
-          RowComponent &&
-          items.data.map((item, key) => <RowComponent key={key} {...item} />)
-        ) : (
-          <DefaultDataProvider
-            getDefaultProps={getDefaultItems || defaultItems}
-          >
-            {(data) =>
-              Array.isArray(data) &&
+        <ListContext.Consumer>
+          {({ listItems }) =>
+            Array.isArray(listItems?.data) ? (
               RowComponent &&
-              data.map((item, key) => <RowComponent key={key} {...item} />)
-            }
-          </DefaultDataProvider>
-        )}
+              listItems.data.map((item, key) => (
+                <RowComponent key={key} {...item} />
+              ))
+            ) : (
+              <DefaultDataProvider
+                getDefaultProps={getDefaultItems || defaultItems}
+              >
+                {(data) =>
+                  Array.isArray(data) &&
+                  RowComponent &&
+                  data.map((item, key) => <RowComponent key={key} {...item} />)
+                }
+              </DefaultDataProvider>
+            )
+          }
+        </ListContext.Consumer>
       </ListBody>
       <ListFooter>
         <CustomPagination />
@@ -66,6 +74,7 @@ DefaultList.propTypes = {
   getDefaultItems: PropTypes.func,
   formId: PropTypes.string,
   listId: PropTypes.string,
+  endpoint: PropTypes.string,
   items: PropTypes.array,
 };
 

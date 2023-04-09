@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { CardBody, CardTitle } from "reactstrap";
+import { CardBody, CardTitle, Spinner } from "reactstrap";
 import SortBy from "../SortBy";
 import ListOptions from "./ListOptions";
 import Text from "../Text";
 import Icon from "../Icon";
+import ListContext from "@/contexts/list-context";
 
 const ListHeader = (props) => {
+  const listContext = useContext(ListContext);
+
   return (
     <CardBody className="List-header">
       <CardTitle tag="div" className="List-title">
-        <Text>{props.title}</Text>
+        <Text className="mr-1">{props.title}</Text>
+        {listContext.isLoading && (
+          <Spinner color="primary" size="sm" className="mx-1">
+            Loading...
+          </Spinner>
+        )}
       </CardTitle>
       <div className="List-headerOptions">
         <Icon />

@@ -32,9 +32,11 @@ const StateRows = (props) => {
           <div className="TrainingListItem-title">
             <Text bold>{props.name}</Text>
             {" - "}
-            <Badge color="primary">
-              <Text size="sm">{props.typeState.nameType}</Text>
-            </Badge>
+            {props.typeState && (
+              <Badge color="primary">
+                <Text size="sm">{props.typeState.nameType}</Text>
+              </Badge>
+            )}
           </div>
           <div className="TrainingListItem-options">
             <Clickable className="mx-2">

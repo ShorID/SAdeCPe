@@ -7,7 +7,7 @@ import classNames from "classnames";
 const List = (props) => {
   return (
     <Card className={classNames("List", props.className)}>
-      <ListProvider formId={props.formId}>
+      <ListProvider formId={props.formId} endpoint={props.endpoint}>
         <>{props.children}</>
       </ListProvider>
     </Card>
@@ -17,6 +17,7 @@ const List = (props) => {
 List.propTypes = {
   className: PropTypes.string,
   formId: PropTypes.string,
+  endpoint: PropTypes.string,
 };
 
 export default List;

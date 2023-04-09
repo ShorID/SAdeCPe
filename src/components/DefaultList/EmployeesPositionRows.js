@@ -22,10 +22,13 @@ const EmployeesPositionRows = (props) => {
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
           <div className="TrainingListItem-title">
-            <Text bold>{props.name}</Text>{" - "}
-            <Badge color="primary">
-              <Text size="sm">{props.departament.name}</Text>
-            </Badge>
+            <Text bold>{props.name}</Text>
+            {" - "}
+            {props.departament && (
+              <Badge color="primary">
+                <Text size="sm">{props.departament.name}</Text>
+              </Badge>
+            )}
           </div>
           <div className="TrainingListItem-options">
             <Clickable className="mx-2">
