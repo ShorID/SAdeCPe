@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import CustomCheck from "../CustomCheck";
 import Text from "../Text";
@@ -6,14 +6,10 @@ import Clickable from "../Clickable";
 import Tooltip from "../Tooltip";
 import Icon from "../Icon";
 import classNames from "classnames";
-import fetcher from "@/services/fetcher";
+import ListContext from "@/contexts/list-context";
 
 const DepartmentRows = (props) => {
-  const handleDelete = () =>
-    fetcher({
-      url: "/departament/delete/" + props.id,
-      method: "DELETE",
-    });
+  const listContext = useContext(ListContext);
 
   return (
     <div className={classNames("TrainingListItem", props.className)}>
@@ -29,7 +25,10 @@ const DepartmentRows = (props) => {
                 <Icon name="faEdit" size="md2" />
               </Tooltip>
             </Clickable>
-            <Clickable className="mx-2" onClick={handleDelete}>
+            <Clickable
+              className="mx-2"
+              onClick={listContext.handleDelete(props)}
+            >
               <Tooltip tooltip="Eliminar?" placement="right">
                 <Icon name="faTrash" size="md2" />
               </Tooltip>

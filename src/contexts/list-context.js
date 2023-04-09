@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import drawerTypes from "@/components/Drawers/drawerTypes";
 import fetcher from "@/services/fetcher";
+import ListDeleteItemModal from "@/components/List/ListDeleteItemModal";
 
 const ListContext = createContext({
   searchVal: "",
@@ -9,12 +10,14 @@ const ListContext = createContext({
   isLoading: false,
   page: 1,
   setPage: () => {},
+  handleDelete: () => {},
   listItems: {},
 });
 
 export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   const [searchVal, setSearchVal] = useState();
   const [openForm, setOpenForm] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [listItems, setListItems] = useState();
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +25,7 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   const getData = async () => {
     setIsLoading(true);
     await fetcher({
-      url: endpoint,
+      url: `${endpoint}/list`,
       params: {
         page,
       },
@@ -33,6 +36,19 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   useEffect(() => {
     if (endpoint) getData();
   }, [endpoint, page]);
+
+  const deleteItem = () =>
+    fetcher({
+      url: `${endpoint}/delete/${openDeleteModal.id}`,
+      method: "DELETE",
+    }).then(()=>{
+      setOpenDeleteModal(null);
+      getData();
+    });
+
+  const handleDelete = (itemData) => () => {
+    setOpenDeleteModal(itemData);
+  }
 
   const onChangeSearch = ({ target: { value } }) => setSearchVal(value);
   const onOpenForm = () => setOpenForm((prev) => !prev);
@@ -49,12 +65,19 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
         page,
         setPage,
         listItems,
+        handleDelete,
       }}
     >
       {children}
       {Drawer && openForm && (
-        <Drawer isOpen={openForm} toggle={onOpenForm} isCreating />
+        <Drawer isOpen={openForm} toggle={onOpenForm} isCreating refresh={getData} />
       )}
+      <ListDeleteItemModal
+        isOpen={!!openDeleteModal}
+        toggle={() => setOpenDeleteModal(null)}
+        title={openDeleteModal?.name}
+        submit={deleteItem}
+      />
     </ListContext.Provider>
   );
 };

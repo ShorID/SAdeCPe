@@ -40,7 +40,12 @@ const EmployeesPositionDrawer = (props) => {
         ...formData,
         creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
       },
-    }).then(({ data }) => data?.id && props.toggle());
+    }).then(({ data }) => {
+      if (data?.id) {
+        props.toggle();
+        props.refresh();
+      }
+    });
   };
 
   return (
@@ -55,63 +60,63 @@ const EmployeesPositionDrawer = (props) => {
         onSubmit: handleSubmit,
       }}
     >
-        <CustomInput
-          label="Nombre"
-          name="name"
-          onChange={handleChange}
-          required
-        />
-        <CustomInput
-          label="Descripcion"
-          type="textarea"
-          onChange={handleChange}
-          name="description"
-          required
-        />
-        <CustomInput
-          label="Activo"
-          type="switch"
-          role="switch"
-          name="active"
-          value={formData.active}
-          onChange={() =>
-            setFormData((prev) => ({ ...prev, active: !prev.active }))
-          }
-          required
-        />
-        <CustomInput
-          label="Gerente"
-          type="switch"
-          role="switch"
-          name="manager"
-          value={formData.manager}
-          onChange={() =>
-            setFormData((prev) => ({ ...prev, manager: !prev.active }))
-          }
-        />
-        <CustomInput
-          label="Departamento"
-          type="select"
-          name="departamentId"
-          onChange={handleChange}
-          required
-        >
-          <option value="0"></option>
-          {Array.isArray(departaments) &&
-            departaments.map((item) => (
-              <option value={item.id} key={item.id}>
-                {item.name}
-              </option>
-            ))}
-        </CustomInput>
-        <DateInput
-          label="Fecha de Creacion"
-          value={formData.creationDate}
-          onChange={handleChange}
-          disabled
-          name="creationDate"
-          required
-        />
+      <CustomInput
+        label="Nombre"
+        name="name"
+        onChange={handleChange}
+        required
+      />
+      <CustomInput
+        label="Descripcion"
+        type="textarea"
+        onChange={handleChange}
+        name="description"
+        required
+      />
+      <CustomInput
+        label="Activo"
+        type="switch"
+        role="switch"
+        name="active"
+        value={formData.active}
+        onChange={() =>
+          setFormData((prev) => ({ ...prev, active: !prev.active }))
+        }
+        required
+      />
+      <CustomInput
+        label="Gerente"
+        type="switch"
+        role="switch"
+        name="manager"
+        value={formData.manager}
+        onChange={() =>
+          setFormData((prev) => ({ ...prev, manager: !prev.active }))
+        }
+      />
+      <CustomInput
+        label="Departamento"
+        type="select"
+        name="departamentId"
+        onChange={handleChange}
+        required
+      >
+        <option value="0"></option>
+        {Array.isArray(departaments) &&
+          departaments.map((item) => (
+            <option value={item.id} key={item.id}>
+              {item.name}
+            </option>
+          ))}
+      </CustomInput>
+      <DateInput
+        label="Fecha de Creacion"
+        value={formData.creationDate}
+        onChange={handleChange}
+        disabled
+        name="creationDate"
+        required
+      />
     </Drawer>
   );
 };

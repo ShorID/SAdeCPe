@@ -32,7 +32,12 @@ const DepartmentDrawer = (props) => {
         ...formData,
         creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
       },
-    }).then(({ data }) => data?.id && props.toggle());
+    }).then(({ data }) => {
+      if (data?.id) {
+        props.toggle();
+        props.refresh();
+      }
+    });
   };
 
   return (

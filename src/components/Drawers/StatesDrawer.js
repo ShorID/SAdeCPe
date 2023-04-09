@@ -40,7 +40,12 @@ const StatesDrawer = (props) => {
         ...formData,
         creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
       },
-    }).then(({ data }) => data?.id && props.toggle());
+    }).then(({ data }) => {
+      if(data?.id){
+        props.toggle()
+        props.refresh()
+      }
+    });
   };
 
   return (
@@ -114,6 +119,7 @@ const StatesDrawer = (props) => {
 
 StatesDrawer.propTypes = {
   toggle: PropTypes.func,
+  refresh: PropTypes.func,
 };
 
 export default StatesDrawer;

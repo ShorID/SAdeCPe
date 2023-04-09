@@ -10,7 +10,7 @@ const EmployeesPosition = (props) => {
       <DefaultList
         title="Cargos"
         listId="employeesPosition"
-        endpoint="/employees-position/list"
+        endpoint="/employees-position"
       />
     </AdminLayout>
   );

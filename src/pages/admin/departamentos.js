@@ -9,7 +9,7 @@ const Departments = (props) => {
       <DefaultList
         title="Departamentos"
         listId="departments"
-        endpoint="/departament/list"
+        endpoint="/departament"
       />
     </AdminLayout>
   );
