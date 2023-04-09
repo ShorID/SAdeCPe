@@ -37,12 +37,18 @@ const StateRows = (props) => {
             )}
           </div>
           <div className="TrainingListItem-options">
-            <Clickable className="mx-2">
+            <Clickable
+              className="mx-2"
+              onClick={listContext.openEditModal(props)}
+            >
               <Tooltip tooltip="Editar?" placement="right">
                 <Icon name="faEdit" size="md2" />
               </Tooltip>
             </Clickable>
-            <Clickable className="mx-2" onClick={listContext.handleDelete(props)}>
+            <Clickable
+              className="mx-2"
+              onClick={listContext.handleDelete(props)}
+            >
               <Tooltip tooltip="Eliminar?" placement="right">
                 <Icon name="faTrash" size="md2" />
               </Tooltip>

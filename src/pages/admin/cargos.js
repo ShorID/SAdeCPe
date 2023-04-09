@@ -4,7 +4,6 @@ import AdminLayout from "@/components/Layout/AdminLayout";
 import DefaultList from "@/components/DefaultList";
 
 const EmployeesPosition = (props) => {
-  console.log("prro", props);
   return (
     <AdminLayout>
       <DefaultList

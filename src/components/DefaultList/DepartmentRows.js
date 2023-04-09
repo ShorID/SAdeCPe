@@ -20,7 +20,7 @@ const DepartmentRows = (props) => {
             <Text bold>{props.name}</Text>
           </div>
           <div className="TrainingListItem-options">
-            <Clickable className="mx-2">
+            <Clickable className="mx-2" onClick={listContext.openEditModal(props)}>
               <Tooltip tooltip="Editar?" placement="right">
                 <Icon name="faEdit" size="md2" />
               </Tooltip>

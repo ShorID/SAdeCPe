@@ -6,8 +6,6 @@ import ListContext from "@/contexts/list-context";
 const CustomPagination = (props) => {
   const listContext = useContext(ListContext);
 
-  console.log("prro", listContext.listItems);
-
   const handleChangePage = (newPage) => () => listContext.setPage(newPage);
 
   const renderPageLink = () => {

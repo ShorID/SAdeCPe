@@ -6,18 +6,20 @@ import ListDeleteItemModal from "@/components/List/ListDeleteItemModal";
 const ListContext = createContext({
   searchVal: "",
   onChangeSearch: () => {},
-  onOpenForm: () => {},
+  openCreateModal: () => {},
   isLoading: false,
   page: 1,
   setPage: () => {},
   handleDelete: () => {},
+  openEditModal: () => {},
   listItems: {},
 });
 
 export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   const [searchVal, setSearchVal] = useState();
-  const [openForm, setOpenForm] = useState(false);
+  const [isCreateModalOpen, setOpenCreateModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [editModalData, setOpenEditModal] = useState(false);
   const [listItems, setListItems] = useState();
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,17 +43,20 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
     fetcher({
       url: `${endpoint}/delete/${openDeleteModal.id}`,
       method: "DELETE",
-    }).then(()=>{
+    }).then(() => {
       setOpenDeleteModal(null);
       getData();
     });
 
   const handleDelete = (itemData) => () => {
     setOpenDeleteModal(itemData);
-  }
+  };
 
   const onChangeSearch = ({ target: { value } }) => setSearchVal(value);
-  const onOpenForm = () => setOpenForm((prev) => !prev);
+
+  const openCreateModal = () => setOpenCreateModal((prev) => !prev);
+
+  const openEditModal = (itemData) => () => setOpenEditModal(itemData);
 
   const Drawer = drawerTypes[formId];
 
@@ -60,7 +65,8 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
       value={{
         onChangeSearch,
         searchVal,
-        onOpenForm,
+        openCreateModal,
+        openEditModal,
         isLoading,
         page,
         setPage,
@@ -69,8 +75,16 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
       }}
     >
       {children}
-      {Drawer && openForm && (
-        <Drawer isOpen={openForm} toggle={onOpenForm} isCreating refresh={getData} />
+      {Drawer && isCreateModalOpen && (
+        <Drawer isOpen toggle={openCreateModal} isCreating refresh={getData} />
+      )}
+      {Drawer && editModalData && (
+        <Drawer
+          isOpen
+          toggle={openEditModal()}
+          refresh={getData}
+          data={editModalData}
+        />
       )}
       <ListDeleteItemModal
         isOpen={!!openDeleteModal}

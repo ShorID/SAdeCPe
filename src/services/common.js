@@ -1,3 +1,4 @@
+import moment from "moment";
 import randomSentence from "random-sentence";
 
 export function getRandomInt(max) {
@@ -28,4 +29,8 @@ export function getRandomColor() {
   }
 
   return color;
+}
+
+export function getFormatedDate(date) {
+  return moment(date).format("yyyy-MM-DD");
 }

@@ -12,7 +12,7 @@ import Text from "../Text";
 import ListContext from "@/contexts/list-context";
 
 const ListOptions = (props) => {
-  const { onOpenForm } = useContext(ListContext)
+  const { openCreateModal } = useContext(ListContext)
   return (
     <>
       <UncontrolledDropdown group>
@@ -25,7 +25,7 @@ const ListOptions = (props) => {
           <DropdownItem header>
             <Text>Opciones de lista</Text>
           </DropdownItem>
-          <DropdownItem onClick={onOpenForm}>
+          <DropdownItem onClick={openCreateModal}>
             <Icon name="faPlus" />
             <Text className="mx-2">Crear nuevo registro</Text>
           </DropdownItem>

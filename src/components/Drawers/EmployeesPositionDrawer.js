@@ -7,13 +7,16 @@ import CustomInput from "../CustomInput";
 import DateInput from "../DateInput";
 import fetcher from "@/services/fetcher";
 import moment from "moment";
+import { getFormatedDate } from "@/services/common";
 
 const EmployeesPositionDrawer = (props) => {
-  const [formData, setFormData] = React.useState({
-    active: true,
-    manager: false,
-    creationDate: new Date(),
-  });
+  const [formData, setFormData] = React.useState(
+    props.data || {
+      active: true,
+      manager: false,
+      creationDate: getFormatedDate(),
+    }
+  );
   const [validated, setValidated] = React.useState([]);
   const [departaments, setDepartaments] = React.useState([]);
 
@@ -34,17 +37,12 @@ const EmployeesPositionDrawer = (props) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
     fetcher({
-      url: "/employees-position/create",
-      method: "POST",
-      data: {
-        ...formData,
-        creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
-      },
-    }).then(({ data }) => {
-      if (data?.id) {
-        props.toggle();
-        props.refresh();
-      }
+      url: "/employees-position/" + (props.isCreating ? "create" : "update"),
+      method: props.isCreating ? "POST" : "PUT",
+      data: formData,
+    }).then(() => {
+      props.toggle();
+      props.refresh();
     });
   };
 
@@ -65,6 +63,7 @@ const EmployeesPositionDrawer = (props) => {
         name="name"
         onChange={handleChange}
         required
+        value={formData["name"]}
       />
       <CustomInput
         label="Descripcion"
@@ -72,6 +71,7 @@ const EmployeesPositionDrawer = (props) => {
         onChange={handleChange}
         name="description"
         required
+        value={formData["description"]}
       />
       <CustomInput
         label="Activo"
@@ -100,6 +100,7 @@ const EmployeesPositionDrawer = (props) => {
         name="departamentId"
         onChange={handleChange}
         required
+        value={formData["departamentId"]}
       >
         <option value="0"></option>
         {Array.isArray(departaments) &&
@@ -121,6 +122,8 @@ const EmployeesPositionDrawer = (props) => {
   );
 };
 
-EmployeesPositionDrawer.propTypes = {};
+EmployeesPositionDrawer.propTypes = {
+  data: PropTypes.object,
+};
 
 export default EmployeesPositionDrawer;

@@ -7,12 +7,15 @@ import CustomInput from "../CustomInput";
 import DateInput from "../DateInput";
 import fetcher from "@/services/fetcher";
 import moment from "moment";
+import { getFormatedDate } from "@/services/common";
 
 const DepartmentDrawer = (props) => {
-  const [formData, setFormData] = React.useState({
-    active: true,
-    creationDate: new Date(),
-  });
+  const [formData, setFormData] = React.useState(
+    props.data || {
+      active: true,
+      creationDate: getFormatedDate(),
+    }
+  );
   const [validated, setValidated] = React.useState([]);
 
   const handleChange = ({ target: { value, name } }) => {
@@ -26,17 +29,12 @@ const DepartmentDrawer = (props) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
     fetcher({
-      url: "/departament/create",
-      method: "POST",
-      data: {
-        ...formData,
-        creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
-      },
-    }).then(({ data }) => {
-      if (data?.id) {
-        props.toggle();
-        props.refresh();
-      }
+      url: "/departament/" + (props.isCreating ? "create" : "update"),
+      method: props.isCreating ? "POST" : "PUT",
+      data: formData,
+    }).then(() => {
+      props.toggle();
+      props.refresh();
     });
   };
 
@@ -56,6 +54,7 @@ const DepartmentDrawer = (props) => {
         label="Nombre"
         name="name"
         onChange={handleChange}
+        value={formData["name"]}
         required
       />
       <CustomInput
@@ -63,6 +62,7 @@ const DepartmentDrawer = (props) => {
         type="textarea"
         onChange={handleChange}
         name="description"
+        value={formData["description"]}
         required
       />
       <CustomInput
@@ -88,6 +88,8 @@ const DepartmentDrawer = (props) => {
   );
 };
 
-DepartmentDrawer.propTypes = {};
+DepartmentDrawer.propTypes = {
+  data: PropTypes.object,
+};
 
 export default DepartmentDrawer;

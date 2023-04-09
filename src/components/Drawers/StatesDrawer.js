@@ -7,13 +7,15 @@ import ColorPicker from "../ColorPicker";
 import { Form } from "reactstrap";
 import CustomButton from "../CustomButton";
 import fetcher from "@/services/fetcher";
-import moment from "moment";
+import { getFormatedDate } from "@/services/common";
 
 const StatesDrawer = (props) => {
-  const [formData, setFormData] = React.useState({
-    active: true,
-    creationDate: new Date(),
-  });
+  const [formData, setFormData] = React.useState(
+    props.data || {
+      active: true,
+      creationDate: getFormatedDate(),
+    }
+  );
   const [stateTypes, setStateTypes] = React.useState([]);
   const [validated, setValidated] = React.useState([]);
 
@@ -34,17 +36,12 @@ const StatesDrawer = (props) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
     fetcher({
-      url: "/state/create",
-      method: "POST",
-      data: {
-        ...formData,
-        creationDate: moment(formData.creationDate).format("yyyy-MM-DD"),
-      },
-    }).then(({ data }) => {
-      if(data?.id){
-        props.toggle()
-        props.refresh()
-      }
+      url: "/state/" + (props.isCreating ? "create" : "update"),
+      method: props.isCreating ? "POST" : "PUT",
+      data: formData,
+    }).then(() => {
+      props.toggle();
+      props.refresh();
     });
   };
 
@@ -64,6 +61,7 @@ const StatesDrawer = (props) => {
         label="Nombre"
         name="name"
         onChange={handleChange}
+        value={formData["name"]}
         required
       />
       <CustomInput
@@ -71,6 +69,7 @@ const StatesDrawer = (props) => {
         type="textarea"
         onChange={handleChange}
         name="description"
+        value={formData["description"]}
         required
       />
       <CustomInput
@@ -97,6 +96,7 @@ const StatesDrawer = (props) => {
         type="select"
         name="stateType"
         onChange={handleChange}
+        value={formData["stateType"]}
         required
       >
         <option></option>
@@ -111,6 +111,7 @@ const StatesDrawer = (props) => {
         label="Escoge un color para identificar tu estado"
         onChange={handleChange}
         name="color"
+        value={formData["color"]}
         required
       />
     </Drawer>
@@ -120,6 +121,7 @@ const StatesDrawer = (props) => {
 StatesDrawer.propTypes = {
   toggle: PropTypes.func,
   refresh: PropTypes.func,
+  data: PropTypes.object,
 };
 
 export default StatesDrawer;

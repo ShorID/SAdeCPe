@@ -4,11 +4,11 @@ import { SketchPicker } from "react-color";
 import Popup from "../Popup";
 
 const ColorPicker = (props) => {
-  const [color, setColor] = React.useState();
+  const [color, setColor] = React.useState(props.value);
   const handleChange = (color) => {
     setColor(color.hex);
     if (typeof props.onChange === "function")
-      props.onChange({ target: { value: color.hex , name: props.name } });
+      props.onChange({ target: { value: color.hex, name: props.name } });
   };
   return (
     <Popup
