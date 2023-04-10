@@ -11,17 +11,20 @@ import Text from "../Text";
 import Icon from "../Icon";
 import Tooltip from "../Tooltip";
 
-const sortbyOptions = [
-  { label: "A-Z", value: "character_desc" },
-  { label: "Z-A", value: "character_asc" },
+export const sortbyOptions = [
+  { label: "A-Z", value: "character_asc" },
+  { label: "Z-A", value: "character_desc" },
   { label: "Mas Nuevo", value: "date_desc" },
   { label: "Mas Antiguo", value: "date_asc" },
 ];
 
 const SortBy = (props) => {
-  const [selected, setSelected] = React.useState();
+  const [selected, setSelected] = React.useState(sortbyOptions[0]);
 
-  const handleSelect = (newSelect) => () => setSelected(newSelect);
+  const handleSelect = (newSelect) => () => {
+    setSelected(newSelect);
+    if (props.onChange) props.onChange({ target: { value: newSelect.value } });
+  };
 
   return (
     <UncontrolledDropdown group className="SortBy">

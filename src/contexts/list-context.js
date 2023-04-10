@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import drawerTypes from "@/components/Drawers/drawerTypes";
 import fetcher from "@/services/fetcher";
 import ListDeleteItemModal from "@/components/List/ListDeleteItemModal";
+import { sortbyOptions } from "@/components/SortBy";
 
 const ListContext = createContext({
   searchVal: "",
@@ -12,7 +13,10 @@ const ListContext = createContext({
   setPage: () => {},
   handleDelete: () => {},
   openEditModal: () => {},
+  refresh: () => {},
   listItems: {},
+  sortBy: sortbyOptions[0].value,
+  setSortBy: () => {},
 });
 
 export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
@@ -23,13 +27,21 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   const [listItems, setListItems] = useState();
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [lastFilters, setLastFilters] = useState();
+  const [sortBy, setSortBy] = useState(sortbyOptions[0].value);
 
-  const getData = async () => {
+  const getData = async (urlParams, noSave = false) => {
     setIsLoading(true);
+    if (urlParams && !noSave) {
+      setLastFilters(urlParams);
+    }
+    console.log("prro", urlParams)
     await fetcher({
       url: `${endpoint}/list`,
       params: {
         page,
+        sortBy,
+        ...(urlParams ? urlParams : lastFilters ? lastFilters : {}),
       },
     }).then((res) => res.data && setListItems(res.data));
     setIsLoading(false);
@@ -38,6 +50,12 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   useEffect(() => {
     if (endpoint) getData();
   }, [endpoint, page]);
+
+  const handleSortBy = (id) => {
+    console.log("prro", id)
+    setSortBy(id);
+    getData({ sortBy: id, ...(lastFilters ? lastFilters : {}) }, true);
+  };
 
   const deleteItem = () =>
     fetcher({
@@ -72,6 +90,8 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
         setPage,
         listItems,
         handleDelete,
+        refresh: endpoint ? getData : () => {},
+        handleSortBy,
       }}
     >
       {children}

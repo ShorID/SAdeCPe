@@ -13,7 +13,7 @@ import {
   getRandomText,
 } from "@/services/common";
 import rowsTypes from "./rowsTypes";
-import ListContext, { ListProvider } from "@/contexts/list-context";
+import ListContext from "@/contexts/list-context";
 
 const defaultItems = () => {
   const arrayWidth = getRandomInt(20);
@@ -33,14 +33,14 @@ const DefaultList = ({
   listId = "training",
   formId,
   getDefaultItems,
-  items,
   endpoint,
+  skipFilters
 }) => {
   const RowComponent = rowsTypes[listId];
   return (
     <List formId={formId || listId} endpoint={endpoint}>
       <ListHeader title={title}></ListHeader>
-      <ListSearcher />
+      <ListSearcher skipFilters={skipFilters}/>
       <ListBody>
         <ListContext.Consumer>
           {({ listItems }) =>
@@ -75,6 +75,7 @@ DefaultList.propTypes = {
   formId: PropTypes.string,
   listId: PropTypes.string,
   endpoint: PropTypes.string,
+  skipFilters: PropTypes.string,
   items: PropTypes.array,
 };
 

@@ -7,12 +7,16 @@ const Searcher = (props) => {
     <Input
       bsSize="sm"
       type="search"
+      name="search"
+      onChange={props.onChange}
       className="Searcher"
       placeholder="Buscar..."
     />
   );
 };
 
-Searcher.propTypes = {};
+Searcher.propTypes = {
+  onChange: PropTypes.func
+};
 
 export default Searcher;

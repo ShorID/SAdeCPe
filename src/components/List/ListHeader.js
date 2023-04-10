@@ -22,7 +22,9 @@ const ListHeader = (props) => {
       </CardTitle>
       <div className="List-headerOptions">
         <Icon />
-        <SortBy />
+        <SortBy
+          onChange={({ target: { value } }) => listContext.handleSortBy(value)}
+        />
         <ListOptions />
       </div>
     </CardBody>

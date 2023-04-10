@@ -16,7 +16,7 @@ const Collapse = (props) => {
           className={classNames("d-flex align-items-center", props.className)}
         >
           {props.header}
-          <Icon name={isOpen ? "faAngleUp" : "faAngleDown"} />
+          <Icon name={isOpen ? "faAngleUp" : "faAngleDown"} className="mx-2" />
         </Clickable>
       )}
       <RSCollapse
