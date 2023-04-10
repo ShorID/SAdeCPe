@@ -1,16 +1,21 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import AdminLayout from '@/components/Layout/AdminLayout'
-import DefaultList from '@/components/DefaultList'
+import React from "react";
+import PropTypes from "prop-types";
+import AdminLayout from "@/components/Layout/AdminLayout";
+import DefaultList from "@/components/DefaultList";
 
-const TrainingCenters = props => {
+const TrainingCenters = (props) => {
   return (
     <AdminLayout>
-        <DefaultList title='Centros de capacitacion' listId="department" endpoint="/center" />
+      <DefaultList
+        title="Centros de capacitacion"
+        listId="trainingCenter"
+        endpoint="/center"
+        withoutFilters
+      />
     </AdminLayout>
-  )
-}
+  );
+};
 
-TrainingCenters.propTypes = {}
+TrainingCenters.propTypes = {};
 
-export default TrainingCenters
+export default TrainingCenters;

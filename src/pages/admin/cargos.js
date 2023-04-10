@@ -10,6 +10,7 @@ const EmployeesPosition = (props) => {
         title="Cargos"
         listId="employeesPosition"
         endpoint="/employees-position"
+        skipFilters="stateType"
       />
     </AdminLayout>
   );

@@ -21,7 +21,7 @@ const filters = [
   },
 ];
 
-const ListSearcher = ({ skipFilters = "" }) => {
+const ListSearcher = ({ skipFilters = "", withoutFilters }) => {
   const [filtersData, setFiltersData] = useState([]);
   const [formData, setFormData] = useState();
 
@@ -43,8 +43,10 @@ const ListSearcher = ({ skipFilters = "" }) => {
   };
 
   useEffect(() => {
-    setFiltersData([])
-    getFiltersData();
+    if (!withoutFilters) {
+      setFiltersData([]);
+      getFiltersData();
+    }
   }, []);
 
   useEffect(() => {
@@ -59,37 +61,40 @@ const ListSearcher = ({ skipFilters = "" }) => {
   return (
     <ListBody className="ListSearcher">
       <Searcher onChange={handleChange} />
-      <div className="mt-3">
-        <Collapse header={<Text size="sm">Mas filtros</Text>}>
-          {filtersData.map(
-            (filter, i) =>
-              Array.isArray(filter.options) && (
-                <CustomInput
-                  type="select"
-                  name={filter.paramName}
-                  size="sm"
-                  className="w-25"
-                  label={filter.label}
-                  key={i}
-                  onChange={handleChange}
-                >
-                  <option value="0">Todos</option>
-                  {filter.options.map((item) => (
-                    <option value={item.id} key={item.id}>
-                      {item.name || item.nameType}
-                    </option>
-                  ))}
-                </CustomInput>
-              )
-          )}
-        </Collapse>
-      </div>
+      {!withoutFilters && (
+        <div className="mt-3">
+          <Collapse header={<Text size="sm">Mas filtros</Text>}>
+            {filtersData.map(
+              (filter, i) =>
+                Array.isArray(filter.options) && (
+                  <CustomInput
+                    type="select"
+                    name={filter.paramName}
+                    size="sm"
+                    className="w-25"
+                    label={filter.label}
+                    key={i}
+                    onChange={handleChange}
+                  >
+                    <option value="0">Todos</option>
+                    {filter.options.map((item) => (
+                      <option value={item.id} key={item.id}>
+                        {item.name || item.nameType}
+                      </option>
+                    ))}
+                  </CustomInput>
+                )
+            )}
+          </Collapse>
+        </div>
+      )}
     </ListBody>
   );
 };
 
 ListSearcher.propTypes = {
   skipFilters: PropTypes.string,
+  withoutFilters: PropTypes.bool,
 };
 
 export default ListSearcher;

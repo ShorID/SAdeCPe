@@ -9,7 +9,7 @@ const DateInput = (props) => {
       ? new Date(props.value + "T00:00:00")
       : props.value;
   const [startDate, setStartDate] = React.useState(value);
-  console.log("prro", { props, startDate });
+
   return (
     <CustomInput {...props} value={moment(startDate).format("yyyy-mm-dd")}>
       <DatePicker

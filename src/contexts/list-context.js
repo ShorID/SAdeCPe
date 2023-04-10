@@ -35,7 +35,7 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
     if (urlParams && !noSave) {
       setLastFilters(urlParams);
     }
-    console.log("prro", urlParams)
+
     await fetcher({
       url: `${endpoint}/list`,
       params: {
@@ -52,7 +52,6 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   }, [endpoint, page]);
 
   const handleSortBy = (id) => {
-    console.log("prro", id)
     setSortBy(id);
     getData({ sortBy: id, ...(lastFilters ? lastFilters : {}) }, true);
   };

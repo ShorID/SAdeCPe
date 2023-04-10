@@ -17,6 +17,7 @@ const links = {
     { label: "Capacitadores", link: "/admin/capacitadores" },
     { label: "Horarios", link: "/admin/horarios" },
     { label: "Estados", link: "/admin/estados" },
+    { label: "Nivel de prioridad", link: "/admin/nivel-de-prioridad" },
   ],
   block2: [
     { label: "Empleados", link: "/admin/empleados" },

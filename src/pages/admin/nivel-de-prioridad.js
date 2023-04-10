@@ -3,19 +3,15 @@ import PropTypes from "prop-types";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import DefaultList from "@/components/DefaultList";
 
-const Departments = (props) => {
+const PriorityLevel = (props) => {
+
   return (
     <AdminLayout>
-      <DefaultList
-        title="Departamentos"
-        listId="departments"
-        endpoint="/departament"
-        withoutFilters
-      />
+      <DefaultList title="Niveles de Prioridad" listId="priorityLevel" endpoint="/priority" withoutFilters />
     </AdminLayout>
   );
 };
 
-Departments.propTypes = {};
+PriorityLevel.propTypes = {};
 
-export default Departments;
+export default PriorityLevel;
