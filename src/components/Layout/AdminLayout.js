@@ -15,7 +15,6 @@ const links = {
       link: "/admin/centros-de-capacitacion",
     },
     { label: "Capacitadores", link: "/admin/capacitadores" },
-    { label: "Horarios", link: "/admin/horarios" },
     { label: "Estados", link: "/admin/estados" },
     { label: "Nivel de prioridad", link: "/admin/nivel-de-prioridad" },
   ],
