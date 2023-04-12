@@ -8,8 +8,13 @@ import Icon from "../Icon";
 import Clickable from "../Clickable";
 import Tooltip from "../Tooltip";
 import TrainingListItemSchedule from "./TrainingListItemSchedule";
+import { useRouter } from "next/router";
 
 const TrainingListItem = (props) => {
+  const router = useRouter();
+  const handleRedirect = () => {
+    router.push("/admin/capacitaciones/1");
+  };
   return (
     <div className={classNames("TrainingListItem", props.className)}>
       <CustomCheck />
@@ -29,7 +34,7 @@ const TrainingListItem = (props) => {
             <Text>{props.title}</Text>
           </div>
           <div className="TrainingListItem-options">
-            <Clickable className="mx-2">
+            <Clickable className="mx-2" onClick={handleRedirect}>
               <Tooltip tooltip="Editar?" placement="right">
                 <Icon name="faEdit" size="md2" />
               </Tooltip>

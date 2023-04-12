@@ -28,9 +28,9 @@
   --main-color: #f86409;
   --base-color: #232f3f;
   --secundary-color: #382b2b;
-  --selection-color: #099DF8;
-  --unselected-color: #C5E8FD;
-  --action-background: #FDDBC5;
+  --selection-color: #099df8;
+  --unselected-color: #c5e8fd;
+  --action-background: #fddbc5;
   --max-width: 1100px;
   --border-radius: 3px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
@@ -38,7 +38,7 @@
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --spacing-16: 1rem;
-  --spacing-8: .5rem;
+  --spacing-8: 0.5rem;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -74,9 +74,9 @@
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
 
-  --text-size-sm: 0.80rem;
+  --text-size-sm: 0.8rem;
   --text-size-md: 1rem;
-  --text-size-lg: 1.80rem;
+  --text-size-lg: 1.8rem;
 }
 
 * {
@@ -100,7 +100,7 @@ a {
   text-decoration: none;
 }
 
-.ml-auto{
+.ml-auto {
   margin-left: auto !important;
 }
 
@@ -108,4 +108,39 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+@keyframes testAnimationHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes testAnimationShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.testWrapper {
+  position: relative;
+}
+
+.testHide,
+.testShow {
+  position: absolute;
+
+  animation-duration: 5000ms;
+}
+
+.testHide {
+  animation-name: testAnimationHide;
+}
+.testShow {
+  animation-name: testAnimationShow;
 }

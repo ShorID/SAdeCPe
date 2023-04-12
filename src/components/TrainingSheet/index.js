@@ -4,6 +4,7 @@ import Text from "../Text";
 import CustomInput from "../CustomInput";
 import { getFormatedDate } from "@/services/common";
 import DateInput from "../DateInput";
+import CustomCalendar from "../CustomCalendar";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -56,6 +57,7 @@ const TrainingSheet = (props) => {
         name="creationDate"
         required
       />
+      <CustomCalendar></CustomCalendar>
     </>
   );
 };
