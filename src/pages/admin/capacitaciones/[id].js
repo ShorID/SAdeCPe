@@ -1,12 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
+import AdminLayout from "@/components/Layout/AdminLayout";
+import TrainingSheet from "@/components/TrainingSheet";
 
-const TrainingSheet = props => {
-  return (
-    <div>TrainingSheet</div>
-  )
-}
+const TrainingSheetPage = (props) => {
+  return <AdminLayout>
+    <TrainingSheet />
+  </AdminLayout>;
+};
 
-TrainingSheet.propTypes = {}
+TrainingSheetPage.propTypes = {};
 
-export default TrainingSheet
+export default TrainingSheetPage;
