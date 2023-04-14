@@ -126,21 +126,3 @@ a {
     opacity: 1;
   }
 }
-
-.testWrapper {
-  position: relative;
-}
-
-.testHide,
-.testShow {
-  position: absolute;
-
-  animation-duration: 5000ms;
-}
-
-.testHide {
-  animation-name: testAnimationHide;
-}
-.testShow {
-  animation-name: testAnimationShow;
-}

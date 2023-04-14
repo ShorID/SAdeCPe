@@ -37,10 +37,6 @@ const TrainingSheetPage = (props) => {
   return (
     <AdminLayout>
       <TrainingSheet />
-      <div className="testWrapper">
-        <span className={"testHide"} key={animationState.index}>{items[animationState.index]}</span>
-        <span className={"testShow"} key={animationState.index + 1}>{items[animationState.index + 1]}</span>
-      </div>
     </AdminLayout>
   );
 };
