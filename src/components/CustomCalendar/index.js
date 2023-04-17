@@ -2,6 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { getRandomDate } from "@/services/common";
 import { Calendar } from "react-multi-date-picker";
+import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
+import Text from "../Text";
+import Collapse from "../Collapse";
+import Clickable from "../Clickable";
+import Icon from "../Icon";
+import fetcher from "@/services/fetcher";
+import CustomInput from "../CustomInput";
 
 const lastDate = new Date(2023, 4, 30);
 const dateEnd = new Date();
@@ -23,7 +30,7 @@ const months = [
   "Dic",
 ];
 
-const items = [
+const ocupedDates = [
   getRandomDate(lastDate, dateEnd),
   getRandomDate(lastDate, dateEnd),
   getRandomDate(lastDate, dateEnd),
@@ -32,34 +39,157 @@ const items = [
 ];
 
 const CustomCalendar = (props) => {
-  const [value, onChange] = React.useState(getRandomDate(lastDate, dateEnd));
+  const [dates, setDates] = React.useState([]);
+  const [date, setDate] = React.useState();
+  const [centers, setCenters] = React.useState();
+
+  const getCenters = () => {
+    fetcher({ url: "/center" }).then(({ data }) => setCenters(data));
+  };
+
+  React.useEffect(() => {
+    getCenters();
+  }, []);
+
+  const handleSelect = (clickedDate) => {
+    setDate(clickedDate);
+    setDates((prev) => [...prev, { date: clickedDate }]);
+  };
+
+  const handleClick = (idx) => () => {
+    setDate(null);
+    setDates((prev) => prev.filter((__, key) => key !== idx));
+  };
+
+  const handleChange =
+    (idx) =>
+    ({ target: { value, name } }) => {
+      setDates((prev) =>
+        prev.map((item, key) =>
+          key === idx
+            ? {
+                ...item,
+                [name]:
+                  name === "center"
+                    ? centers.find((item) => `${item.id}` === `${value}`)
+                    : value,
+              }
+            : item
+        )
+      );
+    };
+
+  const handleTimeRange = (idx) => (value) => {
+    setDates((prev) =>
+      prev.map((item, key) =>
+        key === idx ? { ...item, timeRange: value } : item
+      )
+    );
+  };
 
   return (
     <div>
-      <Calendar
-        onChange={onChange}
-        value={value}
-        weekDays={weekDays}
-        months={months}
-        numberOfMonths={2}
-        mapDays={({ date }) => {
-          if (
-            items.some(
-              (item) =>
-                item.getDay() === date.day &&
-                item.getMonth() === date.monthIndex &&
-                item.getFullYear() === date.year
-            )
-          )
-            return {
-              style: {
-                backgroundColor: "gray",
-              },
-            };
-        }}
-        showOtherDays
-        multiple
+      <Text
+        TagName="h6"
+        className="CustomCalendar-title"
+        text="Selecciona las sesiones que tendra tu capacitacion!"
       />
+      <div className="row">
+        <div className="col-4">
+          <Calendar
+            onChange={handleSelect}
+            value={date}
+            weekDays={weekDays}
+            months={months}
+            mapDays={({ date }) => {
+              if (
+                dates.some(
+                  (item) =>
+                    item.date.day === date.day &&
+                    item.date.monthIndex === date.monthIndex &&
+                    item.date.year === date.year
+                )
+              )
+                return {
+                  style: {
+                    backgroundColor: "lightgreen",
+                    color: "black",
+                  },
+                };
+              if (
+                ocupedDates.some(
+                  (item) =>
+                    item.getDay() === date.day &&
+                    item.getMonth() === date.monthIndex &&
+                    item.getFullYear() === date.year
+                )
+              )
+                return {
+                  className: "CustomCalendar-ocuped",
+                };
+            }}
+            showOtherDays
+          />
+        </div>
+        <div className="col-8 d-flex flex-column">
+          <Text bold>Sesiones Añadidas:</Text>
+          <div className="CustomCalendar-sessions">
+            {Array.isArray(dates) &&
+              dates.map((item, key) => (
+                <Collapse
+                  key={key + item.date.day}
+                  header={
+                    <div>
+                      <Text bold text={`Sesion ${key + 1}:`} />
+                      <Text className="mx-2">{`${item.date.day}/${item.date.monthIndex}/${item.date.year}`}</Text>
+                      <Text>
+                        {item.timeRange
+                          ? `- ${item.timeRange[0]} - ${item.timeRange[1]} -`
+                          : "- Sin duracion -"}
+                      </Text>
+                      <Text>
+                        {item.center
+                          ? `- ${item.center?.name} -`
+                          : "- Sin lugar -"}
+                      </Text>
+                    </div>
+                  }
+                  className="CustomCalendar-session"
+                  contentClass="CustomCalendar-sessionContent"
+                >
+                  <Text className="mr-1">Duracion: </Text>
+                  <TimeRangePicker
+                    className="mb-2"
+                    value={item.timeRange}
+                    onChange={handleTimeRange(key)}
+                  />
+                  <CustomInput
+                    label="Centro de capacitacion"
+                    type="select"
+                    onChange={handleChange(key)}
+                    name="center"
+                  >
+                    <option value="0"></option>
+                    {Array.isArray(centers) &&
+                      centers.map((item) => (
+                        <option value={item.id} key={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </CustomInput>
+                  <div className="CustomCalendar-sessionAction">
+                    <Clickable
+                      className="ml-auto d-flex"
+                      onClick={handleClick(key)}
+                    >
+                      <Icon name="faTrash" />
+                    </Clickable>
+                  </div>
+                </Collapse>
+              ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

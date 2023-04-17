@@ -25,6 +25,7 @@ const Collapse = (props) => {
         onEntered={props.onEntered}
         onExiting={props.onExiting}
         onExited={props.onExited}
+        className={props.contentClass}
       >
         {props.children}
       </RSCollapse>
@@ -40,6 +41,7 @@ Collapse.propTypes = {
   onExiting: PropTypes.func,
   onExited: PropTypes.func,
   className: PropTypes.string,
+  contentClass: PropTypes.string,
   manual: PropTypes.bool,
   isOpen: PropTypes.bool,
 };

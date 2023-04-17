@@ -6,7 +6,7 @@ import DefaultList from '@/components/DefaultList'
 const Employees = props => {
   return (
     <AdminLayout>
-        <DefaultList title='Empleados' />
+        <DefaultList title='Empleados' endpoint='/employees' listId='states' />
     </AdminLayout>
   )
 }

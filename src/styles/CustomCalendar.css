@@ -1,0 +1,30 @@
+.CustomCalendar-title{
+    border-bottom: 1px gray solid;
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+}
+.CustomCalendar-session{
+    background-color: var(--unselected-color);
+    padding: 5px 10px;
+    justify-content: space-between;
+    width: 100%;
+    transition: all 200ms;
+}
+.CustomCalendar-session:hover{
+    background-color: var(--selection-color);
+    padding: 5px 10px;
+}
+.CustomCalendar-sessionContent{
+    padding: 10px;
+    border-bottom: 1px solid gray;
+}
+.CustomCalendar-ocuped{
+    background-color: var(--action-background);
+}
+.CustomCalendar-sessionAction{
+    margin-right: 5px;
+}
+.CustomCalendar-sessions{
+    overflow-y: auto;
+    max-height: 500px;
+}
