@@ -5,7 +5,7 @@ import DefaultList from "@/components/DefaultList";
 const States = (props) => {
   return (
     <AdminLayout>
-      <DefaultList title="Estados" listId="states" endpoint="/state" skipFilters="departament" />
+      <DefaultList title="Estados" listId="states" endpoint="/state" filters="stateType" />
     </AdminLayout>
   );
 };

@@ -11,8 +11,14 @@ import Tooltip from "../Tooltip";
 import Text from "../Text";
 import ListContext from "@/contexts/list-context";
 
-const ListOptions = (props) => {
-  const { openCreateModal } = useContext(ListContext)
+const ListOptions = ({ onCreate }) => {
+  const { openCreateModal } = useContext(ListContext);
+
+  const handleCreate = () => {
+    if (onCreate) onCreate();
+    openCreateModal();
+  };
+
   return (
     <>
       <UncontrolledDropdown group>
@@ -25,7 +31,7 @@ const ListOptions = (props) => {
           <DropdownItem header>
             <Text>Opciones de lista</Text>
           </DropdownItem>
-          <DropdownItem onClick={openCreateModal}>
+          <DropdownItem onClick={handleCreate}>
             <Icon name="faPlus" />
             <Text className="mx-2">Crear nuevo registro</Text>
           </DropdownItem>
@@ -33,7 +39,7 @@ const ListOptions = (props) => {
             <Icon name="faFileExport" />
             <Text className="mx-2">Exportar lista</Text>
           </DropdownItem>
-          <DropdownItem divider/>
+          <DropdownItem divider />
           <DropdownItem>
             <Icon name="faBorderAll" />
             <Text className="mx-2">Seleccionar todos</Text>

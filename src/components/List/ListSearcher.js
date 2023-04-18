@@ -19,9 +19,14 @@ const filters = [
     endpoint: "/departament",
     paramName: "departament",
   },
+  {
+    label: "Escoge un cargo",
+    endpoint: "/employees-position",
+    paramName: "employeePos",
+  },
 ];
 
-const ListSearcher = ({ skipFilters = "", withoutFilters }) => {
+const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
   const [filtersData, setFiltersData] = useState([]);
   const [formData, setFormData] = useState();
 
@@ -30,7 +35,7 @@ const ListSearcher = ({ skipFilters = "", withoutFilters }) => {
   const getFiltersData = () => {
     let requests = [];
     filters.forEach((filter) => {
-      if (!skipFilters.includes(filter.paramName))
+      if (allowedFilters.includes(filter.paramName) || !allowedFilters)
         fetcher({
           url: filter.endpoint,
         }).then(
@@ -93,7 +98,7 @@ const ListSearcher = ({ skipFilters = "", withoutFilters }) => {
 };
 
 ListSearcher.propTypes = {
-  skipFilters: PropTypes.string,
+  filters: PropTypes.string,
   withoutFilters: PropTypes.bool,
 };
 

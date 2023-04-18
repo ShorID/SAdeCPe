@@ -25,7 +25,7 @@ const ListHeader = (props) => {
         <SortBy
           onChange={({ target: { value } }) => listContext.handleSortBy(value)}
         />
-        <ListOptions />
+        <ListOptions onCreate={props.onCreate} />
       </div>
     </CardBody>
   );
@@ -34,6 +34,7 @@ const ListHeader = (props) => {
 ListHeader.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
+  onCreate: PropTypes.func
 };
 
 export default ListHeader;

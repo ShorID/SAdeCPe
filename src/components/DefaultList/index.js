@@ -34,14 +34,15 @@ const DefaultList = ({
   formId,
   getDefaultItems,
   endpoint,
-  skipFilters,
+  filters,
   withoutFilters = false,
+  onCreate
 }) => {
   const RowComponent = rowsTypes[listId];
   return (
     <List formId={formId || listId} endpoint={endpoint}>
-      <ListHeader title={title}></ListHeader>
-      <ListSearcher skipFilters={skipFilters} withoutFilters={withoutFilters} />
+      <ListHeader title={title} onCreate={onCreate}></ListHeader>
+      <ListSearcher filters={filters} withoutFilters={withoutFilters} />
       <ListBody>
         <ListContext.Consumer>
           {({ listItems }) =>
@@ -76,9 +77,10 @@ DefaultList.propTypes = {
   formId: PropTypes.string,
   listId: PropTypes.string,
   endpoint: PropTypes.string,
-  skipFilters: PropTypes.string,
+  filters: PropTypes.string,
   items: PropTypes.array,
   withoutFilters: PropTypes.bool,
+  onCreate: PropTypes.func
 };
 
 export default DefaultList;
