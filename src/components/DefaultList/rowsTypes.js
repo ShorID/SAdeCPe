@@ -4,6 +4,7 @@ import EmployeesPositionRows from "./EmployeesPositionRows";
 import EmployeesRows from "./EmployeesRows";
 import OrgRows from "./OrgRows";
 import StateRows from "./StateRows";
+import TrainerRows from "./TrainerRows";
 import TrainingCenterRows from "./TrainingCenterRows";
 
 export default {
@@ -14,5 +15,6 @@ export default {
   employeesPosition: EmployeesPositionRows,
   trainingCenter: TrainingCenterRows,
   org: OrgRows,
+  trainer: TrainerRows,
   employees: EmployeesRows
 };
