@@ -6,7 +6,7 @@ import DefaultList from '@/components/DefaultList'
 const Organizations = props => {
   return (
     <AdminLayout>
-        <DefaultList title='Organizaciones' />
+        <DefaultList title='Organizaciones' endpoint='/org' listId='org' withoutFilters />
     </AdminLayout>
   )
 }
