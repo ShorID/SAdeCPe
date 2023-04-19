@@ -6,6 +6,7 @@ import { getFormatedDate } from "@/services/common";
 import DateInput from "../DateInput";
 import CustomCalendar from "../CustomCalendar";
 import Tags from "../Tags";
+import DefaultList from "../DefaultList";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -64,6 +65,14 @@ const TrainingSheet = (props) => {
         TagName="h6"
         className="CustomCalendar-title mt-3"
         text="Selecciona los participantes de esta capacitacion."
+      />
+      <DefaultList
+        title="Empleados"
+        endpoint="/collaborator"
+        listId="employees"
+        filters="employeePos,departament"
+        withoutEdit
+        withoutDelete
       />
     </>
   );

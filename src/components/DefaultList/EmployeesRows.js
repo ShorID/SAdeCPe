@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 const EmployeesRows = (props) => {
   const router = useRouter();
   const listContext = useContext(ListContext);
-
+  console.log("prro", props)
   const handleEdit = () => router.push(`/admin/empleados/${props.id}`);
 
   return (
@@ -25,19 +25,23 @@ const EmployeesRows = (props) => {
             <Text bold>{`${props.name} ${props.lastName}`}</Text>
           </div>
           <div className="TrainingListItem-options">
-            <Clickable className="mx-2" onClick={handleEdit}>
-              <Tooltip tooltip="Editar?" placement="right">
-                <Icon name="faEdit" size="md2" />
-              </Tooltip>
-            </Clickable>
-            <Clickable
-              className="mx-2"
-              onClick={listContext.handleDelete(props)}
-            >
-              <Tooltip tooltip="Eliminar?" placement="right">
-                <Icon name="faTrash" size="md2" />
-              </Tooltip>
-            </Clickable>
+            {!props.withoutEdit && (
+              <Clickable className="mx-2" onClick={handleEdit}>
+                <Tooltip tooltip="Editar?" placement="right">
+                  <Icon name="faEdit" size="md2" />
+                </Tooltip>
+              </Clickable>
+            )}
+            {!props.withoutDelete && (
+              <Clickable
+                className="mx-2"
+                onClick={listContext.handleDelete(props)}
+              >
+                <Tooltip tooltip="Eliminar?" placement="right">
+                  <Icon name="faTrash" size="md2" />
+                </Tooltip>
+              </Clickable>
+            )}
             <Clickable
               className="mx-2"
               onClick={listContext.handleDelete(props)}

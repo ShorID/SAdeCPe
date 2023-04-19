@@ -36,7 +36,9 @@ const DefaultList = ({
   endpoint,
   filters,
   withoutFilters = false,
-  onCreate
+  withoutEdit = false,
+  withoutDelete = false,
+  onCreate,
 }) => {
   const RowComponent = rowsTypes[listId];
   return (
@@ -49,7 +51,12 @@ const DefaultList = ({
             Array.isArray(listItems?.data) ? (
               RowComponent &&
               listItems.data.map((item, key) => (
-                <RowComponent key={key} {...item} />
+                <RowComponent
+                  key={key}
+                  withoutEdit={withoutEdit}
+                  withoutDelete={withoutDelete}
+                  {...item}
+                />
               ))
             ) : (
               <DefaultDataProvider
@@ -58,7 +65,14 @@ const DefaultList = ({
                 {(data) =>
                   Array.isArray(data) &&
                   RowComponent &&
-                  data.map((item, key) => <RowComponent key={key} {...item} />)
+                  data.map((item, key) => (
+                    <RowComponent
+                      key={key}
+                      withoutEdit={withoutEdit}
+                      withoutDelete={withoutDelete}
+                      {...item}
+                    />
+                  ))
                 }
               </DefaultDataProvider>
             )
@@ -80,7 +94,9 @@ DefaultList.propTypes = {
   filters: PropTypes.string,
   items: PropTypes.array,
   withoutFilters: PropTypes.bool,
-  onCreate: PropTypes.func
+  onCreate: PropTypes.func,
+  withoutEdit: PropTypes.bool,
+  withoutDelete: PropTypes.bool,
 };
 
 export default DefaultList;
