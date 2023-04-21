@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 const EmployeesRows = (props) => {
   const router = useRouter();
   const listContext = useContext(ListContext);
-  console.log("prro", props)
   const handleEdit = () => router.push(`/admin/empleados/${props.id}`);
 
   return (
