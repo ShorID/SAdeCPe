@@ -6,7 +6,9 @@ import fetcher from "@/services/fetcher";
 
 const Tags = (props) => {
   const [trainingTags, setTrainingTags] = React.useState([]);
+  const [selected, setSelected] = React.useState([]);
   const [newTag, setNewTag] = React.useState("");
+  const [newTagCount, setNewTagCount] = React.useState(0);
 
   React.useEffect(() => {
     fetcher({
@@ -23,31 +25,45 @@ const Tags = (props) => {
   const handleChange = (newValue = "") => {
     setNewTag(newValue);
   };
+
+  const handleSelect = (newValue) => {
+    setSelected(newValue);
+    if (props.onChange)
+      props.onChange({ target: { value: newValue, name: props.name } });
+  };
+
   const handleKey = (e) => {
-    if ((e.key === "Enter" || e.keyCode === 13) && newTag)
-      return setTrainingTags((prev) => [
-        ...prev,
-        { isNew: true, label: newTag, value: 0 },
-      ]);
+    if ((e.key === "Enter" || e.keyCode === 13) && newTag) {
+      const newValue = { isNew: true, label: newTag, value: newTagCount };
+      setNewTagCount((prev) => prev - 1);
+      setNewTag("");
+      setSelected((prev) => [...prev, newValue]);
+      return setTrainingTags((prev) => [...prev, newValue]);
+    }
   };
 
   return (
     <CustomInput label="Escoga los temas de esta capacitacion">
       <Select
-        // defaultValue={[colourOptions[2], colourOptions[3]]}
+        defaultValue={props.value}
         isMulti
-        name="colors"
+        value={selected}
+        name={props.name}
         options={trainingTags}
         inputValue={newTag}
         className="basic-multi-select"
         classNamePrefix="select"
         onInputChange={handleChange}
+        onChange={handleSelect}
         onKeyDown={handleKey}
       />
     </CustomInput>
   );
 };
 
-Tags.propTypes = {};
+Tags.propTypes = {
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+};
 
 export default Tags;
