@@ -22,18 +22,22 @@ const Tags = (props) => {
     );
   }, []);
 
+  React.useEffect(() => {
+    if (props.onChange)
+      props.onChange({ target: { value: trainingTags, name: props.name } });
+  }, [trainingTags]);
+
   const handleChange = (newValue = "") => {
     setNewTag(newValue);
   };
 
   const handleSelect = (newValue) => {
     setSelected(newValue);
-    if (props.onChange)
-      props.onChange({ target: { value: newValue, name: props.name } });
   };
 
   const handleKey = (e) => {
     if ((e.key === "Enter" || e.keyCode === 13) && newTag) {
+      e.nativeEvent.preventDefault();
       const newValue = { isNew: true, label: newTag, value: newTagCount };
       setNewTagCount((prev) => prev - 1);
       setNewTag("");

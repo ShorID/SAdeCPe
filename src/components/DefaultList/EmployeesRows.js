@@ -13,11 +13,21 @@ import { useRouter } from "next/router";
 const EmployeesRows = (props) => {
   const router = useRouter();
   const listContext = useContext(ListContext);
+
   const handleEdit = () => router.push(`/admin/empleados/${props.id}`);
+
+  const handleCheck = (isChecked) => {
+    listContext.handleSelect(isChecked, props);
+  };
 
   return (
     <div className={classNames("TrainingListItem", props.className)}>
-      <CustomCheck />
+      {!props.withoutCheck && (
+        <CustomCheck
+          onChange={handleCheck}
+          checked={listContext.isSelected(props)}
+        />
+      )}
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
           <div className="TrainingListItem-title">
@@ -41,14 +51,16 @@ const EmployeesRows = (props) => {
                 </Tooltip>
               </Clickable>
             )}
-            <Clickable
-              className="mx-2"
-              onClick={listContext.handleDelete(props)}
-            >
-              <Tooltip tooltip="Imprimir?" placement="right">
-                <Icon name="faPrint" size="md2" />
-              </Tooltip>
-            </Clickable>
+            {!props.withoutPrint && (
+              <Clickable
+                className="mx-2"
+                onClick={listContext.handleDelete(props)}
+              >
+                <Tooltip tooltip="Imprimir?" placement="right">
+                  <Icon name="faPrint" size="md2" />
+                </Tooltip>
+              </Clickable>
+            )}
           </div>
         </div>
         <div className="d-flex mb-2">

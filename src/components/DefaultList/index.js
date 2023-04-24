@@ -38,11 +38,13 @@ const DefaultList = ({
   withoutFilters = false,
   withoutEdit = false,
   withoutDelete = false,
+  withoutCheck = false,
   onCreate,
+  onSelect,
 }) => {
   const RowComponent = rowsTypes[listId];
   return (
-    <List formId={formId || listId} endpoint={endpoint}>
+    <List formId={formId || listId} endpoint={endpoint} onSelect={onSelect}>
       <ListHeader title={title} onCreate={onCreate}></ListHeader>
       <ListSearcher filters={filters} withoutFilters={withoutFilters} />
       <ListBody>
@@ -55,6 +57,7 @@ const DefaultList = ({
                   key={key}
                   withoutEdit={withoutEdit}
                   withoutDelete={withoutDelete}
+                  withoutCheck={withoutCheck}
                   {...item}
                 />
               ))
@@ -95,8 +98,10 @@ DefaultList.propTypes = {
   items: PropTypes.array,
   withoutFilters: PropTypes.bool,
   onCreate: PropTypes.func,
+  onSelect: PropTypes.func,
   withoutEdit: PropTypes.bool,
   withoutDelete: PropTypes.bool,
+  withoutCheck: PropTypes.bool,
 };
 
 export default DefaultList;

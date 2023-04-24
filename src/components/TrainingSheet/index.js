@@ -7,31 +7,98 @@ import DateInput from "../DateInput";
 import CustomCalendar from "../CustomCalendar";
 import Tags from "../Tags";
 import DefaultList from "../DefaultList";
+import { Col, Form, Row } from "reactstrap";
+import fetcher from "@/services/fetcher";
+import ReactInputMask from "react-input-mask";
+import CustomButton from "../CustomButton";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
     props.data || {
-      active: true,
+      external: false,
+      certificated: false,
       creationDate: getFormatedDate(),
     }
   );
+  const [states, setStates] = React.useState([]);
+  const [orgs, setOrgs] = React.useState([]);
+  const [priorities, setPriorities] = React.useState([]);
   const [validated, setValidated] = React.useState([]);
 
   const handleChange = ({ target: { value, name } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  React.useEffect(() => {
+    fetcher({ url: "/state" }).then(({ data }) => {
+      if (Array.isArray(data)) setStates(data);
+      if (data.length)
+        handleChange({ target: { value: data[0].id, name: "stateId" } });
+    });
+    fetcher({ url: "/org" }).then(({ data }) => {
+      if (Array.isArray(data)) {
+        setOrgs(data);
+        if (data.length)
+          handleChange({ target: { value: data[0].id, name: "orgId" } });
+      }
+    });
+    fetcher({ url: "/priority" }).then(({ data }) => {
+      if (Array.isArray(data)) {
+        setPriorities(data);
+        if (data.length)
+          handleChange({
+            target: { value: data[0].id, name: "levelPrioryId" },
+          });
+      }
+    });
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setValidated(true);
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) return console.log("Error");
+    fetcher({
+      url: "/capacitation/" + (!props.isCreating ? "create" : "update"),
+      method: !props.isCreating ? "POST" : "PUT",
+      data: formData,
+    });
+  };
+
   return (
-    <>
+    <Form onSubmit={handleSubmit}>
       <Text TagName="h5">
         {props.isCreating ? "Creando Capacitacion" : "Editando Capacitacion"}
       </Text>
-      <CustomInput
-        label="Nombre"
-        name="name"
-        onChange={handleChange}
-        value={formData["name"]}
-        required
-      />
+      <Row>
+        <Col sm="sm" md="9">
+          <CustomInput
+            label="Nombre"
+            name="name"
+            onChange={handleChange}
+            value={formData["name"]}
+            required
+          />
+        </Col>
+        <Col sm="12" md="3">
+          <CustomInput
+            label="Estado"
+            type="select"
+            name="stateId"
+            onChange={handleChange}
+            required
+            value={formData["stateId"]}
+          >
+            {Array.isArray(states) &&
+              states.map((item) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
+          </CustomInput>
+        </Col>
+      </Row>
       <CustomInput
         label="Descripcion"
         type="textarea"
@@ -40,17 +107,73 @@ const TrainingSheet = (props) => {
         value={formData["description"]}
         required
       />
-      <CustomInput
-        label="Activo"
-        type="switch"
-        role="switch"
-        name="active"
-        value={formData.active}
-        onChange={() =>
-          setFormData((prev) => ({ ...prev, active: !prev.active }))
-        }
-        required
-      />
+      <Row>
+        <Col sm="12" md="6">
+          <CustomInput
+            label="Organizacion"
+            type="select"
+            name="orgId"
+            onChange={handleChange}
+            required
+            value={formData["orgId"]}
+          >
+            {Array.isArray(orgs) &&
+              orgs.map((item) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
+          </CustomInput>
+        </Col>
+        <Col sm="12" md="6">
+          <CustomInput
+            label="Prioridad"
+            type="select"
+            name="levelPrioryId"
+            onChange={handleChange}
+            required
+            value={formData["levelPrioryId"]}
+          >
+            {Array.isArray(priorities) &&
+              priorities.map((item) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
+          </CustomInput>
+        </Col>
+      </Row>
+      <Row>
+        <Col md="3">
+          <CustomInput
+            label="Tiene certificado?"
+            type="switch"
+            role="switch"
+            name="is_certifiqued"
+            value={formData.is_certifiqued}
+            onChange={() =>
+              setFormData((prev) => ({
+                ...prev,
+                is_certifiqued: !prev.is_certifiqued,
+              }))
+            }
+            required
+          />
+        </Col>
+        <Col md="3">
+          <CustomInput
+            label="Es externa?"
+            type="switch"
+            role="switch"
+            name="external"
+            value={formData.external}
+            onChange={() =>
+              setFormData((prev) => ({ ...prev, external: !prev.external }))
+            }
+            required
+          />
+        </Col>
+      </Row>
       <DateInput
         label="Fecha de Creacion"
         value={formData.creationDate}
@@ -59,7 +182,40 @@ const TrainingSheet = (props) => {
         name="creationDate"
         required
       />
-      <Tags />
+      <Row>
+        <Col>
+          <CustomInput
+            label="Costo ($)"
+            name="costUnit"
+            type="number"
+            value={formData.costUnit}
+            onChange={handleChange}
+            required
+          />
+        </Col>
+        <Col>
+          <CustomInput
+            label="Fondo INATEC ($)"
+            name="inatecBackground"
+            type="number"
+            value={formData.inatecBackground}
+            onChange={handleChange}
+            required
+          />
+        </Col>
+        <Col>
+          <CustomInput
+            label="Total ($)"
+            name="total"
+            type="number"
+            value={formData.total}
+            onChange={handleChange}
+            disabled
+            required
+          />
+        </Col>
+      </Row>
+      <Tags name="tags" onChange={handleChange} />
       <CustomCalendar></CustomCalendar>
       <Text
         TagName="h6"
@@ -74,7 +230,8 @@ const TrainingSheet = (props) => {
         withoutEdit
         withoutDelete
       />
-    </>
+      <CustomButton text="Guardar" />
+    </Form>
   );
 };
 

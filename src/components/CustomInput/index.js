@@ -10,6 +10,7 @@ import {
   Label,
 } from "reactstrap";
 import classNames from "classnames";
+import Text from "../Text";
 
 const CustomInput = (props) => {
   const {
@@ -29,8 +30,12 @@ const CustomInput = (props) => {
   } = props;
   if (variant === "group")
     return (
-      <InputGroup>
-        {label && <InputGroupText>{label}</InputGroupText>}
+      <InputGroup className={props.wrapperClass}>
+        {label && (
+          <InputGroupText>
+            <Text size={size}>{label}</Text>
+          </InputGroupText>
+        )}
         <Input
           placeholder={props.placeholder}
           type={type}
@@ -55,8 +60,12 @@ const CustomInput = (props) => {
       </InputGroup>
     );
   return (
-    <FormGroup switch={type === "switch"}>
-      {label && <Label for={id}>{label}</Label>}
+    <FormGroup switch={type === "switch"} className={props.wrapperClass}>
+      {label && (
+        <Label for={id}>
+          <Text size={size}>{label}</Text>
+        </Label>
+      )}
       <Input
         type={type}
         bgSize={size}
@@ -73,6 +82,7 @@ const CustomInput = (props) => {
         style={props.style}
         name={name}
         required={required}
+        id={id}
       >
         {props.type === "select" ? props.children : undefined}
       </Input>
@@ -92,6 +102,7 @@ CustomInput.propTypes = {
   hint: PropTypes.string,
   value: PropTypes.string,
   size: PropTypes.string,
+  wrapperClass: PropTypes.string,
   variant: PropTypes.oneOf(["form", "group"]),
   role: PropTypes.string,
   disabled: PropTypes.bool,

@@ -17,9 +17,18 @@ const ListContext = createContext({
   listItems: {},
   sortBy: sortbyOptions[0].value,
   setSortBy: () => {},
+  handleSelect: (isChecked = true, itemData = {}) =>
+    console.log(isChecked, itemData),
+  isSelected: (itemData = {}) => console.log(itemData),
+  selectedItems: []
 });
 
-export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
+export const ListProvider = ({
+  children,
+  formId = "",
+  endpoint = "",
+  onSelect,
+}) => {
   const [searchVal, setSearchVal] = useState();
   const [isCreateModalOpen, setOpenCreateModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -29,6 +38,8 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [lastFilters, setLastFilters] = useState();
   const [sortBy, setSortBy] = useState(sortbyOptions[0].value);
+
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const getData = async (urlParams, noSave = false) => {
     setIsLoading(true);
@@ -50,6 +61,10 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
   useEffect(() => {
     if (endpoint) getData();
   }, [endpoint, page]);
+
+  useEffect(() => {
+    if (onSelect) onSelect(selectedItems);
+  }, [selectedItems]);
 
   const handleSortBy = (id) => {
     setSortBy(id);
@@ -75,6 +90,15 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
 
   const openEditModal = (itemData) => () => setOpenEditModal(itemData);
 
+  const handleSelect = (isChecked, selectedItem) =>
+    setSelectedItems((prev) => {
+      if (isChecked) return [...prev, selectedItem];
+      return prev.filter((item) => item?.id !== selectedItem?.id);
+    });
+
+  const isSelected = (itemData) =>
+    selectedItems.some((item) => item?.id === itemData?.id);
+
   const Drawer = drawerTypes[formId];
 
   return (
@@ -91,6 +115,9 @@ export const ListProvider = ({ children, formId = "", endpoint = "" }) => {
         handleDelete,
         refresh: endpoint ? getData : () => {},
         handleSortBy,
+        handleSelect,
+        selectedItems,
+        isSelected,
       }}
     >
       {children}

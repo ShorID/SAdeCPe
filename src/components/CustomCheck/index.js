@@ -14,7 +14,14 @@ const CustomCheck = (props) => {
   const { id, label, variant = "form" } = props;
   const [isChecked, setIsChecked] = React.useState(props.checked);
 
-  const handleCheck = () => setIsChecked((prev) => !prev);
+  React.useEffect(() => {
+    setIsChecked(props.checked);
+  }, [props.checked]);
+
+  const handleCheck = () => {
+    setIsChecked((prev) => !prev);
+    if (props.onChange) props.onChange(!isChecked);
+  };
 
   const inputLabel =
     variant === "group"
@@ -22,11 +29,7 @@ const CustomCheck = (props) => {
       : label && <Label for={id}>{label}</Label>;
 
   const inputIcon = (
-    <Tooltip
-      tooltip={
-        isChecked ? "Deseleccionar?" : "Seleccionar?"
-      }
-    >
+    <Tooltip tooltip={isChecked ? "Deseleccionar?" : "Seleccionar?"}>
       <Clickable onClick={handleCheck} className={props.className}>
         <img
           className="CustomCheck"
@@ -62,6 +65,7 @@ CustomCheck.propTypes = {
   wrapperClass: PropTypes.string,
   variant: PropTypes.oneOf(["form", "group"]),
   checked: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default CustomCheck;
