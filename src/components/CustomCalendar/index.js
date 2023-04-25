@@ -65,7 +65,12 @@ const CustomCalendar = (props) => {
     setDate(clickedDate);
     setDates((prev) => [
       ...prev,
-      { date: clickedDate, center: centers[0], timeRange: ["13:00", "14:00"] },
+      {
+        date: clickedDate,
+        formatted: `${clickedDate.day}/${clickedDate.monthIndex}/${clickedDate.year}`,
+        center: centers[0],
+        timeRange: ["13:00", "14:00"],
+      },
     ]);
   };
 

@@ -11,6 +11,7 @@ import { Col, Form, Row } from "reactstrap";
 import fetcher from "@/services/fetcher";
 import ReactInputMask from "react-input-mask";
 import CustomButton from "../CustomButton";
+import { useRouter } from "next/router";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -26,6 +27,8 @@ const TrainingSheet = (props) => {
   const [orgs, setOrgs] = React.useState([]);
   const [priorities, setPriorities] = React.useState([]);
   const [validated, setValidated] = React.useState([]);
+
+  const router = useRouter();
 
   const handleChange = ({ target: { value, name } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -56,17 +59,27 @@ const TrainingSheet = (props) => {
   }, []);
 
   const handleSelect = (selectedItems) => {
-    if (Array.isArray(selectedItems))
+    if (Array.isArray(selectedItems)) {
       handleChange({
         target: { value: selectedItems.length, name: "totalColEnrolled" },
       });
+      handleChange({
+        target: {
+          value: selectedItems.map((item) => item.id).join(","),
+          name: "collaborators",
+        },
+      });
+    }
   };
   const handleSession = (selectedItems) => {
-    console.log("prro", selectedItems);
-    if (Array.isArray(selectedItems))
+    if (Array.isArray(selectedItems)){
       handleChange({
         target: { value: selectedItems.length, name: "totalSession" },
       });
+      handleChange({
+        target: { value: selectedItems, name: "sessions" },
+      });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -76,8 +89,8 @@ const TrainingSheet = (props) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
     fetcher({
-      url: "/capacitation/" + (!props.isCreating ? "create" : "update"),
-      method: !props.isCreating ? "POST" : "PUT",
+      url: "/capacitation/" + (props.isCreating ? "create" : "update"),
+      method: props.isCreating ? "POST" : "PUT",
       data: {
         ...formData,
         costInitial: formData.costUnit * formData.totalColEnrolled,
@@ -85,6 +98,12 @@ const TrainingSheet = (props) => {
           formData.costUnit * formData.totalColEnrolled * formData.totalSession,
         totalColFin: 0,
       },
+    }).then(({ data }) => {
+      if (props.isCreating) {
+        router.push(`/admin/capacitaciones/${data.id}`);
+      } else {
+        router.reload();
+      }
     });
   };
 

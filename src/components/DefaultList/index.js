@@ -50,35 +50,17 @@ const DefaultList = ({
       <ListBody>
         <ListContext.Consumer>
           {({ listItems }) =>
-            Array.isArray(listItems?.data) ? (
-              RowComponent &&
-              listItems.data.map((item, key) => (
-                <RowComponent
-                  key={key}
-                  withoutEdit={withoutEdit}
-                  withoutDelete={withoutDelete}
-                  withoutCheck={withoutCheck}
-                  {...item}
-                />
-              ))
-            ) : (
-              <DefaultDataProvider
-                getDefaultProps={getDefaultItems || defaultItems}
-              >
-                {(data) =>
-                  Array.isArray(data) &&
-                  RowComponent &&
-                  data.map((item, key) => (
-                    <RowComponent
-                      key={key}
-                      withoutEdit={withoutEdit}
-                      withoutDelete={withoutDelete}
-                      {...item}
-                    />
-                  ))
-                }
-              </DefaultDataProvider>
-            )
+            Array.isArray(listItems?.data) &&
+            RowComponent &&
+            listItems.data.map((item, key) => (
+              <RowComponent
+                key={key}
+                withoutEdit={withoutEdit}
+                withoutDelete={withoutDelete}
+                withoutCheck={withoutCheck}
+                {...item}
+              />
+            ))
           }
         </ListContext.Consumer>
       </ListBody>

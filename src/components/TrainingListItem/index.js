@@ -12,9 +12,11 @@ import { useRouter } from "next/router";
 
 const TrainingListItem = (props) => {
   const router = useRouter();
+
   const handleRedirect = () => {
-    router.push("/admin/capacitaciones/1");
+    router.push("/admin/capacitaciones/" + props.id);
   };
+
   return (
     <div className={classNames("TrainingListItem", props.className)}>
       <CustomCheck />
@@ -31,7 +33,7 @@ const TrainingListItem = (props) => {
             />
           </Tooltip>
           <div className="TrainingListItem-title">
-            <Text>{props.title}</Text>
+            <Text>{props.name}</Text>
           </div>
           <div className="TrainingListItem-options">
             <Clickable className="mx-2" onClick={handleRedirect}>
