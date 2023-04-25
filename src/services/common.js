@@ -1,5 +1,6 @@
 import moment from "moment";
 import randomSentence from "random-sentence";
+import currencyFormatter from 'currency-formatter';
 
 export function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -34,3 +35,16 @@ export function getRandomColor() {
 export function getFormatedDate(date) {
   return moment(date).format("yyyy-MM-DD");
 }
+
+export const formatQuantity = (
+  value = 0,
+  options = { precision: 2, code: "", decimal: ".", thousand: "," }
+) => {
+  const { precision = 2, code = "", decimal = ".", thousand = "," } = options;
+  return currencyFormatter.format(value, {
+    code,
+    decimal,
+    thousand,
+    precision,
+  });
+};

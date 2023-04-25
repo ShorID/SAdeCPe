@@ -42,6 +42,7 @@ const CustomCalendar = (props) => {
   const [dates, setDates] = React.useState([]);
   const [date, setDate] = React.useState();
   const [centers, setCenters] = React.useState();
+  const changeRef = React.useRef(null);
 
   const getCenters = () => {
     fetcher({ url: "/center" }).then(({ data }) => setCenters(data));
@@ -51,9 +52,21 @@ const CustomCalendar = (props) => {
     getCenters();
   }, []);
 
+  React.useEffect(() => {
+    clearTimeout(changeRef.current);
+    changeRef.current = setTimeout(
+      () => props.onChange && props.onChange(dates),
+      1000
+    );
+    return () => clearTimeout(changeRef.current);
+  }, [dates]);
+
   const handleSelect = (clickedDate) => {
     setDate(clickedDate);
-    setDates((prev) => [...prev, { date: clickedDate }]);
+    setDates((prev) => [
+      ...prev,
+      { date: clickedDate, center: centers[0], timeRange: ["13:00", "14:00"] },
+    ]);
   };
 
   const handleClick = (idx) => () => {
@@ -168,8 +181,8 @@ const CustomCalendar = (props) => {
                     type="select"
                     onChange={handleChange(key)}
                     name="center"
+                    value={item.center?.id}
                   >
-                    <option value="0"></option>
                     {Array.isArray(centers) &&
                       centers.map((item) => (
                         <option value={item.id} key={item.id}>
@@ -194,6 +207,8 @@ const CustomCalendar = (props) => {
   );
 };
 
-CustomCalendar.propTypes = {};
+CustomCalendar.propTypes = {
+  onChange: PropTypes.func,
+};
 
 export default CustomCalendar;

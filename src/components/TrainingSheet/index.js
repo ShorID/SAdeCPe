@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Text from "../Text";
 import CustomInput from "../CustomInput";
-import { getFormatedDate } from "@/services/common";
+import { formatQuantity, getFormatedDate } from "@/services/common";
 import DateInput from "../DateInput";
 import CustomCalendar from "../CustomCalendar";
 import Tags from "../Tags";
@@ -17,6 +17,8 @@ const TrainingSheet = (props) => {
     props.data || {
       external: false,
       certificated: false,
+      totalColEnrolled: 0,
+      totalSession: 0,
       creationDate: getFormatedDate(),
     }
   );
@@ -53,6 +55,20 @@ const TrainingSheet = (props) => {
     });
   }, []);
 
+  const handleSelect = (selectedItems) => {
+    if (Array.isArray(selectedItems))
+      handleChange({
+        target: { value: selectedItems.length, name: "totalColEnrolled" },
+      });
+  };
+  const handleSession = (selectedItems) => {
+    console.log("prro", selectedItems);
+    if (Array.isArray(selectedItems))
+      handleChange({
+        target: { value: selectedItems.length, name: "totalSession" },
+      });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -62,7 +78,13 @@ const TrainingSheet = (props) => {
     fetcher({
       url: "/capacitation/" + (!props.isCreating ? "create" : "update"),
       method: !props.isCreating ? "POST" : "PUT",
-      data: formData,
+      data: {
+        ...formData,
+        costInitial: formData.costUnit * formData.totalColEnrolled,
+        costFinal:
+          formData.costUnit * formData.totalColEnrolled * formData.totalSession,
+        totalColFin: 0,
+      },
     });
   };
 
@@ -149,12 +171,12 @@ const TrainingSheet = (props) => {
             label="Tiene certificado?"
             type="switch"
             role="switch"
-            name="is_certifiqued"
-            value={formData.is_certifiqued}
+            name="certificated"
+            value={formData.certificated}
             onChange={() =>
               setFormData((prev) => ({
                 ...prev,
-                is_certifiqued: !prev.is_certifiqued,
+                certificated: !prev.certificated,
               }))
             }
             required
@@ -185,7 +207,7 @@ const TrainingSheet = (props) => {
       <Row>
         <Col>
           <CustomInput
-            label="Costo ($)"
+            label="Costo unitario por persona ($)"
             name="costUnit"
             type="number"
             value={formData.costUnit}
@@ -205,22 +227,55 @@ const TrainingSheet = (props) => {
         </Col>
         <Col>
           <CustomInput
-            label="Total ($)"
+            label="Costo inicial ($)"
             name="total"
-            type="number"
-            value={formData.total}
+            value={formatQuantity(
+              formData.costUnit * formData.totalColEnrolled
+            )}
             onChange={handleChange}
             disabled
             required
           />
         </Col>
       </Row>
+      <Row>
+        <Col md="4" sm="12">
+          <CustomInput
+            label="Cantidad de personas a capacitar"
+            type="number"
+            value={formData.totalColEnrolled}
+            disabled
+            required
+          />
+        </Col>
+        <Col md="4" sm="12">
+          <CustomInput
+            label="Cantidad de sesiones"
+            type="number"
+            value={formData.totalSession}
+            disabled
+            required
+          />
+        </Col>
+        <Col md="4" sm="12">
+          <CustomInput
+            label="Costo final"
+            value={formatQuantity(
+              formData.costUnit *
+                formData.totalColEnrolled *
+                formData.totalSession
+            )}
+            disabled
+            required
+          />
+        </Col>
+      </Row>
       <Tags name="tags" onChange={handleChange} />
-      <CustomCalendar></CustomCalendar>
+      <CustomCalendar onChange={handleSession} />
       <Text
         TagName="h6"
         className="CustomCalendar-title mt-3"
-        text="Selecciona los participantes de esta capacitacion."
+        text={`Selecciona los participantes de esta capacitacion (${formData.totalSession}).`}
       />
       <DefaultList
         title="Empleados"
@@ -229,6 +284,7 @@ const TrainingSheet = (props) => {
         filters="employeePos,departament"
         withoutEdit
         withoutDelete
+        onSelect={handleSelect}
       />
       <CustomButton text="Guardar" />
     </Form>
