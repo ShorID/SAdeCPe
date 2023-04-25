@@ -14,6 +14,7 @@ const Admin = (props) => {
         listId="training"
         endpoint="/capacitation"
         onCreate={handleRedirect}
+        filters="stateType"
       />
     </AdminLayout>
   );

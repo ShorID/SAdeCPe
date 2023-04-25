@@ -12,10 +12,10 @@ import Icon from "../Icon";
 import Tooltip from "../Tooltip";
 
 export const sortbyOptions = [
-  { label: "A-Z", value: "character_asc" },
-  { label: "Z-A", value: "character_desc" },
   { label: "Mas Nuevo", value: "date_desc" },
   { label: "Mas Antiguo", value: "date_asc" },
+  { label: "A-Z", value: "character_asc" },
+  { label: "Z-A", value: "character_desc" },
 ];
 
 const SortBy = (props) => {
