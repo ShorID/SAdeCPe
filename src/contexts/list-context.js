@@ -40,7 +40,7 @@ export const ListProvider = ({
   const [sortBy, setSortBy] = useState(sortbyOptions[0].value);
 
   const [selectedItems, setSelectedItems] = useState([]);
-  console.log("prro", listItems)
+
   const getData = async (urlParams, noSave = false) => {
     setIsLoading(true);
     if (urlParams && !noSave) {

@@ -24,6 +24,7 @@
 @import "./Drawer.css";
 @import "./CustomInput.css";
 @import "./CustomCalendar.css";
+@import "./Form.css";
 
 :root {
   --main-color: #f86409;

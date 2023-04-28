@@ -1,0 +1,6 @@
+.Form-title{
+    border-bottom: 5px var(--base-color) solid;
+    padding-bottom: .5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}

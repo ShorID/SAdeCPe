@@ -68,7 +68,7 @@ const CustomCalendar = (props) => {
       {
         date: clickedDate,
         formatted: `${clickedDate.day}/${clickedDate.monthIndex}/${clickedDate.year}`,
-        center: centers[0],
+        center: centers[0] ?? {},
         timeRange: ["13:00", "14:00"],
       },
     ]);
@@ -109,16 +109,15 @@ const CustomCalendar = (props) => {
     <div>
       <Text
         TagName="h6"
-        className="CustomCalendar-title"
+        className="Form-title"
         text="Selecciona las sesiones que tendra tu capacitacion!"
       />
-      <div className="row">
-        <div className="col-4">
-          <Calendar
+      <Calendar
             onChange={handleSelect}
             value={date}
             weekDays={weekDays}
             months={months}
+            numberOfMonths={3}
             mapDays={({ date }) => {
               if (
                 dates.some(
@@ -146,11 +145,10 @@ const CustomCalendar = (props) => {
                   className: "CustomCalendar-ocuped",
                 };
             }}
+            className="mx-auto mb-3"
             showOtherDays
           />
-        </div>
-        <div className="col-8 d-flex flex-column">
-          <Text bold>Sesiones Añadidas:</Text>
+      <Text bold>Sesiones Añadidas:</Text>
           <div className="CustomCalendar-sessions">
             {Array.isArray(dates) &&
               dates.map((item, key) => (
@@ -206,8 +204,6 @@ const CustomCalendar = (props) => {
                 </Collapse>
               ))}
           </div>
-        </div>
-      </div>
     </div>
   );
 };

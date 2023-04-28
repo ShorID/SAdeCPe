@@ -109,7 +109,7 @@ const TrainingSheet = (props) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Text TagName="h5">
+      <Text TagName="h5" className="Form-title mt-0">
         {props.isCreating ? "Creando Capacitacion" : "Editando Capacitacion"}
       </Text>
       <Row>
@@ -223,6 +223,12 @@ const TrainingSheet = (props) => {
         name="creationDate"
         required
       />
+      <Tags name="tags" onChange={handleChange} />
+      <Text
+        TagName="h6"
+        className="Form-title"
+        text={`Precios y costos.`}
+      />
       <Row>
         <Col>
           <CustomInput
@@ -289,11 +295,10 @@ const TrainingSheet = (props) => {
           />
         </Col>
       </Row>
-      <Tags name="tags" onChange={handleChange} />
       <CustomCalendar onChange={handleSession} />
       <Text
         TagName="h6"
-        className="CustomCalendar-title mt-3"
+        className="Form-title"
         text={`Selecciona los participantes de esta capacitacion (${formData.totalSession}).`}
       />
       <DefaultList
