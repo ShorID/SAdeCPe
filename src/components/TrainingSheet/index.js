@@ -12,6 +12,7 @@ import fetcher from "@/services/fetcher";
 import ReactInputMask from "react-input-mask";
 import CustomButton from "../CustomButton";
 import { useRouter } from "next/router";
+import drawerTypes from "../Drawers/drawerTypes";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -34,12 +35,20 @@ const TrainingSheet = (props) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  React.useEffect(() => {
-    fetcher({ url: "/state" }).then(({ data }) => {
+  const getStates = () =>
+    fetcher({
+      url: "/state",
+      params: {
+        field: "stateType",
+        value: 1,
+      },
+    }).then(({ data }) => {
       if (Array.isArray(data)) setStates(data);
       if (data.length)
         handleChange({ target: { value: data[0].id, name: "stateId" } });
     });
+
+  const getOrgs = () =>
     fetcher({ url: "/org" }).then(({ data }) => {
       if (Array.isArray(data)) {
         setOrgs(data);
@@ -47,6 +56,8 @@ const TrainingSheet = (props) => {
           handleChange({ target: { value: data[0].id, name: "orgId" } });
       }
     });
+
+  const getPriorities = () =>
     fetcher({ url: "/priority" }).then(({ data }) => {
       if (Array.isArray(data)) {
         setPriorities(data);
@@ -56,6 +67,11 @@ const TrainingSheet = (props) => {
           });
       }
     });
+
+  React.useEffect(() => {
+    getStates();
+    getOrgs();
+    getPriorities();
   }, []);
 
   const handleSelect = (selectedItems) => {
@@ -72,7 +88,7 @@ const TrainingSheet = (props) => {
     }
   };
   const handleSession = (selectedItems) => {
-    if (Array.isArray(selectedItems)){
+    if (Array.isArray(selectedItems)) {
       handleChange({
         target: { value: selectedItems.length, name: "totalSession" },
       });
@@ -130,6 +146,8 @@ const TrainingSheet = (props) => {
             onChange={handleChange}
             required
             value={formData["stateId"]}
+            Drawer={drawerTypes["states"]}
+            refreshFunc={getStates}
           >
             {Array.isArray(states) &&
               states.map((item) => (
@@ -157,6 +175,8 @@ const TrainingSheet = (props) => {
             onChange={handleChange}
             required
             value={formData["orgId"]}
+            Drawer={drawerTypes["org"]}
+            refreshFunc={getOrgs}
           >
             {Array.isArray(orgs) &&
               orgs.map((item) => (
@@ -174,6 +194,8 @@ const TrainingSheet = (props) => {
             onChange={handleChange}
             required
             value={formData["levelPrioryId"]}
+            Drawer={drawerTypes["priorityLevel"]}
+            refreshFunc={getPriorities}
           >
             {Array.isArray(priorities) &&
               priorities.map((item) => (
@@ -224,11 +246,7 @@ const TrainingSheet = (props) => {
         required
       />
       <Tags name="tags" onChange={handleChange} />
-      <Text
-        TagName="h6"
-        className="Form-title"
-        text={`Precios y costos.`}
-      />
+      <Text TagName="h6" className="Form-title" text={`Precios y costos.`} />
       <Row>
         <Col>
           <CustomInput
@@ -242,23 +260,25 @@ const TrainingSheet = (props) => {
         </Col>
         <Col>
           <CustomInput
-            label="Fondo INATEC ($)"
+            label="Tipo de exoneracion"
+            type="select"
+            name="levelPrioryId"
+            // onChange={handleChange}
+            required
+            // value={formData["levelPrioryId"]}
+          >
+            <option>Fondo Inatec</option>
+            <option>Proveedor horas gratuitas</option>
+            <option>Por la organizacion</option>
+          </CustomInput>
+        </Col>
+        <Col>
+          <CustomInput
+            label="Fondo de Exoneracion ($)"
             name="inatecBackground"
             type="number"
             value={formData.inatecBackground}
             onChange={handleChange}
-            required
-          />
-        </Col>
-        <Col>
-          <CustomInput
-            label="Costo inicial ($)"
-            name="total"
-            value={formatQuantity(
-              formData.costUnit * formData.totalColEnrolled
-            )}
-            onChange={handleChange}
-            disabled
             required
           />
         </Col>
@@ -268,8 +288,9 @@ const TrainingSheet = (props) => {
           <CustomInput
             label="Cantidad de personas a capacitar"
             type="number"
+            name="totalColEnrolled"
             value={formData.totalColEnrolled}
-            disabled
+            onChange={handleChange}
             required
           />
         </Col>
@@ -282,9 +303,21 @@ const TrainingSheet = (props) => {
             required
           />
         </Col>
-        <Col md="4" sm="12">
+        <Col sm="12">
           <CustomInput
-            label="Costo final"
+            label="Costo inicial ($)"
+            name="total"
+            value={formatQuantity(
+              formData.costUnit * formData.totalColEnrolled
+            )}
+            onChange={handleChange}
+            disabled
+            required
+          />
+        </Col>
+        <Col sm="12">
+          <CustomInput
+            label="Costo final ($)"
             value={formatQuantity(
               formData.costUnit *
                 formData.totalColEnrolled *

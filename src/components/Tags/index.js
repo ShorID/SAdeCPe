@@ -47,7 +47,10 @@ const Tags = (props) => {
   };
 
   return (
-    <CustomInput label="Escoga los temas de esta capacitacion">
+    <CustomInput
+      label="Escoga los temas de esta capacitacion"
+      hint="Puedes añadir tu tema tan solo presionando 'Enter'"
+    >
       <Select
         defaultValue={props.value}
         isMulti

@@ -6,13 +6,19 @@ import "@/styles/globals.css";
 import moment from "moment";
 import "moment/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
-import '@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css';
-import 'react-clock/dist/Clock.css';
+import "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css";
+import "react-clock/dist/Clock.css";
+import '@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import React from "react";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 export default function App({ Component, pageProps }) {
   React.useEffect(() => {
     moment.locale("es-mx");
   }, []);
-  return <Component {...pageProps} />;
+
+  const windowDimensions = useWindowDimensions();
+
+  return <Component {...pageProps} windowDimensions={windowDimensions} />;
 }

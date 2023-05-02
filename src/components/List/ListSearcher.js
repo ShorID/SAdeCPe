@@ -8,7 +8,7 @@ import ListContext from "@/contexts/list-context";
 import Collapse from "../Collapse";
 import Text from "../Text";
 
-const filters = [
+export const filters = [
   {
     label: "Escoge un tipo de estado",
     endpoint: "/type-state",

@@ -4,6 +4,7 @@ import AdminLayout from "@/components/Layout/AdminLayout";
 import TrainingSheet from "@/components/TrainingSheet";
 
 const CreateTraining = (props) => {
+  console.log("prro", props)
   return (
     <AdminLayout>
       <TrainingSheet isCreating />
