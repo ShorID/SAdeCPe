@@ -9,6 +9,8 @@ import classNames from "classnames";
 import { Badge } from "reactstrap";
 import ListContext from "@/contexts/list-context";
 import { useRouter } from "next/router";
+import { ChartExample } from "../ChartExample";
+import Popup from "../Popup";
 
 const EmployeesRows = (props) => {
   const router = useRouter();
@@ -61,6 +63,9 @@ const EmployeesRows = (props) => {
                 </Tooltip>
               </Clickable>
             )}
+            <Popup title="Estadisticas" description={<ChartExample />}>
+              <Tooltip tooltip="Ver datos" placement="right"><Icon name="faCubesStacked" /></Tooltip>
+            </Popup>
           </div>
         </div>
         <div className="d-flex mb-2">

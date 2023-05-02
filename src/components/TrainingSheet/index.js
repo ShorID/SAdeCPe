@@ -7,7 +7,7 @@ import DateInput from "../DateInput";
 import CustomCalendar from "../CustomCalendar";
 import Tags from "../Tags";
 import DefaultList from "../DefaultList";
-import { Col, Form, Row } from "reactstrap";
+import { Col, Form, Row, Table } from "reactstrap";
 import fetcher from "@/services/fetcher";
 import ReactInputMask from "react-input-mask";
 import CustomButton from "../CustomButton";
@@ -81,7 +81,7 @@ const TrainingSheet = (props) => {
       });
       handleChange({
         target: {
-          value: selectedItems.map((item) => item.id).join(","),
+          value: selectedItems,
           name: "collaborators",
         },
       });
@@ -332,7 +332,33 @@ const TrainingSheet = (props) => {
       <Text
         TagName="h6"
         className="Form-title"
-        text={`Selecciona los participantes de esta capacitacion (${formData.totalSession}).`}
+        text={`Empleados seleccionados (${formData.totalColEnrolled}).`}
+      />
+      <Table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombres</th>
+            <th>Sesiones</th>
+            <th>Activo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.isArray(formData.collaborators) &&
+            formData.collaborators.map((item) => (
+              <tr>
+                <th scope="row">{item.id}</th>
+                <td>{`${item.name} ${item.lastName}`}</td>
+                <td>Todas las sesiones.</td>
+                <td>{item.active? "Si" : "No"}</td>
+              </tr>
+            ))}
+        </tbody>
+      </Table>
+      <Text
+        TagName="h6"
+        className="Form-title"
+        text={`Selecciona los participantes de esta capacitacion!`}
       />
       <DefaultList
         title="Empleados"

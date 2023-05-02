@@ -6,7 +6,7 @@
 .CustomCalendar-session{
     background-color: var(--unselected-color);
     padding: 5px 10px;
-    justify-content: space-between;
+    text-align: start;
     width: 100%;
     transition: all 200ms;
 }
@@ -16,6 +16,7 @@
 }
 .CustomCalendar-sessionContent{
     padding: 10px;
+    padding-top: 0;
     border-bottom: 1px solid gray;
 }
 .CustomCalendar-ocuped{
