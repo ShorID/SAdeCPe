@@ -375,7 +375,7 @@ const TrainingSheet = (props) => {
         className="Form-title"
         text="Añade las sesiones que tendra tu capacitacion!"
       />
-      <TrainingSession />
+      <TrainingSession title="Sesion 1" />
       <CustomCalendar onChange={handleSession} />
       <CustomButton text="Guardar" />
     </Form>

@@ -1,11 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, CardBody, CardHeader, CardText, CardTitle } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardText,
+  CardTitle,
+  Col,
+  Row,
+} from "reactstrap";
 import Text from "../Text";
 import { Calendar } from "react-multi-date-picker";
 import CustomInput from "../CustomInput";
 import drawerTypes from "../Drawers/drawerTypes";
 import fetcher from "@/services/fetcher";
+import DateRangePicker from "@wojtekmaj/react-daterange-picker";
+import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
+import TrainingSessionMember from "./TrainingSessionMember";
+import Collapse from "../Collapse";
 
 const weekDays = ["DO", "LU", "MA", "MI", "JU", "VI", "SA"];
 
@@ -52,30 +64,52 @@ const TrainingSession = (props) => {
         <Text>{props.title}</Text>
       </CardHeader>
       <CardBody>
-        <Calendar
-          weekDays={weekDays}
-          months={months}
-          numberOfMonths={3}
-          className="mb-3 mx-auto"
-          range
-          showOtherDays
-        />
-        <CustomInput
-          label="Centro de capacitacion"
-          type="select"
-          onChange={handleChange}
-          name="center"
-          value={formData.center?.id}
-          Drawer={drawerTypes["trainingCenter"]}
-          refreshFunc={getCenters}
+        <Row className="mb-3">
+          <Col sm="12" md="4">
+            <Calendar weekDays={weekDays} months={months} range showOtherDays />
+          </Col>
+          <Col sm="12" md="8">
+            <CustomInput label="Horario: " labelClass="d-block">
+              <DateRangePicker
+              // value={dates[showingItem].date}
+              // className="d-block w-auto"
+              />
+            </CustomInput>
+            <CustomInput label="Duracion:" labelClass="d-block">
+              <TimeRangePicker
+              // value={dates[showingItem].timeRange}
+              // onChange={handleTimeRange(showingItem)}
+              // className="d-block w-auto"
+              />
+            </CustomInput>
+            <CustomInput
+              label="Centro de capacitacion"
+              type="select"
+              onChange={handleChange}
+              name="center"
+              value={formData.center?.id}
+              Drawer={drawerTypes["trainingCenter"]}
+              refreshFunc={getCenters}
+            >
+              {Array.isArray(centers) &&
+                centers.map((item) => (
+                  <option value={item.id} key={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+            </CustomInput>
+          </Col>
+        </Row>
+        <Collapse
+          className="TrainingSession-members"
+          header={
+            <Text className="w-100" TagName="div">
+              Participantes
+            </Text>
+          }
         >
-          {Array.isArray(centers) &&
-            centers.map((item) => (
-              <option value={item.id} key={item.id}>
-                {item.name}
-              </option>
-            ))}
-        </CustomInput>
+          <TrainingSessionMember />
+        </Collapse>
       </CardBody>
     </Card>
   );

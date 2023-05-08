@@ -25,6 +25,7 @@
 @import "./CustomInput.css";
 @import "./CustomCalendar.css";
 @import "./Form.css";
+@import "./TrainingSession.css";
 
 :root {
   --main-color: #f86409;

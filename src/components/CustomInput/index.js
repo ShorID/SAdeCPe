@@ -83,13 +83,13 @@ const CustomInput = (props) => {
   const fullInput =
     variant === "group" ? (
       <InputGroup className={props.wrapperClass}>
-        {label && <InputGroupText>{labelText}</InputGroupText>}
+        {label && <InputGroupText className={props.labelClass}>{labelText}</InputGroupText>}
         {input}
         {props.type !== "select" && props.children}
       </InputGroup>
     ) : (
       <FormGroup switch={type === "switch"} className={props.wrapperClass}>
-        {label && <Label for={id}>{labelText}</Label>}
+        {label && <Label for={id} className={props.labelClass}>{labelText}</Label>}
         {input}
         {props.type !== "select" && props.children}
         {feedback && <FormFeedback valid>{feedback}</FormFeedback>}
@@ -119,6 +119,7 @@ CustomInput.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   className: PropTypes.string,
+  labelClass: PropTypes.string,
   feedback: PropTypes.string,
   hint: PropTypes.string,
   value: PropTypes.string,
