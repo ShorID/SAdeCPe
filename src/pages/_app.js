@@ -10,6 +10,7 @@ import "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css";
 import "react-clock/dist/Clock.css";
 import '@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import 'react-vertical-timeline-component/style.min.css';
 import React from "react";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 

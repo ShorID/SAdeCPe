@@ -13,6 +13,8 @@ import ReactInputMask from "react-input-mask";
 import CustomButton from "../CustomButton";
 import { useRouter } from "next/router";
 import drawerTypes from "../Drawers/drawerTypes";
+import TrainingSessions from "../TrainingSession";
+import TrainingSession from "../TrainingSession";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -328,7 +330,20 @@ const TrainingSheet = (props) => {
           />
         </Col>
       </Row>
-      <CustomCalendar onChange={handleSession} />
+      <Text
+        TagName="h6"
+        className="Form-title"
+        text={`Selecciona los participantes de esta capacitacion!`}
+      />
+      <DefaultList
+        title="Empleados"
+        endpoint="/collaborator"
+        listId="employees"
+        filters="employeePos,departament"
+        withoutEdit
+        withoutDelete
+        onSelect={handleSelect}
+      />
       <Text
         TagName="h6"
         className="Form-title"
@@ -350,7 +365,7 @@ const TrainingSheet = (props) => {
                 <th scope="row">{item.id}</th>
                 <td>{`${item.name} ${item.lastName}`}</td>
                 <td>Todas las sesiones.</td>
-                <td>{item.active? "Si" : "No"}</td>
+                <td>{item.active ? "Si" : "No"}</td>
               </tr>
             ))}
         </tbody>
@@ -358,17 +373,10 @@ const TrainingSheet = (props) => {
       <Text
         TagName="h6"
         className="Form-title"
-        text={`Selecciona los participantes de esta capacitacion!`}
+        text="Añade las sesiones que tendra tu capacitacion!"
       />
-      <DefaultList
-        title="Empleados"
-        endpoint="/collaborator"
-        listId="employees"
-        filters="employeePos,departament"
-        withoutEdit
-        withoutDelete
-        onSelect={handleSelect}
-      />
+      <TrainingSession />
+      <CustomCalendar onChange={handleSession} />
       <CustomButton text="Guardar" />
     </Form>
   );
