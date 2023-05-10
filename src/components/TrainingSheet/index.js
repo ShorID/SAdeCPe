@@ -114,8 +114,16 @@ const TrainingSheet = (props) => {
     }
   };
 
-  const handleAddSession = () => setSessions((prev) => [...prev, {}]);
-
+  const handleAddSession = () => {
+    setSessions((prev) => [...prev, {}])
+    handleChange({
+      target: { value: sessions.length + 1, name: "totalSession" },
+    });
+    handleChange({
+      target: { value: [...sessions, {}], name: "sessions" },
+    });
+  };
+  console.log("prro", formData)
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
