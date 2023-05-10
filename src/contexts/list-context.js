@@ -28,6 +28,7 @@ export const ListProvider = ({
   formId = "",
   endpoint = "",
   onSelect,
+  itemsQuantity = 10,
 }) => {
   const [searchVal, setSearchVal] = useState();
   const [isCreateModalOpen, setOpenCreateModal] = useState(false);
@@ -52,6 +53,7 @@ export const ListProvider = ({
       params: {
         page,
         sortBy,
+        limit: itemsQuantity,
         ...(urlParams ? urlParams : lastFilters ? lastFilters : {}),
       },
     }).then((res) => res.data && setListItems(res.data));

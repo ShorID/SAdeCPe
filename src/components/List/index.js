@@ -11,6 +11,7 @@ const List = (props) => {
         formId={props.formId}
         endpoint={props.endpoint}
         onSelect={props.onSelect}
+        itemsQuantity={props.itemsQuantity}
       >
         <>{props.children}</>
       </ListProvider>

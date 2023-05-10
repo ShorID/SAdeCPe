@@ -129,3 +129,6 @@ a {
     opacity: 1;
   }
 }
+.react-datepicker__triangle{
+  left: -10px !important;
+}

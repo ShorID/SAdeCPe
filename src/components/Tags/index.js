@@ -24,8 +24,8 @@ const Tags = (props) => {
 
   React.useEffect(() => {
     if (props.onChange)
-      props.onChange({ target: { value: trainingTags, name: props.name } });
-  }, [trainingTags]);
+      props.onChange({ target: { value: selected, name: props.name } });
+  }, [selected]);
 
   const handleChange = (newValue = "") => {
     setNewTag(newValue);

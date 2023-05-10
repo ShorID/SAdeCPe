@@ -67,14 +67,14 @@ const CustomInput = (props) => {
       {Drawer && (
         <Tooltip tooltip="No encuentras lo que buscas? Crealo!" TagName="span">
           <Button
-          size="sm"
-          color="success"
-          className="CustomInput-createBtn"
-          type="button"
-          onClick={openCreateModal}
-        >
-          <Icon name="faPlus" />
-        </Button>
+            size="sm"
+            color="success"
+            className="CustomInput-createBtn"
+            type="button"
+            onClick={openCreateModal}
+          >
+            <Icon name="faPlus" />
+          </Button>
         </Tooltip>
       )}
     </>
@@ -83,13 +83,21 @@ const CustomInput = (props) => {
   const fullInput =
     variant === "group" ? (
       <InputGroup className={props.wrapperClass}>
-        {label && <InputGroupText className={props.labelClass}>{labelText}</InputGroupText>}
+        {label && (
+          <InputGroupText className={props.labelClass}>
+            {labelText}
+          </InputGroupText>
+        )}
         {input}
         {props.type !== "select" && props.children}
       </InputGroup>
     ) : (
       <FormGroup switch={type === "switch"} className={props.wrapperClass}>
-        {label && <Label for={id} className={props.labelClass}>{labelText}</Label>}
+        {label && (
+          <Label for={id} className={props.labelClass}>
+            {labelText}
+          </Label>
+        )}
         {input}
         {props.type !== "select" && props.children}
         {feedback && <FormFeedback valid>{feedback}</FormFeedback>}
@@ -97,7 +105,11 @@ const CustomInput = (props) => {
       </FormGroup>
     );
 
-  const withTooltip = tooltip? <Tooltip tooltip={tooltip}>{fullInput}</Tooltip> : fullInput
+  const withTooltip = tooltip ? (
+    <Tooltip tooltip={tooltip}>{fullInput}</Tooltip>
+  ) : (
+    fullInput
+  );
 
   return (
     <React.Fragment>

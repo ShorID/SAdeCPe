@@ -30,7 +30,7 @@ CustomButton.propTypes = {
   variant: PropTypes.string,
   btnColor: PropTypes.string,
   type: PropTypes.string,
-  btnSize: PropTypes.oneOf(["sm","md","lg"]),
+  btnSize: PropTypes.oneOf(["sm", "md", "lg"]),
   btnOutline: PropTypes.bool,
   withoutCustom: PropTypes.bool,
 };

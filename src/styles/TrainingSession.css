@@ -1,4 +1,16 @@
 @import "./TrainingSessionMember.css";
 
-.TrainingSession{
+.TrainingSession-members {
+  border-bottom: 1px solid black;
+  margin-bottom: 1rem;
+  text-align: left;
+  width: 100%;
+}
+
+.TrainingSession-membersContainer {
+  border-radius: var(--border-radius);
+
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.33);
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.33);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.33);
 }

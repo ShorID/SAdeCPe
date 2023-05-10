@@ -7,7 +7,7 @@ import DateInput from "../DateInput";
 import CustomCalendar from "../CustomCalendar";
 import Tags from "../Tags";
 import DefaultList from "../DefaultList";
-import { Col, Form, Row, Table } from "reactstrap";
+import { Button, Col, Form, Row, Table } from "reactstrap";
 import fetcher from "@/services/fetcher";
 import ReactInputMask from "react-input-mask";
 import CustomButton from "../CustomButton";
@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import drawerTypes from "../Drawers/drawerTypes";
 import TrainingSessions from "../TrainingSession";
 import TrainingSession from "../TrainingSession";
+import { BarExample } from "../BarExample";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -29,6 +30,8 @@ const TrainingSheet = (props) => {
   const [states, setStates] = React.useState([]);
   const [orgs, setOrgs] = React.useState([]);
   const [priorities, setPriorities] = React.useState([]);
+  const [sessions, setSessions] = React.useState([]);
+  const [reasons, setReasons] = React.useState([]);
   const [validated, setValidated] = React.useState([]);
 
   const router = useRouter();
@@ -69,11 +72,22 @@ const TrainingSheet = (props) => {
           });
       }
     });
+  const getReasons = () =>
+    fetcher({ url: "/reason" }).then(({ data }) => {
+      if (Array.isArray(data)) {
+        setReasons(data);
+        if (data.length)
+          handleChange({
+            target: { value: data[0].id, name: "reasonId" },
+          });
+      }
+    });
 
   React.useEffect(() => {
     getStates();
     getOrgs();
     getPriorities();
+    getReasons();
   }, []);
 
   const handleSelect = (selectedItems) => {
@@ -99,6 +113,8 @@ const TrainingSheet = (props) => {
       });
     }
   };
+
+  const handleAddSession = () => setSessions((prev) => [...prev, {}]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -264,14 +280,17 @@ const TrainingSheet = (props) => {
           <CustomInput
             label="Tipo de exoneracion"
             type="select"
-            name="levelPrioryId"
-            // onChange={handleChange}
+            name="reasonId"
+            onChange={handleChange}
             required
-            // value={formData["levelPrioryId"]}
+            value={formData["reasonId"]}
           >
-            <option>Fondo Inatec</option>
-            <option>Proveedor horas gratuitas</option>
-            <option>Por la organizacion</option>
+            {Array.isArray(reasons) &&
+              reasons.map((item) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))}
           </CustomInput>
         </Col>
         <Col>
@@ -340,6 +359,7 @@ const TrainingSheet = (props) => {
         endpoint="/collaborator"
         listId="employees"
         filters="employeePos,departament"
+        itemsQuantity={5}
         withoutEdit
         withoutDelete
         onSelect={handleSelect}
@@ -370,13 +390,45 @@ const TrainingSheet = (props) => {
             ))}
         </tbody>
       </Table>
-      <Text
-        TagName="h6"
-        className="Form-title"
-        text="Añade las sesiones que tendra tu capacitacion!"
-      />
-      <TrainingSession title="Sesion 1" />
-      <CustomCalendar onChange={handleSession} />
+      <Text TagName="h6" className="Form-title">
+        Añade las sesiones que tendra tu capacitacion!
+      </Text>
+      {sessions.map((_, key) => (
+        <TrainingSession
+          title={`Sesion ${key + 1}`}
+          collaborators={formData.collaborators}
+        />
+      ))}
+      <Button
+        color="warning"
+        className="w-100 my-2"
+        type="button"
+        onClick={handleAddSession}
+      >
+        Añadir Sesion
+      </Button>
+      <Text TagName="h6" className="Form-title">
+        Resultados Esperados
+      </Text>
+      {Array.isArray(formData.tags) &&
+      !!formData.tags.length &&
+      Array.isArray(formData.collaborators) &&
+      !!formData.collaborators.length ? (
+        formData.tags.map((item) => (
+          <BarExample
+            labels={formData.collaborators.map((item) => item.name)}
+            title={{
+              display: true,
+              text: "Resultados esperados para " + item.label,
+            }}
+          />
+        ))
+      ) : (
+        <Text TagName="div" className="mb-4">
+          Debes de agregar al menos un tema y un colaborador para poder ver la
+          grafica
+        </Text>
+      )}
       <CustomButton text="Guardar" />
     </Form>
   );

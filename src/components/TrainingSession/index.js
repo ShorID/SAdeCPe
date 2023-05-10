@@ -7,6 +7,7 @@ import {
   CardText,
   CardTitle,
   Col,
+  Container,
   Row,
 } from "reactstrap";
 import Text from "../Text";
@@ -14,10 +15,12 @@ import { Calendar } from "react-multi-date-picker";
 import CustomInput from "../CustomInput";
 import drawerTypes from "../Drawers/drawerTypes";
 import fetcher from "@/services/fetcher";
-import DateRangePicker from "@wojtekmaj/react-daterange-picker";
-import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 import TrainingSessionMember from "./TrainingSessionMember";
 import Collapse from "../Collapse";
+import Clickable from "../Clickable";
+import Icon from "../Icon";
+import ReactInputMask from "react-input-mask";
+import ReactDatePicker from "react-datepicker";
 
 const weekDays = ["DO", "LU", "MA", "MI", "JU", "VI", "SA"];
 
@@ -39,47 +42,113 @@ const months = [
 const TrainingSession = (props) => {
   const [formData, setFormData] = React.useState({});
   const [centers, setCenters] = React.useState([]);
+  const [trainers, setTrainers] = React.useState([]);
+  const [isMinimized, setIsMinimized] = React.useState(true);
 
   const getCenters = () => {
-    fetcher({ url: "/center" }).then(({ data }) => setCenters(data));
+    fetcher({ url: "/center" }).then(({ data }) => {
+      if (Array.isArray(data)) setCenters(data);
+      if (data.length)
+        handleChange({ target: { value: data[0].id, name: "center" } });
+    });
+  };
+  const getTrainers = () => {
+    fetcher({ url: "/trainer" }).then(({ data }) => {
+      if (Array.isArray(data)) setTrainers(data);
+      if (data.length)
+        handleChange({ target: { value: data[0].id, name: "trainer" } });
+    });
   };
 
   React.useEffect(() => {
     getCenters();
+    getTrainers();
   }, []);
 
   const handleChange = ({ target: { value, name } }) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]:
-        name === "center"
-          ? centers.find((item) => `${item.id}` === `${value}`)
-          : value,
-    }));
+    setFormData((prev) => {
+      let returnObj = {
+        ...prev,
+        [name]: value,
+      };
+      if (name === "center")
+        return {
+          ...returnObj,
+          [name]: centers.find((item) => `${item.id}` === `${value}`),
+          centerId: value,
+        };
+      if (name === "trainer")
+        return {
+          ...returnObj,
+          [name]: trainers.find((item) => `${item.id}` === `${value}`),
+          trainerId: value,
+        };
+      return returnObj;
+    });
   };
+
+  const handleChangeDate = (value) =>
+    handleChange({ target: { value, name: "dates" } });
+
+  const handleChangeTime = (name) => (value) =>
+    handleChange({ target: { value, name } });
+
+  const handleMinimize = () => setIsMinimized((prev) => !prev);
 
   return (
     <Card className="my-2">
-      <CardHeader>
+      <CardHeader className="d-flex justify-content-between">
         <Text>{props.title}</Text>
+        <div className="ml-auto d-flex justify-content-end">
+          <Clickable className="mx-1" onClick={handleMinimize}>
+            <Icon name="faMinus" />
+          </Clickable>
+          <Clickable className="mx-1">
+            <Icon name="faCircleXmark" />
+          </Clickable>
+        </div>
       </CardHeader>
-      <CardBody>
+      <CardBody
+        style={{
+          transition: `max-height 0.15s ease-in}`,
+          maxHeight: isMinimized ? "0px" : "unset",
+          overflow: "hidden",
+          ...(isMinimized ? { padding: "0px" } : {}),
+        }}
+      >
         <Row className="mb-3">
           <Col sm="12" md="4">
-            <Calendar weekDays={weekDays} months={months} range showOtherDays />
+            <Calendar
+              weekDays={weekDays}
+              months={months}
+              onChange={handleChangeDate}
+              range
+              showOtherDays
+            />
           </Col>
           <Col sm="12" md="8">
-            <CustomInput label="Horario: " labelClass="d-block">
-              <DateRangePicker
-              // value={dates[showingItem].date}
-              // className="d-block w-auto"
+            <CustomInput label="De: " value={formData.from}>
+              <ReactDatePicker
+                selected={formData.from}
+                onChange={handleChangeTime("from")}
+                showTimeSelect
+                showTimeSelectOnly
+                // timeIntervals={15}
+                timeCaption="Time"
+                dateFormat="h:mm aa"
+                className="form-control"
               />
             </CustomInput>
-            <CustomInput label="Duracion:" labelClass="d-block">
-              <TimeRangePicker
-              // value={dates[showingItem].timeRange}
-              // onChange={handleTimeRange(showingItem)}
-              // className="d-block w-auto"
+            <CustomInput label="Hasta: " value={formData.to}>
+              <ReactDatePicker
+                selected={formData.to}
+                onChange={handleChangeTime("to")}
+                showTimeSelect
+                showTimeSelectOnly
+                // timeIntervals={15}
+                timeCaption="Time"
+                dateFormat="h:mm aa"
+                className="form-control"
               />
             </CustomInput>
             <CustomInput
@@ -98,18 +167,41 @@ const TrainingSession = (props) => {
                   </option>
                 ))}
             </CustomInput>
+            <CustomInput
+              label="Capacitador"
+              type="select"
+              onChange={handleChange}
+              name="trainer"
+              value={formData.trainer?.id}
+              Drawer={drawerTypes["trainer"]}
+              refreshFunc={getTrainers}
+            >
+              {Array.isArray(trainers) &&
+                trainers.map((item) => (
+                  <option value={item.id} key={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+            </CustomInput>
           </Col>
         </Row>
-        <Collapse
-          className="TrainingSession-members"
-          header={
-            <Text className="w-100" TagName="div">
-              Participantes
-            </Text>
-          }
-        >
-          <TrainingSessionMember />
-        </Collapse>
+        {Array.isArray(props.collaborators) && !!props.collaborators.length && (
+          <Collapse
+            className="TrainingSession-members"
+            contentClass="TrainingSession-membersContainer"
+            header={
+              <Text className="w-100" TagName="div">
+                Participantes
+              </Text>
+            }
+          >
+            <Container>
+              {props.collaborators.map((item) => (
+                <TrainingSessionMember {...item} />
+              ))}
+            </Container>
+          </Collapse>
+        )}
       </CardBody>
     </Card>
   );
@@ -117,6 +209,7 @@ const TrainingSession = (props) => {
 
 TrainingSession.propTypes = {
   title: PropTypes.string,
+  collaborators: PropTypes.array,
 };
 
 export default TrainingSession;

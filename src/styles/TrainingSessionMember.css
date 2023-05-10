@@ -1,16 +1,11 @@
 .TrainingSessionMember {
   border-radius: var(--border-radius);
   background-color: white;
-  display: block;
 
-  padding: .5rem;
+  padding: .5rem .2rem;
+  margin-bottom: 3px;
+}
+.TrainingSessionMember-disabled {
+  background-color: gainsboro;
+}
 
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.33);
-  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.33);
-  -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.33);
-}
-.TrainingSessionMember-members {
-  border-bottom: 1px solid black;
-  text-align: left;
-  width: 100%;
-}
