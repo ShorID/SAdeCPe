@@ -65,12 +65,22 @@ const TrainingSession = (props) => {
     getTrainers();
   }, []);
 
+  React.useEffect(() => {
+    if (props.onChange) props.onChange(formData);
+  }, [formData]);
+
   const handleChange = ({ target: { value, name } }) => {
     setFormData((prev) => {
       let returnObj = {
         ...prev,
         [name]: value,
       };
+      if (name === "dates")
+        return {
+          ...returnObj,
+          [name]: value,
+          formattedDate: [value[0].day,value[1].day],
+        };
       if (name === "center")
         return {
           ...returnObj,

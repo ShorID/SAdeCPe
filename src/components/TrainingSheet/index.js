@@ -103,19 +103,9 @@ const TrainingSheet = (props) => {
       });
     }
   };
-  const handleSession = (selectedItems) => {
-    if (Array.isArray(selectedItems)) {
-      handleChange({
-        target: { value: selectedItems.length, name: "totalSession" },
-      });
-      handleChange({
-        target: { value: selectedItems, name: "sessions" },
-      });
-    }
-  };
 
   const handleAddSession = () => {
-    setSessions((prev) => [...prev, {}])
+    setSessions((prev) => [...prev, {}]);
     handleChange({
       target: { value: sessions.length + 1, name: "totalSession" },
     });
@@ -123,7 +113,13 @@ const TrainingSheet = (props) => {
       target: { value: [...sessions, {}], name: "sessions" },
     });
   };
-  console.log("prro", formData)
+  console.log("prro", sessions);
+
+  const handleChangeSession = (idx) => (newData) =>
+    setSessions((prev) =>
+      prev.map((item, key) => (key === idx ? { ...item, ...newData } : item))
+    );
+
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -405,6 +401,7 @@ const TrainingSheet = (props) => {
         <TrainingSession
           title={`Sesion ${key + 1}`}
           collaborators={formData.collaborators}
+          onChange={handleChangeSession(key)}
         />
       ))}
       <Button

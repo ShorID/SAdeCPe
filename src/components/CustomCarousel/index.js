@@ -36,7 +36,7 @@ const CustomCarousel = (props) => {
       <CarouselItem
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={item.src}
+        key={item.id || item.src}
       >
         <img src={item.src} alt={item.altText} className="CustomCarousel-img" />
         <Container className="position-relative">

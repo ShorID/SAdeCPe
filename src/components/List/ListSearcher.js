@@ -30,7 +30,7 @@ const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
   const [filtersData, setFiltersData] = useState([]);
   const [formData, setFormData] = useState();
 
-  const { refresh, selectedItems } = useContext(ListContext);
+  const { refresh } = useContext(ListContext);
 
   const getFiltersData = () => {
     let requests = [];
@@ -66,15 +66,6 @@ const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
   return (
     <ListBody className="ListSearcher">
       <Searcher onChange={handleChange} />
-      {Array.isArray(selectedItems) && !!selectedItems.length && (
-        <CustomInput
-          type="checkbox"
-          size="sm"
-          label="Mostrar seleccionados."
-          wrapperClass="d-flex flex-row-reverse justify-content-start ml-auto"
-          id="showSelected"
-        />
-      )}
       {!withoutFilters && (
         <div className="mt-3">
           <Collapse header={<Text size="sm">Mas filtros</Text>}>
