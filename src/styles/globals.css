@@ -26,6 +26,7 @@
 @import "./CustomCalendar.css";
 @import "./Form.css";
 @import "./TrainingSession.css";
+@import "./AddCollaboratorModal.css";
 
 :root {
   --main-color: #f86409;

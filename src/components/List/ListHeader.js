@@ -6,6 +6,8 @@ import ListOptions from "./ListOptions";
 import Text from "../Text";
 import Icon from "../Icon";
 import ListContext from "@/contexts/list-context";
+import Clickable from "../Clickable";
+import CustomButton from "../CustomButton";
 
 const ListHeader = (props) => {
   const listContext = useContext(ListContext);
@@ -21,7 +23,19 @@ const ListHeader = (props) => {
         )}
       </CardTitle>
       <div className="List-headerOptions">
-        <Icon />
+        {!!listContext.selectedItems?.length &&
+          listContext.handleSaveSelected && (
+            <CustomButton
+              withoutCustom
+              btnColor="success"
+              btnSize="sm"
+              onClick={listContext.handleSaveSelected}
+              btnOutline
+            >
+              <Icon name="faSave" />{" "}
+              <Text size="sm">Guardar los seleccionados</Text>
+            </CustomButton>
+          )}
         <SortBy
           onChange={({ target: { value } }) => listContext.handleSortBy(value)}
         />
@@ -34,7 +48,7 @@ const ListHeader = (props) => {
 ListHeader.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
-  onCreate: PropTypes.func
+  onCreate: PropTypes.func,
 };
 
 export default ListHeader;

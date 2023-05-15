@@ -16,6 +16,8 @@ import drawerTypes from "../Drawers/drawerTypes";
 import TrainingSessions from "../TrainingSession";
 import TrainingSession from "../TrainingSession";
 import { BarExample } from "../BarExample";
+import Icon from "../Icon";
+import AddCollaboratorModal from "./AddCollaboratorModal";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -32,6 +34,8 @@ const TrainingSheet = (props) => {
   const [priorities, setPriorities] = React.useState([]);
   const [sessions, setSessions] = React.useState([]);
   const [reasons, setReasons] = React.useState([]);
+  const [collaborators, setCollaborators] = React.useState([]);
+  const [addModal, setAddModal] = React.useState(false);
   const [validated, setValidated] = React.useState([]);
 
   const router = useRouter();
@@ -90,16 +94,13 @@ const TrainingSheet = (props) => {
     getReasons();
   }, []);
 
-  const handleSelect = (selectedItems) => {
+  const handleSelect = (selectedItems, { cleanSelected }) => {
     if (Array.isArray(selectedItems)) {
+      setAddModal(selectedItems);
+      setCollaborators(selectedItems);
+      // if(cleanSelected) cleanSelected();
       handleChange({
         target: { value: selectedItems.length, name: "totalColEnrolled" },
-      });
-      handleChange({
-        target: {
-          value: selectedItems,
-          name: "collaborators",
-        },
       });
     }
   };
@@ -113,7 +114,8 @@ const TrainingSheet = (props) => {
       target: { value: [...sessions, {}], name: "sessions" },
     });
   };
-  console.log("prro", sessions);
+
+  const addModalToggle = () => setAddModal((prev) => !prev);
 
   const handleChangeSession = (idx) => (newData) =>
     setSessions((prev) =>
@@ -353,54 +355,13 @@ const TrainingSheet = (props) => {
           />
         </Col>
       </Row>
-      <Text
-        TagName="h6"
-        className="Form-title"
-        text={`Selecciona los participantes de esta capacitacion!`}
-      />
-      <DefaultList
-        title="Empleados"
-        endpoint="/collaborator"
-        listId="employees"
-        filters="employeePos,departament"
-        itemsQuantity={5}
-        withoutEdit
-        withoutDelete
-        onSelect={handleSelect}
-      />
-      <Text
-        TagName="h6"
-        className="Form-title"
-        text={`Empleados seleccionados (${formData.totalColEnrolled}).`}
-      />
-      <Table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombres</th>
-            <th>Sesiones</th>
-            <th>Activo</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(formData.collaborators) &&
-            formData.collaborators.map((item) => (
-              <tr>
-                <th scope="row">{item.id}</th>
-                <td>{`${item.name} ${item.lastName}`}</td>
-                <td>Todas las sesiones.</td>
-                <td>{item.active ? "Si" : "No"}</td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
       <Text TagName="h6" className="Form-title">
         Añade las sesiones que tendra tu capacitacion!
       </Text>
-      {sessions.map((_, key) => (
+      {sessions.map((item, key) => (
         <TrainingSession
           title={`Sesion ${key + 1}`}
-          collaborators={formData.collaborators}
+          data={item}
           onChange={handleChangeSession(key)}
         />
       ))}
@@ -412,6 +373,30 @@ const TrainingSheet = (props) => {
       >
         Añadir Sesion
       </Button>
+      <Text
+        TagName="h6"
+        className="Form-title"
+        text={`Selecciona los participantes de esta capacitacion!`}
+      />
+      {addModal && (
+        <AddCollaboratorModal
+          isOpen
+          toggle={addModalToggle}
+          collaborators={collaborators}
+          sessions={sessions}
+          handleChangeSession={handleChangeSession}
+        />
+      )}
+      <DefaultList
+        title="Empleados"
+        endpoint="/collaborator"
+        listId="employees"
+        filters="employeePos,departament"
+        itemsQuantity={5}
+        withoutEdit
+        withoutDelete
+        onSaveSelected={handleSelect}
+      />
       <Text TagName="h6" className="Form-title">
         Resultados Esperados
       </Text>

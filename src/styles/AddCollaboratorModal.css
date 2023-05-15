@@ -1,0 +1,7 @@
+.AddCollaboratorModal-sessionOpt {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+.AddCollaboratorModal-sessionOpt:hover {
+  background-color: var(--selection-color);
+}

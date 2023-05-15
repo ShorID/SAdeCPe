@@ -19,15 +19,16 @@ const ListContext = createContext({
   setSortBy: () => {},
   handleSelect: (isChecked = true, itemData = {}) =>
     console.log(isChecked, itemData),
+  handleSaveSelected: () => {},
   isSelected: (itemData = {}) => console.log(itemData),
-  selectedItems: []
+  selectedItems: [],
 });
 
 export const ListProvider = ({
   children,
   formId = "",
   endpoint = "",
-  onSelect,
+  onSaveSelected,
   itemsQuantity = 10,
 }) => {
   const [searchVal, setSearchVal] = useState();
@@ -64,10 +65,6 @@ export const ListProvider = ({
     if (endpoint) getData();
   }, [endpoint, page]);
 
-  useEffect(() => {
-    if (onSelect) onSelect(selectedItems);
-  }, [selectedItems]);
-
   const handleSortBy = (id) => {
     setSortBy(id);
     getData({ sortBy: id, ...(lastFilters ? lastFilters : {}) }, true);
@@ -98,6 +95,14 @@ export const ListProvider = ({
       return prev.filter((item) => item?.id !== selectedItem?.id);
     });
 
+  const cleanSelected = () => setSelectedItems([]);
+
+  const handleSaveSelected = () => {
+    onSaveSelected(selectedItems, {
+      cleanSelected,
+    });
+  };
+
   const isSelected = (itemData) =>
     selectedItems.some((item) => item?.id === itemData?.id);
 
@@ -120,6 +125,7 @@ export const ListProvider = ({
         handleSelect,
         selectedItems,
         isSelected,
+        handleSaveSelected: onSaveSelected ? handleSaveSelected : undefined,
       }}
     >
       {children}

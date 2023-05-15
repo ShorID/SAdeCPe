@@ -40,7 +40,7 @@ const months = [
 ];
 
 const TrainingSession = (props) => {
-  const [formData, setFormData] = React.useState({});
+  const [formData, setFormData] = React.useState({ title: props.title });
   const [centers, setCenters] = React.useState([]);
   const [trainers, setTrainers] = React.useState([]);
   const [isMinimized, setIsMinimized] = React.useState(true);
@@ -49,14 +49,15 @@ const TrainingSession = (props) => {
     fetcher({ url: "/center" }).then(({ data }) => {
       if (Array.isArray(data)) setCenters(data);
       if (data.length)
-        handleChange({ target: { value: data[0].id, name: "center" } });
+        handleChange({ target: { value: data[0], name: "center" } });
     });
   };
+  
   const getTrainers = () => {
     fetcher({ url: "/trainer" }).then(({ data }) => {
       if (Array.isArray(data)) setTrainers(data);
       if (data.length)
-        handleChange({ target: { value: data[0].id, name: "trainer" } });
+        handleChange({ target: { value: data[0], name: "trainer" } });
     });
   };
 
@@ -75,23 +76,33 @@ const TrainingSession = (props) => {
         ...prev,
         [name]: value,
       };
+      const isObj = typeof value === "object";
       if (name === "dates")
         return {
           ...returnObj,
           [name]: value,
-          formattedDate: [value[0].day,value[1].day],
+          formattedDate: [
+            `${value[0].day}/${value[0].monthIndex}/${value[0].year}`,
+            value[1]
+              ? `${value[1].day}/${value[1].monthIndex}/${value[1].year}`
+              : "",
+          ],
         };
       if (name === "center")
         return {
           ...returnObj,
-          [name]: centers.find((item) => `${item.id}` === `${value}`),
-          centerId: value,
+          [name]: isObj
+            ? value
+            : centers.find((item) => `${item.id}` === `${value}`),
+          centerId: isObj ? value.id : value,
         };
       if (name === "trainer")
         return {
           ...returnObj,
-          [name]: trainers.find((item) => `${item.id}` === `${value}`),
-          trainerId: value,
+          [name]: isObj
+            ? value
+            : trainers.find((item) => `${item.id}` === `${value}`),
+          trainerId: isObj ? value.id : value,
         };
       return returnObj;
     });

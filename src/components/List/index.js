@@ -10,7 +10,7 @@ const List = (props) => {
       <ListProvider
         formId={props.formId}
         endpoint={props.endpoint}
-        onSelect={props.onSelect}
+        onSaveSelected={props.onSaveSelected}
         itemsQuantity={props.itemsQuantity}
       >
         <>{props.children}</>
@@ -23,7 +23,7 @@ List.propTypes = {
   className: PropTypes.string,
   formId: PropTypes.string,
   endpoint: PropTypes.string,
-  onSelect: PropTypes.func,
+  onSaveSelected: PropTypes.func,
 };
 
 export default List;

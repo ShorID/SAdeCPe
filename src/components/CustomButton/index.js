@@ -7,6 +7,7 @@ import Text from "../Text";
 const CustomButton = (props) => {
   return (
     <Button
+      {...props}
       className={classNames(
         !props.withoutCustom && "CustomButton",
         props.variant,
@@ -16,7 +17,7 @@ const CustomButton = (props) => {
       outline={props.btnOutline}
       size={props.btnSize}
       onClick={props.onClick}
-      type={props.type}
+      type={props.type || "button"}
     >
       <Text>{props.text || props.children}</Text>
     </Button>
