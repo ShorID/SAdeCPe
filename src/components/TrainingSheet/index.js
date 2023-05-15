@@ -96,9 +96,8 @@ const TrainingSheet = (props) => {
 
   const handleSelect = (selectedItems, { cleanSelected }) => {
     if (Array.isArray(selectedItems)) {
-      setAddModal(selectedItems);
       setCollaborators(selectedItems);
-      // if(cleanSelected) cleanSelected();
+      setAddModal(() => cleanSelected);
       handleChange({
         target: { value: selectedItems.length, name: "totalColEnrolled" },
       });
@@ -114,13 +113,14 @@ const TrainingSheet = (props) => {
       target: { value: [...sessions, {}], name: "sessions" },
     });
   };
-
+  console.log("prro", sessions);
   const addModalToggle = () => setAddModal((prev) => !prev);
 
-  const handleChangeSession = (idx) => (newData) =>
+  const handleChangeSession = (idx) => (newData) => {
     setSessions((prev) =>
       prev.map((item, key) => (key === idx ? { ...item, ...newData } : item))
     );
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -319,6 +319,7 @@ const TrainingSheet = (props) => {
             value={formData.totalColEnrolled}
             onChange={handleChange}
             required
+            disabled
           />
         </Col>
         <Col md="4" sm="12">
@@ -384,6 +385,7 @@ const TrainingSheet = (props) => {
           toggle={addModalToggle}
           collaborators={collaborators}
           sessions={sessions}
+          onSubmit={addModal}
           handleChangeSession={handleChangeSession}
         />
       )}

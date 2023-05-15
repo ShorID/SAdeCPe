@@ -5,7 +5,14 @@ import fetcher from "@/services/fetcher";
 
 const FileInput = (props) => {
   const inputRef = React.useRef(null);
-  const [value, setValue] = React.useState(props.value);
+  const [value, setValue] = React.useState(
+    props.value
+      ? `${fetcher.defaults.baseURL}${fileUploaded}`.replace(
+          new RegExp("//", "g"),
+          "/"
+        )
+      : null
+  );
 
   const handleChange = async (inputEvent) => {
     const { target = {} } = inputEvent;

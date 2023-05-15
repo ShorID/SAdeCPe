@@ -48,12 +48,25 @@ const AddCollaboratorModal = (props) => {
 
   const handleSave = () => {
     try {
+      console.log("prro", {collaborators: props.collaborators, selected})
       selected.forEach((item) =>
         props.handleChangeSession(item.value)({
           ...item.data,
-          collaborators: props.collaborators,
+          collaborators: Array.isArray(item.data.collaborators)
+            ? [
+                ...item.data.collaborators,
+                ...props.collaborators.filter(
+                  (collaborator) =>
+                    !item.data.collaborators.some(
+                      (savedCollaborators) =>
+                        savedCollaborators.id === collaborator.id
+                    )
+                ),
+              ]
+            : props.collaborators,
         })
       );
+      if (props.onSubmit) props.onSubmit();
     } catch (e) {
       console.log("error saving collaborators");
     }

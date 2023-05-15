@@ -40,7 +40,10 @@ const months = [
 ];
 
 const TrainingSession = (props) => {
-  const [formData, setFormData] = React.useState({ title: props.title });
+  const [formData, setFormData] = React.useState({
+    title: props.title,
+    collaborators: props.data.collaborators,
+  });
   const [centers, setCenters] = React.useState([]);
   const [trainers, setTrainers] = React.useState([]);
   const [isMinimized, setIsMinimized] = React.useState(true);
@@ -52,7 +55,7 @@ const TrainingSession = (props) => {
         handleChange({ target: { value: data[0], name: "center" } });
     });
   };
-  
+
   const getTrainers = () => {
     fetcher({ url: "/trainer" }).then(({ data }) => {
       if (Array.isArray(data)) setTrainers(data);
@@ -206,23 +209,24 @@ const TrainingSession = (props) => {
             </CustomInput>
           </Col>
         </Row>
-        {Array.isArray(props.collaborators) && !!props.collaborators.length && (
-          <Collapse
-            className="TrainingSession-members"
-            contentClass="TrainingSession-membersContainer"
-            header={
-              <Text className="w-100" TagName="div">
-                Participantes
-              </Text>
-            }
-          >
-            <Container>
-              {props.collaborators.map((item) => (
-                <TrainingSessionMember {...item} />
-              ))}
-            </Container>
-          </Collapse>
-        )}
+        {Array.isArray(props.data.collaborators) &&
+          !!props.data.collaborators.length && (
+            <Collapse
+              className="TrainingSession-members"
+              contentClass="TrainingSession-membersContainer"
+              header={
+                <Text className="w-100" TagName="div">
+                  Participantes
+                </Text>
+              }
+            >
+              <Container>
+                {props.data.collaborators.map((item) => (
+                  <TrainingSessionMember {...item} />
+                ))}
+              </Container>
+            </Collapse>
+          )}
       </CardBody>
     </Card>
   );
