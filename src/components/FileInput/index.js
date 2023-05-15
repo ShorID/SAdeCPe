@@ -4,8 +4,8 @@ import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
 
 const FileInput = (props) => {
-  const inputRef = React.useRef(null)
-  const [value, setValue] = React.useState();
+  const inputRef = React.useRef(null);
+  const [value, setValue] = React.useState(props.value);
 
   const handleChange = async (inputEvent) => {
     const { target = {} } = inputEvent;
@@ -18,9 +18,17 @@ const FileInput = (props) => {
       method: "POST",
       data,
     });
-    if (inputRef.current) inputRef.current.value = '';
-    if (fileUploaded)
-      setValue(`${fetcher.defaults.baseURL}${fileUploaded}`.replace(new RegExp('//', 'g'),'/'));
+    if (inputRef.current) inputRef.current.value = "";
+    if (fileUploaded) {
+      if (props.onChange)
+        props.onChange({ target: { value: fileUploaded, name: props.name } });
+      setValue(
+        `${fetcher.defaults.baseURL}${fileUploaded}`.replace(
+          new RegExp("//", "g"),
+          "/"
+        )
+      );
+    }
   };
   return (
     <>
