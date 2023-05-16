@@ -26,8 +26,8 @@
     margin-right: 1rem;
 }
 .TrainingListItem-avatar{
-    height: 1.5rem;
-    object-fit: contain;
+    height: 1.7rem;
+    object-fit: cover;
     object-position: center;
-    width: 1.5rem;
+    width: 1.7rem;
 }

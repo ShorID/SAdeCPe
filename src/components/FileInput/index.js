@@ -6,12 +6,7 @@ import fetcher from "@/services/fetcher";
 const FileInput = (props) => {
   const inputRef = React.useRef(null);
   const [value, setValue] = React.useState(
-    props.value
-      ? `${fetcher.defaults.baseURL}${fileUploaded}`.replace(
-          new RegExp("//", "g"),
-          "/"
-        )
-      : null
+    props.value ? `${fetcher.defaults.baseURL}${props.value}` : null
   );
 
   const handleChange = async (inputEvent) => {
@@ -29,20 +24,17 @@ const FileInput = (props) => {
     if (fileUploaded) {
       if (props.onChange)
         props.onChange({ target: { value: fileUploaded, name: props.name } });
-      setValue(
-        `${fetcher.defaults.baseURL}${fileUploaded}`.replace(
-          new RegExp("//", "g"),
-          "/"
-        )
-      );
+      setValue(`${fetcher.defaults.baseURL}${fileUploaded}`);
     }
   };
+
   return (
     <>
       <CustomInput label="Foto de Perfil" type="file" onChange={handleChange} />
       {value && (
         <img
-          src={value}
+          key={value}
+          src={`${value}`}
           style={{
             maxHeight: "100px",
             maxWidth: "100px",
@@ -56,6 +48,6 @@ const FileInput = (props) => {
   );
 };
 
-FileInput.propTypes = {};
+FileInput.propTypes = CustomInput.propTypes;
 
 export default FileInput;

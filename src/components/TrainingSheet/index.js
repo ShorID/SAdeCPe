@@ -18,6 +18,7 @@ import TrainingSession from "../TrainingSession";
 import { BarExample } from "../BarExample";
 import Icon from "../Icon";
 import AddCollaboratorModal from "./AddCollaboratorModal";
+import moment from "moment";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -113,7 +114,7 @@ const TrainingSheet = (props) => {
       target: { value: [...sessions, {}], name: "sessions" },
     });
   };
-  console.log("prro", sessions);
+
   const addModalToggle = () => setAddModal((prev) => !prev);
 
   const handleChangeSession = (idx) => (newData) => {
@@ -128,11 +129,44 @@ const TrainingSheet = (props) => {
     setValidated(true);
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
+    let totalSession = sessions.length;
+    let allCollaborators = [];
+    let totalColEnrolled = 0;
+
+    sessions.forEach((item) => {
+      const newCollaborators = allCollaborators.filter(
+        (collaborator) =>
+          !item.collaborators.some(
+            (savedCollaborators) => savedCollaborators.id === collaborator.id
+          )
+      );
+      allCollaborators = [...allCollaborators, ...newCollaborators];
+      totalColEnrolled = allCollaborators.length;
+    });
+
     fetcher({
       url: "/capacitation/" + (props.isCreating ? "create" : "update"),
       method: props.isCreating ? "POST" : "PUT",
       data: {
         ...formData,
+        tags:
+          Array.isArray(formData.tags) &&
+          formData.tags.map((item) =>
+            item["__isNew__"] ? { ...item, isNew: true } : item
+          ),
+        totalColEnrolled,
+        totalSession,
+        inatecBackground: formData.inatecBackground || 0,
+        sessions: sessions.map((item) => ({
+          dates: item.formattedDate,
+          centerId: item.centerId,
+          timeRange: [
+            moment(item.from).format("HH:mm"),
+            moment(item.to).format("HH:mm"),
+          ],
+          collaborators: item.collaborators?.map((item) => item.id).join(","),
+          trainerId: item.trainerId,
+        })),
         costInitial: formData.costUnit * formData.totalColEnrolled,
         costFinal:
           formData.costUnit * formData.totalColEnrolled * formData.totalSession,
@@ -244,7 +278,6 @@ const TrainingSheet = (props) => {
                 certificated: !prev.certificated,
               }))
             }
-            required
           />
         </Col>
         <Col md="3">
@@ -257,7 +290,6 @@ const TrainingSheet = (props) => {
             onChange={() =>
               setFormData((prev) => ({ ...prev, external: !prev.external }))
             }
-            required
           />
         </Col>
       </Row>
@@ -306,7 +338,6 @@ const TrainingSheet = (props) => {
             type="number"
             value={formData.inatecBackground}
             onChange={handleChange}
-            required
           />
         </Col>
       </Row>
@@ -421,7 +452,7 @@ const TrainingSheet = (props) => {
           grafica
         </Text>
       )}
-      <CustomButton text="Guardar" />
+      <CustomButton text="Guardar" type="submit" />
     </Form>
   );
 };

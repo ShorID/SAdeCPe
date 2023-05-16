@@ -159,8 +159,9 @@ const TrainingSession = (props) => {
                 showTimeSelectOnly
                 // timeIntervals={15}
                 timeCaption="Time"
-                dateFormat="h:mm aa"
+                dateFormat="HH:mm"
                 className="form-control"
+                required
               />
             </CustomInput>
             <CustomInput label="Hasta: " value={formData.to}>
@@ -171,8 +172,9 @@ const TrainingSession = (props) => {
                 showTimeSelectOnly
                 // timeIntervals={15}
                 timeCaption="Time"
-                dateFormat="h:mm aa"
+                dateFormat="HH:mm"
                 className="form-control"
+                required
               />
             </CustomInput>
             <CustomInput
@@ -183,6 +185,7 @@ const TrainingSession = (props) => {
               value={formData.center?.id}
               Drawer={drawerTypes["trainingCenter"]}
               refreshFunc={getCenters}
+              required
             >
               {Array.isArray(centers) &&
                 centers.map((item) => (
@@ -199,6 +202,7 @@ const TrainingSession = (props) => {
               value={formData.trainer?.id}
               Drawer={drawerTypes["trainer"]}
               refreshFunc={getTrainers}
+              required
             >
               {Array.isArray(trainers) &&
                 trainers.map((item) => (

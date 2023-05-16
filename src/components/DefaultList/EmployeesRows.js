@@ -11,6 +11,7 @@ import ListContext from "@/contexts/list-context";
 import { useRouter } from "next/router";
 import { ChartExample } from "../ChartExample";
 import Popup from "../Popup";
+import fetcher from "@/services/fetcher";
 
 const EmployeesRows = (props) => {
   const router = useRouter();
@@ -32,6 +33,13 @@ const EmployeesRows = (props) => {
       )}
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
+          <Tooltip tooltip={props.name} className="TrainingListItem-avatarWrapper">
+            <img
+              className="TrainingListItem-avatar"
+              src={fetcher.defaults.baseURL + props.photo}
+              alt={props.name}
+            />
+          </Tooltip>
           <div className="TrainingListItem-title">
             <Text bold>{`${props.name} ${props.lastName}`}</Text>
           </div>
@@ -64,7 +72,9 @@ const EmployeesRows = (props) => {
               </Clickable>
             )}
             <Popup title="Estadisticas" description={<ChartExample />}>
-              <Tooltip tooltip="Ver datos" placement="right"><Icon name="faCubesStacked" /></Tooltip>
+              <Tooltip tooltip="Ver datos" placement="right">
+                <Icon name="faCubesStacked" />
+              </Tooltip>
             </Popup>
           </div>
         </div>

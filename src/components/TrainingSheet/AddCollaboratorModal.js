@@ -48,7 +48,6 @@ const AddCollaboratorModal = (props) => {
 
   const handleSave = () => {
     try {
-      console.log("prro", {collaborators: props.collaborators, selected})
       selected.forEach((item) =>
         props.handleChangeSession(item.value)({
           ...item.data,

@@ -183,7 +183,7 @@ const EmployeeSheet = (props) => {
             </option>
           ))}
       </CustomInput>
-      <FileInput />
+      <FileInput onChange={handleChange} name="photo" value={formData["photo"]} required/>
       <CustomButton className="ml-auto d-block" type="submit">
         Guardar Cambios
       </CustomButton>
