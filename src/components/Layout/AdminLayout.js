@@ -47,7 +47,13 @@ const AdminLayout = (props) => {
       <Row className="my-4">
         <Col md="3" className="AdminLayout">
           <ListGroup className="mb-4">
-            <ListGroupItem action href="/admin" tag="a" className="AdminLayout-link">
+            <ListGroupItem
+              action
+              href="/admin"
+              tag="a"
+              active={router.asPath === "/admin"}
+              className="AdminLayout-link"
+            >
               <Text>Bienvenido!</Text>
             </ListGroupItem>
           </ListGroup>
