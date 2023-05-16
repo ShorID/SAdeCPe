@@ -8,6 +8,7 @@ import FileInput from "../FileInput";
 import CustomButton from "../CustomButton";
 import { useRouter } from "next/router";
 import DateInput from "../DateInput";
+import drawerTypes from "../Drawers/drawerTypes";
 
 const EmployeeSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -22,15 +23,18 @@ const EmployeeSheet = (props) => {
 
   const router = useRouter();
 
-  React.useEffect(() => {
+  const getDepartments = () =>
     fetcher({
       url: "/departament",
     }).then(({ data }) => setDepartaments(data));
-    if (props.data)
-      getEmployeesPosition({
-        field: "id",
-        value: props.data.employeePositionId,
-      });
+  if (props.data)
+    getEmployeesPosition({
+      field: "id",
+      value: props.data.employeePositionId,
+    });
+
+  React.useEffect(() => {
+    getDepartments();
   }, []);
 
   const getEmployeesPosition = async (params) => {
@@ -148,6 +152,8 @@ const EmployeeSheet = (props) => {
         onChange={handleChange}
         required
         value={formData["departamentId"]}
+        Drawer={drawerTypes["departments"]}
+        refreshFunc={getDepartments}
       >
         <option value="0"></option>
         {Array.isArray(departaments) &&
@@ -183,7 +189,12 @@ const EmployeeSheet = (props) => {
             </option>
           ))}
       </CustomInput>
-      <FileInput onChange={handleChange} name="photo" value={formData["photo"]} required/>
+      <FileInput
+        onChange={handleChange}
+        name="photo"
+        value={formData["photo"]}
+        required
+      />
       <CustomButton className="ml-auto d-block" type="submit">
         Guardar Cambios
       </CustomButton>

@@ -8,7 +8,7 @@ import Link from "../Link";
 
 const links = {
   block1: [
-    { label: "Capacitaciones", link: "/admin" },
+    { label: "Capacitaciones", link: "/admin/capacitaciones" },
     { label: "Organizaciones", link: "/admin/organizaciones" },
     {
       label: "Centros de Capacitacion",
@@ -47,7 +47,7 @@ const AdminLayout = (props) => {
       <Row className="my-4">
         <Col md="3" className="AdminLayout">
           <ListGroup className="mb-4">
-            <ListGroupItem action href="#" tag="a" className="AdminLayout-link">
+            <ListGroupItem action href="/admin" tag="a" className="AdminLayout-link">
               <Text>Bienvenido!</Text>
             </ListGroupItem>
           </ListGroup>
