@@ -145,6 +145,7 @@ const TrainingSession = (props) => {
             <Calendar
               weekDays={weekDays}
               months={months}
+              value={formData["dates"]}
               onChange={handleChangeDate}
               range
               showOtherDays

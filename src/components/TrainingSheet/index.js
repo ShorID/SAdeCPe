@@ -28,12 +28,13 @@ const TrainingSheet = (props) => {
       totalColEnrolled: 0,
       totalSession: 0,
       creationDate: getFormatedDate(),
+      active: true,
     }
   );
   const [states, setStates] = React.useState([]);
   const [orgs, setOrgs] = React.useState([]);
   const [priorities, setPriorities] = React.useState([]);
-  const [sessions, setSessions] = React.useState([]);
+  const [sessions, setSessions] = React.useState(props.data?.sessions || []);
   const [reasons, setReasons] = React.useState([]);
   const [collaborators, setCollaborators] = React.useState([]);
   const [addModal, setAddModal] = React.useState(false);
@@ -301,7 +302,7 @@ const TrainingSheet = (props) => {
         name="creationDate"
         required
       />
-      <Tags name="tags" onChange={handleChange} />
+      <Tags name="tags" onChange={handleChange} value={formData["tags"]} />
       <Text TagName="h6" className="Form-title" text={`Precios y costos.`} />
       <Row>
         <Col>

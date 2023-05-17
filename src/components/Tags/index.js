@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CreatableSelect  from "react-select/creatable";
+import CreatableSelect from "react-select/creatable";
 import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
 
 const Tags = (props) => {
   const [trainingTags, setTrainingTags] = React.useState([]);
-  const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = React.useState(props.value || []);
 
   React.useEffect(() => {
     fetcher({
@@ -44,7 +44,9 @@ const Tags = (props) => {
         classNamePrefix="select"
         onChange={handleSelect}
         placeholder="Busca o agrega tu tema..."
-        formatCreateLabel={(value)=> `Parece que el tema que buscas no existe, deseas crear "${value}" como tema?`}
+        formatCreateLabel={(value) =>
+          `Parece que el tema que buscas no existe, deseas crear "${value}" como tema?`
+        }
       />
     </CustomInput>
   );

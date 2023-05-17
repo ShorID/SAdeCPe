@@ -6,8 +6,8 @@ import Tooltip from "../Tooltip";
 import Text from "../Text";
 import Clickable from "../Clickable";
 import Icon from "../Icon";
-import CustomButton from "../CustomButton";
 import ListContext from "@/contexts/list-context";
+import AvatarRow from "./AvatarRow";
 
 const TrainingCenterRows = (props) => {
   const listContext = useContext(ListContext);
@@ -17,11 +17,7 @@ const TrainingCenterRows = (props) => {
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
           <Tooltip tooltip="Centro" className="TrainingListItem-avatarWrapper">
-            <img
-              className="TrainingListItem-avatar"
-              src={props.photo}
-              alt={props.name}
-            />
+            <AvatarRow photo={props.photo} name={props.name} />
           </Tooltip>
           <div className="TrainingListItem-title">
             <Text>{props.name}</Text>

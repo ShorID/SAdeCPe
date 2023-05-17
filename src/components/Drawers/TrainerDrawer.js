@@ -4,6 +4,7 @@ import Drawer from ".";
 import CustomButton from "../CustomButton";
 import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
+import FileInput from "../FileInput";
 
 const TrainerDrawer = (props) => {
   const [formData, setFormData] = React.useState(
@@ -91,6 +92,12 @@ const TrainerDrawer = (props) => {
         onChange={() =>
           setFormData((prev) => ({ ...prev, active: !prev.active }))
         }
+        required
+      />
+      <FileInput
+        onChange={handleChange}
+        name="photo"
+        value={formData["photo"]}
         required
       />
     </Drawer>

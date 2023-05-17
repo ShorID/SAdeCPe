@@ -6,6 +6,7 @@ import CustomInput from "../CustomInput";
 import DateInput from "../DateInput";
 import fetcher from "@/services/fetcher";
 import { getFormatedDate } from "@/services/common";
+import FileInput from "../FileInput";
 
 const TrainingCenterDrawer = (props) => {
   const [formData, setFormData] = React.useState(
@@ -80,6 +81,12 @@ const TrainingCenterDrawer = (props) => {
         onChange={handleChange}
         disabled
         name="creationDate"
+        required
+      />
+      <FileInput
+        onChange={handleChange}
+        name="photo"
+        value={formData["photo"]}
         required
       />
     </Drawer>

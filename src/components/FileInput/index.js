@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
+import { Spinner } from "reactstrap";
 
 const FileInput = (props) => {
   const inputRef = React.useRef(null);
+  const [loading, setLoading] = React.useState(false);
   const [value, setValue] = React.useState(
     props.value ? `${fetcher.defaults.baseURL}${props.value}` : null
   );
@@ -14,12 +16,13 @@ const FileInput = (props) => {
     const value = target && target.files[0];
     const data = new FormData();
     data.append("file", value);
-
+    setLoading(true);
     const { data: fileUploaded } = await fetcher({
       url: `/image/upload-file`,
       method: "POST",
       data,
     });
+    setLoading(false);
     if (inputRef.current) inputRef.current.value = "";
     if (fileUploaded) {
       if (props.onChange)
@@ -31,7 +34,12 @@ const FileInput = (props) => {
   return (
     <>
       <CustomInput label="Foto de Perfil" type="file" onChange={handleChange} />
-      {value && (
+      {loading && (
+        <Spinner color="primary" size="sm" className="mx-1">
+          Loading...
+        </Spinner>
+      )}
+      {value && !loading && (
         <img
           key={value}
           src={`${value}`}

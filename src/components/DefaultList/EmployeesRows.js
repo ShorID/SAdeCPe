@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { ChartExample } from "../ChartExample";
 import Popup from "../Popup";
 import fetcher from "@/services/fetcher";
+import AvatarRow from "./AvatarRow";
 
 const EmployeesRows = (props) => {
   const router = useRouter();
@@ -34,11 +35,7 @@ const EmployeesRows = (props) => {
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
           <Tooltip tooltip={props.name} className="TrainingListItem-avatarWrapper">
-            <img
-              className="TrainingListItem-avatar"
-              src={fetcher.defaults.baseURL + props.photo}
-              alt={props.name}
-            />
+            <AvatarRow photo={props.photo} name={props.name} />
           </Tooltip>
           <div className="TrainingListItem-title">
             <Text bold>{`${props.name} ${props.lastName}`}</Text>
