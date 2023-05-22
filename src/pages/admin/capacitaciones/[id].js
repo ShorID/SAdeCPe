@@ -29,14 +29,19 @@ TrainingSheetPage.getInitialProps = async ({ asPath }) => {
         label: item.tag.name,
         value: item.tag.id,
       })),
-      sessions: data.sessions.map((item) => ({
-        ...item,
-        collaborators: item.assistances.map((item) => ({
-          ...item.collaborator,
+      sessions: data.sessions.map((item) => {
+        const [from, to] = item.schedule.split(" - ");
+        return {
           ...item,
-        })),
-        datesPP: item.dates.split(" - "),
-      })),
+          collaborators: item.assistances.map((item) => ({
+            ...item.collaborator,
+            ...item,
+          })),
+          dates: item.dates.split(" - ").map((item) => new Date(item)),
+          // from: new Date(),
+          to: "2000-10-1",
+        };
+      }),
     },
   };
 };

@@ -40,10 +40,8 @@ const months = [
 ];
 
 const TrainingSession = (props) => {
-  const [formData, setFormData] = React.useState({
-    title: props.title,
-    collaborators: props.data.collaborators,
-  });
+  const [formData, setFormData] = React.useState(props.data ? props.data : {});
+  console.log("prro", formData);
   const [centers, setCenters] = React.useState([]);
   const [trainers, setTrainers] = React.useState([]);
   const [isMinimized, setIsMinimized] = React.useState(true);
@@ -85,9 +83,9 @@ const TrainingSession = (props) => {
           ...returnObj,
           [name]: value,
           formattedDate: [
-            `${value[0].day}/${value[0].monthIndex}/${value[0].year}`,
+            `${value[0].year}/${value[0].monthIndex}/${value[0].day}`,
             value[1]
-              ? `${value[1].day}/${value[1].monthIndex}/${value[1].year}`
+              ? `${value[1].year}/${value[1].monthIndex}/${value[1].day}`
               : "",
           ],
         };
