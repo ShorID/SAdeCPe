@@ -38,8 +38,8 @@ TrainingSheetPage.getInitialProps = async ({ asPath }) => {
             ...item,
           })),
           dates: item.dates.split(" - ").map((item) => new Date(item)),
-          // from: new Date(),
-          to: "2000-10-1",
+          from,
+          to,
         };
       }),
     },

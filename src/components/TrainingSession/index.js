@@ -40,8 +40,16 @@ const months = [
 ];
 
 const TrainingSession = (props) => {
-  const [formData, setFormData] = React.useState(props.data ? props.data : {});
-  console.log("prro", formData);
+  const [formData, setFormData] = React.useState(
+    props.data
+      ? {
+          ...props.data,
+          from: new Date("01/01/1970 " + props.data.from),
+          to: new Date("01/01/1970 " + props.data.to),
+        }
+      : {}
+  );
+  console.log("prro", { formData, data: props.data });
   const [centers, setCenters] = React.useState([]);
   const [trainers, setTrainers] = React.useState([]);
   const [isMinimized, setIsMinimized] = React.useState(true);
