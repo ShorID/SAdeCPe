@@ -4,6 +4,7 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 import classNames from "classnames";
 import Icon from "../Icon";
 import { useRouter } from "next/router";
+import fetcher from "@/services/fetcher";
 
 const CustomNav = (props) => {
   const router = useRouter();
@@ -30,13 +31,14 @@ const CustomNav = (props) => {
             Solicitar Capacitacion
           </NavLink>
         </NavItem>
-        {router.pathname !== "/login" && (
-          <NavItem className="CustomNav-end">
-            <NavLink href="/login" className="CustomNav-link">
-              <Icon name="faArrowRightFromBracket" /> Acceder
-            </NavLink>
-          </NavItem>
-        )}
+        {router.pathname !== "/login" &&
+          !fetcher.defaults.headers["Authorization"] && (
+            <NavItem className="CustomNav-end">
+              <NavLink href="/login" className="CustomNav-link">
+                <Icon name="faArrowRightFromBracket" /> Acceder
+              </NavLink>
+            </NavItem>
+          )}
       </Nav>
     </div>
   );
