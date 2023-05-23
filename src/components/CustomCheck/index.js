@@ -29,8 +29,12 @@ const CustomCheck = (props) => {
       : label && <Label for={id}>{label}</Label>;
 
   const inputIcon = (
-    <Tooltip tooltip={isChecked ? "Deseleccionar?" : "Seleccionar?"}>
-      <Clickable onClick={handleCheck} className={props.className}>
+    <>
+      <Clickable
+        onClick={!props.disabled ? handleCheck : undefined}
+        style={{ opacity: props.disabled ? ".3" : "1" }}
+        className={props.className}
+      >
         <img
           className="CustomCheck"
           alt="select item"
@@ -42,15 +46,24 @@ const CustomCheck = (props) => {
         type="checkbox"
         checked={isChecked}
         className="d-none"
+        disabled={props.disabled}
       />
+    </>
+  );
+
+  const withTooltip = props.tooltip ? (
+    <Tooltip tooltip={isChecked ? "Deseleccionar?" : "Seleccionar?"}>
+      {inputIcon}
     </Tooltip>
+  ) : (
+    inputIcon
   );
 
   const InputWrapper = variant === "group" ? InputGroup : FormGroup;
 
   const input = (
     <InputWrapper className={props.wrapperClass}>
-      {inputIcon}
+      {withTooltip}
       {inputLabel}
     </InputWrapper>
   );
@@ -65,6 +78,7 @@ CustomCheck.propTypes = {
   wrapperClass: PropTypes.string,
   variant: PropTypes.oneOf(["form", "group"]),
   checked: PropTypes.bool,
+  tooltip: PropTypes.bool,
   onChange: PropTypes.func,
 };
 

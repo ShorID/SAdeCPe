@@ -396,6 +396,7 @@ const TrainingSheet = (props) => {
           title={`Sesion ${key + 1}`}
           data={item}
           onChange={handleChangeSession(key)}
+          costUnit={formData.costUnit}
         />
       ))}
       <Button

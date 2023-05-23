@@ -16,6 +16,7 @@ const Clickable = React.forwardRef(function Clickable(props, ref) {
       onClick={props.onClick}
       onBlur={props.onBlur}
       disabled={props.disabled}
+      style={props.style}
     >
       {props.children}
     </button>

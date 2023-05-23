@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Table,
 } from "reactstrap";
 import Text from "../Text";
 import { Calendar } from "react-multi-date-picker";
@@ -21,6 +22,7 @@ import Clickable from "../Clickable";
 import Icon from "../Icon";
 import ReactInputMask from "react-input-mask";
 import ReactDatePicker from "react-datepicker";
+import { formatQuantity } from "@/services/common";
 
 const weekDays = ["DO", "LU", "MA", "MI", "JU", "VI", "SA"];
 
@@ -40,15 +42,17 @@ const months = [
 ];
 
 const TrainingSession = (props) => {
-  const [formData, setFormData] = React.useState(
-    props.data
+  const [formData, setFormData] = React.useState({
+    title: props.title,
+    collaborators: props.data.collaborators,
+    ...(props.data
       ? {
           ...props.data,
-          from: new Date("01/01/1970 " + props.data.from),
-          to: new Date("01/01/1970 " + props.data.to),
+          from: props.data.from && new Date("01/01/1970 " + props.data.from),
+          to: props.data.to && new Date("01/01/1970 " + props.data.to),
         }
-      : {}
-  );
+      : {}),
+  });
   console.log("prro", { formData, data: props.data });
   const [centers, setCenters] = React.useState([]);
   const [trainers, setTrainers] = React.useState([]);
@@ -117,6 +121,19 @@ const TrainingSession = (props) => {
     });
   };
 
+  React.useEffect(() => {
+    handleChange({
+      target: {
+        value:
+          (props.costUnit || 0) *
+          (Array.isArray(formData.collaborators)
+            ? formData.collaborators.length
+            : 0),
+        name: "initialCost",
+      },
+    });
+  }, [props.costUnit, formData.collaborators]);
+
   const handleChangeDate = (value) =>
     handleChange({ target: { value, name: "dates" } });
 
@@ -124,6 +141,16 @@ const TrainingSession = (props) => {
     handleChange({ target: { value, name } });
 
   const handleMinimize = () => setIsMinimized((prev) => !prev);
+
+  const handleCollaboratorDisable = (idx) => (disabled) =>
+    setFormData((prev) => ({
+      ...prev,
+      collaborators: Array.isArray(prev.collaborators)
+        ? prev.collaborators.map((item, key) =>
+            key === idx ? { ...item, active: !disabled } : item
+          )
+        : [],
+    }));
 
   return (
     <Card className="my-2">
@@ -158,6 +185,11 @@ const TrainingSession = (props) => {
             />
           </Col>
           <Col sm="12" md="8">
+            <CustomInput
+              label="Costo: "
+              value={formatQuantity(formData.initialCost) + "$"}
+              disabled
+            />
             <CustomInput label="De: " value={formData.from}>
               <ReactDatePicker
                 selected={formData.from}
@@ -231,11 +263,24 @@ const TrainingSession = (props) => {
                 </Text>
               }
             >
-              <Container>
-                {props.data.collaborators.map((item) => (
-                  <TrainingSessionMember {...item} />
-                ))}
-              </Container>
+              <Table className="mb-0">
+                <thead>
+                  <tr>
+                    <th className="w-100">Nombre</th>
+                    <th className="text-center">Activo</th>
+                    <th className="text-center">Archivos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {props.data.collaborators.map((item, key) => (
+                    <TrainingSessionMember
+                      key={key + "-collaborator"}
+                      {...item}
+                      onDisable={handleCollaboratorDisable(key)}
+                    />
+                  ))}
+                </tbody>
+              </Table>
             </Collapse>
           )}
       </CardBody>

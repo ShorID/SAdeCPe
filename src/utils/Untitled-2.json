@@ -1,0 +1,64 @@
+{
+    "id": 25,
+    "stateId": 1,
+    "levelPrioryId": 1,
+    "orgId": 2,
+    "reasonId": 1,
+    "name": "Prueba",
+    "description": "xdfxfdxfxf",
+    "costUnit": 100,
+    "costInitial": 200,
+    "costFinal": 200,
+    "inatecBackground": 0,
+    "certificated": false,
+    "external": false,
+    "sessions": [
+        {
+            "id": 24,
+            "capId": 25,
+            "trainerId": 1,
+            "centerId": 3,
+            "dates": "18/4/2023 - 20/4/2023",
+            "schedule": "18:00 - 20:00",
+            "assistances": [
+                {
+                    "id": 25,
+                    "sessionId": 24,
+                    "collaboratorId": 1,
+                    "qualification": null,
+                    "certificate": null,
+                    "description": null,
+                    "creationDate": "2023-05-16",
+                    "active": true
+                },
+                {
+                    "id": 24,
+                    "sessionId": 24,
+                    "collaboratorId": 2,
+                    "qualification": null,
+                    "certificate": null,
+                    "description": null,
+                    "creationDate": "2023-05-16",
+                    "active": true
+                }
+            ]
+        }
+    ],
+    "tags": [
+        {
+            "id": 15,
+            "capId": 25,
+            "tagId": 24
+        },
+        {
+            "id": 16,
+            "capId": 25,
+            "tagId": 25
+        },
+        {
+            "id": 17,
+            "capId": 25,
+            "tagId": 26
+        }
+    ]
+}

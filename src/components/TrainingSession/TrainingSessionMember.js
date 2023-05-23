@@ -4,43 +4,36 @@ import { Button, Col, Row } from "reactstrap";
 import Icon from "../Icon";
 import Text from "../Text";
 import classNames from "classnames";
+import CustomCheck from "../CustomCheck";
 
 const TrainingSessionMember = (props) => {
-  const [disabled, setDisabled] = React.useState(props.disabled);
-
-  const onDisable = () => setDisabled((prev) => !prev);
-
   return (
-    <Row
+    <tr
       className={classNames(
         "TrainingSessionMember",
-        disabled && "TrainingSessionMember-disabled"
+        !props.active && "TrainingSessionMember-disabled"
       )}
     >
-      <Col>
-        <Text>{props.name}</Text>
-      </Col>
-      <Col className="d-flex justify-content-end">
-        <Button
-          size="sm"
-          color="warning"
-          type="button"
-          className="mx-1"
-          onClick={onDisable}
-        >
-          <Icon name={disabled ? "faUserPlus" : "faUserMinus"} />
-        </Button>
+      <td scope="row">{`${props.name} ${props.lastName}`}</td>
+      <td className="text-center">
+        <CustomCheck
+          checked={props.active}
+          onChange={props.onDisable}
+          tooltip={false}
+        />
+      </td>
+      <td className="text-center">
         <Button
           size="sm"
           color="primary"
           type="button"
           className="mx-1"
-          disabled={disabled}
+          disabled={!props.active}
         >
           <Icon name="faCloudUpload" />
         </Button>
-      </Col>
-    </Row>
+      </td>
+    </tr>
   );
 };
 
