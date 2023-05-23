@@ -29,8 +29,8 @@
 @import "./AddCollaboratorModal.css";
 
 :root {
-  --main-color: #f86409;
-  --base-color: #232f3f;
+  --main-color: #1D2C4F;
+  --base-color: #f86409;
   --secundary-color: #382b2b;
   --selection-color: #099df8;
   --unselected-color: #c5e8fd;
@@ -96,7 +96,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: var(--background-end-rgb);
+  background: whitesmoke;
 }
 
 a {

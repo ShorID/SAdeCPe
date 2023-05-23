@@ -4,7 +4,11 @@
   background-color: var(--main-color);
   padding: 0;
 }
+.CustomNavbar .container-lg{
+  padding-left: 0;
+}
 .CustomNavbar-logo{
   padding-top: 0;
   padding-bottom: 0;
+  width: auto;
 }
