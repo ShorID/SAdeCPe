@@ -8,12 +8,13 @@ import "moment/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 import "@wojtekmaj/react-timerange-picker/dist/TimeRangePicker.css";
 import "react-clock/dist/Clock.css";
-import '@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css';
-import 'react-calendar/dist/Calendar.css';
-import 'react-vertical-timeline-component/style.min.css';
+import "@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css";
+import "react-calendar/dist/Calendar.css";
+import "react-vertical-timeline-component/style.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import React from "react";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 export default function App({ Component, pageProps }) {
   React.useEffect(() => {
@@ -22,5 +23,9 @@ export default function App({ Component, pageProps }) {
 
   const windowDimensions = useWindowDimensions();
 
-  return <Component {...pageProps} windowDimensions={windowDimensions} />;
+  return (
+    <ErrorBoundary>
+      <Component {...pageProps} windowDimensions={windowDimensions} />;
+    </ErrorBoundary>
+  );
 }

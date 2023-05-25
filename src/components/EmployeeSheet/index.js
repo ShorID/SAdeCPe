@@ -23,20 +23,6 @@ const EmployeeSheet = (props) => {
 
   const router = useRouter();
 
-  const getDepartments = () =>
-    fetcher({
-      url: "/departament",
-    }).then(({ data }) => setDepartaments(data));
-  if (props.data)
-    getEmployeesPosition({
-      field: "id",
-      value: props.data.employeePositionId,
-    });
-
-  React.useEffect(() => {
-    getDepartments();
-  }, []);
-
   const getEmployeesPosition = async (params) => {
     setLoading(true);
     fetcher({
@@ -47,6 +33,20 @@ const EmployeeSheet = (props) => {
       setLoading(false);
     });
   };
+
+  const getDepartments = () =>
+    fetcher({
+      url: "/departament",
+    }).then(({ data }) => setDepartaments(data));
+
+  React.useEffect(() => {
+    getDepartments();
+    if (props.data)
+    getEmployeesPosition({
+      field: "id",
+      value: props.data.employeePositionId,
+    });
+  }, []);
 
   const handleChange = async ({ target: { value, name } }) => {
     setFormData((prev) => ({

@@ -1,22 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Text from "../Text";
 import CustomInput from "../CustomInput";
 import { formatQuantity, getFormatedDate } from "@/services/common";
 import DateInput from "../DateInput";
-import CustomCalendar from "../CustomCalendar";
 import Tags from "../Tags";
 import DefaultList from "../DefaultList";
-import { Button, Col, Form, Row, Table } from "reactstrap";
+import { Button, Col, Form, Row } from "reactstrap";
 import fetcher from "@/services/fetcher";
-import ReactInputMask from "react-input-mask";
 import CustomButton from "../CustomButton";
 import { useRouter } from "next/router";
 import drawerTypes from "../Drawers/drawerTypes";
-import TrainingSessions from "../TrainingSession";
 import TrainingSession from "../TrainingSession";
-import { BarExample } from "../BarExample";
-import Icon from "../Icon";
 import AddCollaboratorModal from "./AddCollaboratorModal";
 import moment from "moment";
 
@@ -41,7 +35,7 @@ const TrainingSheet = (props) => {
   const [validated, setValidated] = React.useState([]);
 
   const router = useRouter();
-
+  console.log("prro wtf", sessions);
   const handleChange = ({ target: { value, name } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -107,7 +101,7 @@ const TrainingSheet = (props) => {
   };
 
   const handleAddSession = () => {
-    setSessions((prev) => [...prev, {}]);
+    setSessions((prev) => [...prev, { active: true }]);
     handleChange({
       target: { value: sessions.length + 1, name: "totalSession" },
     });

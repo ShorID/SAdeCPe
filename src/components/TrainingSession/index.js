@@ -1,16 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardText,
-  CardTitle,
-  Col,
-  Container,
-  Row,
-  Table,
-} from "reactstrap";
+import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import Text from "../Text";
 import { Calendar } from "react-multi-date-picker";
 import CustomInput from "../CustomInput";
@@ -20,7 +10,6 @@ import TrainingSessionMember from "./TrainingSessionMember";
 import Collapse from "../Collapse";
 import Clickable from "../Clickable";
 import Icon from "../Icon";
-import ReactInputMask from "react-input-mask";
 import ReactDatePicker from "react-datepicker";
 import { formatQuantity } from "@/services/common";
 
@@ -44,7 +33,6 @@ const months = [
 const TrainingSession = (props) => {
   const [formData, setFormData] = React.useState({
     title: props.title,
-    collaborators: props.data.collaborators,
     ...(props.data
       ? {
           ...props.data,
@@ -53,7 +41,7 @@ const TrainingSession = (props) => {
         }
       : {}),
   });
-  console.log("prro", { formData, data: props.data });
+
   const [centers, setCenters] = React.useState([]);
   const [trainers, setTrainers] = React.useState([]);
   const [isMinimized, setIsMinimized] = React.useState(true);
@@ -126,13 +114,16 @@ const TrainingSession = (props) => {
       target: {
         value:
           (props.costUnit || 0) *
-          (Array.isArray(formData.collaborators)
-            ? formData.collaborators.length
+          (Array.isArray(props.data.collaborators)
+            ? props.data.collaborators.length
             : 0),
         name: "initialCost",
       },
     });
-  }, [props.costUnit, formData.collaborators]);
+  }, [props.costUnit, props.data.collaborators]);
+
+  const handleDeleteSession = () =>
+    setFormData((prev) => ({ ...prev, active: !prev.active }));
 
   const handleChangeDate = (value) =>
     handleChange({ target: { value, name: "dates" } });
@@ -142,15 +133,16 @@ const TrainingSession = (props) => {
 
   const handleMinimize = () => setIsMinimized((prev) => !prev);
 
-  const handleCollaboratorDisable = (idx) => (disabled) =>
-    setFormData((prev) => ({
-      ...prev,
-      collaborators: Array.isArray(prev.collaborators)
-        ? prev.collaborators.map((item, key) =>
-            key === idx ? { ...item, active: disabled } : item
-          )
-        : [],
-    }));
+  const handleCollaboratorDisable = (idx) => (disabled) => {
+    if (props.onChange)
+      props.onChange({
+        collaborators: Array.isArray(props.data.collaborators)
+          ? props.data.collaborators.map((item, key) =>
+              key === idx ? { ...item, active: disabled } : item
+            )
+          : [],
+      });
+  };
 
   return (
     <Card className="my-2">
@@ -160,8 +152,10 @@ const TrainingSession = (props) => {
           <Clickable className="mx-1" onClick={handleMinimize}>
             <Icon name="faMinus" />
           </Clickable>
-          <Clickable className="mx-1">
-            <Icon name="faCircleXmark" />
+          <Clickable className="mx-1" onClick={handleDeleteSession}>
+            <Icon
+              name={formData.active ? "faCircleXmark" : "faArrowLeftRotate"}
+            />
           </Clickable>
         </div>
       </CardHeader>

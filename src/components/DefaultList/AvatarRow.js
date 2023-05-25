@@ -4,11 +4,13 @@ import fetcher from "@/services/fetcher";
 
 const AvatarRow = (props) => {
   return (
-    <img
+    <a href={fetcher.defaults.baseURL + props.photo} target="_blank" rel="noopener noreferrer">
+      <img
       className="TrainingListItem-avatar"
       src={fetcher.defaults.baseURL + props.photo}
       alt={props.name}
     />
+    </a>
   );
 };
 
