@@ -3,7 +3,7 @@ const { default: axios } = require("axios");
 const fetcher = axios;
 
 fetcher.defaults.baseURL =
-  "https://f42f-2803-2d60-1102-1dc2-8cb-ae35-2a96-802.ngrok-free.app/";
+  "https://3e57-2803-2d60-1102-1dc2-64f6-2296-5800-5766.ngrok-free.app/";
 
 fetcher.defaults.headers = {
   "ngrok-skip-browser-warning": true,
@@ -11,8 +11,8 @@ fetcher.defaults.headers = {
 
 axios.interceptors.request.use(
   function (config) {
-    if (!config.headers.Authorization) {
-      config.headers.Authorization = sessionStorage.getItem("access_token");
+    if (!config.headers.Authorization && typeof window !== "undefined") {
+      config.headers.Authorization = window.sessionStorage.getItem("access_token");
     }
     return config;
   },
@@ -28,7 +28,7 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (error.response?.status === 401) window.location.pathname = "/login";
+    if (error.response?.status === 401 && typeof window !== "undefined") window.location.pathname = "/login";
     return Promise.reject(error);
   }
 );

@@ -111,14 +111,27 @@ const TrainingSheet = (props) => {
     handleChange({
       target: { value: sessions.length + 1, name: "totalSession" },
     });
-    handleChange({
-      target: { value: [...sessions, {}], name: "sessions" },
-    });
   };
 
   const addModalToggle = () => setAddModal((prev) => !prev);
 
   const handleChangeSession = (idx) => (newData) => {
+    let total = 0;
+    sessions.forEach(function (a, key) {
+      if (idx === key) {
+        total += Array.isArray(newData.collaborators)
+          ? newData.collaborators.length
+          : 0;
+      } else {
+        total += Array.isArray(a.collaborators) ? a.collaborators.length : 0;
+      }
+    });
+    handleChange({
+      target: {
+        value: total,
+        name: "totalColEnrolled",
+      },
+    });
     setSessions((prev) =>
       prev.map((item, key) => (key === idx ? { ...item, ...newData } : item))
     );
@@ -358,7 +371,7 @@ const TrainingSheet = (props) => {
           <CustomInput
             label="Cantidad de sesiones"
             type="number"
-            value={formData.totalSession}
+            value={sessions.length}
             disabled
             required
           />
@@ -432,28 +445,6 @@ const TrainingSheet = (props) => {
         withoutDelete
         onSaveSelected={handleSelect}
       />
-      <Text TagName="h6" className="Form-title">
-        Resultados Esperados
-      </Text>
-      {Array.isArray(formData.tags) &&
-      !!formData.tags.length &&
-      Array.isArray(formData.collaborators) &&
-      !!formData.collaborators.length ? (
-        formData.tags.map((item) => (
-          <BarExample
-            labels={formData.collaborators.map((item) => item.name)}
-            title={{
-              display: true,
-              text: "Resultados esperados para " + item.label,
-            }}
-          />
-        ))
-      ) : (
-        <Text TagName="div" className="mb-4">
-          Debes de agregar al menos un tema y un colaborador para poder ver la
-          grafica
-        </Text>
-      )}
       <CustomButton text="Guardar" type="submit" />
     </Form>
   );

@@ -25,7 +25,8 @@ const Login = (props) => {
         fetcher.defaults.headers[
           "Authorization"
         ] = `Bearer ${data.access_token}`;
-        sessionStorage.setItem("access_token", data.access_token);
+        if (typeof window !== "undefined")
+          sessionStorage.setItem("access_token", data.access_token);
         router.push("/admin");
       }
     });

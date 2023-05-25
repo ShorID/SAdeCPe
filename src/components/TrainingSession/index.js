@@ -147,7 +147,7 @@ const TrainingSession = (props) => {
       ...prev,
       collaborators: Array.isArray(prev.collaborators)
         ? prev.collaborators.map((item, key) =>
-            key === idx ? { ...item, active: !disabled } : item
+            key === idx ? { ...item, active: disabled } : item
           )
         : [],
     }));

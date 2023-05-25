@@ -19,8 +19,8 @@ const CustomCheck = (props) => {
   }, [props.checked]);
 
   const handleCheck = () => {
-    setIsChecked((prev) => !prev);
     if (props.onChange) props.onChange(!isChecked);
+    setIsChecked((prev) => !prev);
   };
 
   const inputLabel =
