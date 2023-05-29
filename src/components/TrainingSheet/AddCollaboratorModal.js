@@ -48,23 +48,41 @@ const AddCollaboratorModal = (props) => {
 
   const handleSave = () => {
     try {
-      selected.forEach((item) =>
-        props.handleChangeSession(item.value)({
+      selected.forEach((item) => {
+        const newData = {
           ...item.data,
           collaborators: Array.isArray(item.data.collaborators)
             ? [
                 ...item.data.collaborators,
-                ...props.collaborators.filter(
-                  (collaborator) =>
-                    !item.data.collaborators.some(
-                      (savedCollaborators) =>
-                        savedCollaborators.id === collaborator.id
-                    )
-                ),
+                ...props.collaborators
+                  .filter(
+                    (collaborator) =>
+                      !item.data.collaborators.some(
+                        (savedCollaborators) =>
+                          savedCollaborators.collaboratorId === collaborator.id
+                      )
+                  )
+                  .map((item) => {
+                    const newData = {
+                      ...item,
+                      collaboratorId: item.id,
+                    };
+                    delete newData.id;
+                    return newData;
+                  }),
               ]
-            : props.collaborators,
-        })
-      );
+            : props.collaborators.map((item) => {
+                const newData = {
+                  ...item,
+                  collaboratorId: item.id,
+                };
+                delete newData.id;
+                return newData;
+              }),
+        };
+        console.log("prro FFFFFFFFFFFFFFFFF", { selected, newData });
+        props.handleChangeSession(item.value)(newData);
+      });
       if (props.onSubmit) props.onSubmit();
     } catch (e) {
       console.log("error saving collaborators");

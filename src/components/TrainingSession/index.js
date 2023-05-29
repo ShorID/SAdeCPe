@@ -50,7 +50,14 @@ const TrainingSession = (props) => {
     fetcher({ url: "/center" }).then(({ data }) => {
       if (Array.isArray(data)) setCenters(data);
       if (data.length)
-        handleChange({ target: { value: data[0], name: "center" } });
+        handleChange({
+          target: {
+            value: formData.centerId
+              ? data.find((item) => item.id === formData.centerId)
+              : data[0],
+            name: "center",
+          },
+        });
     });
   };
 
@@ -58,7 +65,14 @@ const TrainingSession = (props) => {
     fetcher({ url: "/trainer" }).then(({ data }) => {
       if (Array.isArray(data)) setTrainers(data);
       if (data.length)
-        handleChange({ target: { value: data[0], name: "trainer" } });
+        handleChange({
+          target: {
+            value: formData.trainerId
+              ? data.find((item) => item.id === formData.trainerId)
+              : data[0],
+            name: "trainer",
+          },
+        });
     });
   };
 
@@ -110,16 +124,15 @@ const TrainingSession = (props) => {
   };
 
   React.useEffect(() => {
-    handleChange({
-      target: {
-        value:
-          (props.costUnit || 0) *
-          (Array.isArray(props.data.collaborators)
-            ? props.data.collaborators.length
-            : 0),
-        name: "initialCost",
-      },
-    });
+    setFormData((prev) => ({
+      ...prev,
+      initialCost:
+        (props.costUnit || 0) *
+        (Array.isArray(props.data.collaborators)
+          ? props.data.collaborators.length
+          : 0),
+      collaborators: props.data.collaborators,
+    }));
   }, [props.costUnit, props.data.collaborators]);
 
   const handleDeleteSession = () =>
@@ -227,6 +240,7 @@ const TrainingSession = (props) => {
                   </option>
                 ))}
             </CustomInput>
+
             <CustomInput
               label="Capacitador"
               type="select"

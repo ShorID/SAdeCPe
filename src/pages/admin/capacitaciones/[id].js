@@ -14,36 +14,45 @@ const TrainingSheetPage = (props) => {
   );
 };
 
-TrainingSheetPage.getInitialProps = async ({ asPath }) => {
+TrainingSheetPage.getInitialProps = async ({ asPath, res }) => {
   const arrayFromQuery = asPath.split("/");
   const newId = +arrayFromQuery.find(Number);
-  const { data } = await fetcher({
-    url: "/capacitation/find/" + newId,
-  });
-
-  return {
-    data: {
-      ...data,
-      tags: data.tags.map((item) => ({
-        ...item,
-        label: item.tag.name,
-        value: item.tag.id,
-      })),
-      sessions: data.sessions.map((item) => {
-        const [from, to] = item.schedule.split(" - ");
-        return {
+  try {
+    const { data } = await fetcher({
+      url: "/capacitation/find/" + newId,
+    });
+    return {
+      data: {
+        ...data,
+        tags: data.tags.map((item) => ({
           ...item,
-          collaborators: item.assistances.map((item) => ({
-            ...item.collaborator,
+          label: item.tag.name,
+          value: item.tag.id,
+        })),
+        sessions: data.sessions.map((item) => {
+          const [from, to] = item.schedule.split(" - ");
+          return {
             ...item,
-          })),
-          dates: item.dates.split(" - ").map((item) => new Date(item)),
-          from,
-          to,
-        };
-      }),
-    },
-  };
+            collaborators: item.assistances.map((item) => ({
+              ...item.collaborator,
+              ...item,
+            })),
+            dates: item.dates.split(" - ").map((item) => new Date(item)),
+            formattedDate: item.dates.split(" - "),
+            from,
+            to,
+          };
+        }),
+      },
+    };
+  } catch (e) {
+    res.writeHead(302, {
+      Location: "/login",
+      "Content-Type": "text/html; charset=utf-8",
+    });
+    res.end();
+    return {};
+  }
 };
 
 export default TrainingSheetPage;

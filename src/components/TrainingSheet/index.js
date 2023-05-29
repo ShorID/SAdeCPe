@@ -35,7 +35,7 @@ const TrainingSheet = (props) => {
   const [validated, setValidated] = React.useState([]);
 
   const router = useRouter();
-  console.log("prro wtf", sessions);
+  console.log("prro--------------", sessions);
   const handleChange = ({ target: { value, name } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -102,32 +102,31 @@ const TrainingSheet = (props) => {
 
   const handleAddSession = () => {
     setSessions((prev) => [...prev, { active: true }]);
-    handleChange({
-      target: { value: sessions.length + 1, name: "totalSession" },
-    });
   };
 
   const addModalToggle = () => setAddModal((prev) => !prev);
 
   const handleChangeSession = (idx) => (newData) => {
     let total = 0;
+    let totalSessions = 0;
     sessions.forEach(function (a, key) {
       if (idx === key) {
         total += Array.isArray(newData.collaborators)
-          ? newData.collaborators.length
+          ? newData.collaborators.filter((item) => item.active).length
           : 0;
+        totalSessions += newData.active ? 1 : 0;
       } else {
-        total += Array.isArray(a.collaborators) ? a.collaborators.length : 0;
+        total += Array.isArray(a.collaborators)
+          ? a.collaborators.filter((item) => item.active).length
+          : 0;
+        totalSessions += a.active ? 1 : 0;
       }
     });
-    handleChange({
-      target: {
-        value: total,
-        name: "totalColEnrolled",
-      },
-    });
+    setFormData((prev) => ({ ...prev, totalSessions }));
     setSessions((prev) =>
-      prev.map((item, key) => (key === idx ? { ...item, ...newData } : item))
+      prev.map((item, key) =>
+        key === idx ? { ...item, ...newData, totalColEnrolled: total } : item
+      )
     );
   };
 
@@ -137,9 +136,12 @@ const TrainingSheet = (props) => {
     setValidated(true);
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
-    let totalSession = sessions.length;
     let allCollaborators = [];
     let totalColEnrolled = 0;
+    let totalSession =
+      (Array.isArray(sessions) &&
+        sessions.filter((item) => item.active).length) ||
+      0;
 
     sessions.forEach((item) => {
       const newCollaborators = allCollaborators.filter(
@@ -151,35 +153,47 @@ const TrainingSheet = (props) => {
       allCollaborators = [...allCollaborators, ...newCollaborators];
       totalColEnrolled = allCollaborators.length;
     });
-
+    const data = {
+      ...formData,
+      tags:
+        Array.isArray(formData.tags) &&
+        formData.tags.map((item) =>
+          item["__isNew__"] ? { ...item, isNew: true } : item
+        ),
+      inatecBackground: formData.inatecBackground || 0,
+      sessions: sessions.map((item) => ({
+        id: item.id,
+        dates: item.formattedDate,
+        centerId: item.centerId,
+        timeRange: [
+          moment(item.from).format("HH:mm"),
+          moment(item.to).format("HH:mm"),
+        ],
+        [item.id ? "assistances" : "collaborators"]: item.id
+          ? item.collaborators?.map((item) => ({
+              id: item.id,
+              sessionId: item.sessionId,
+              collaboratorId: item.collaboratorId,
+              qualification: null,
+              certificate: null,
+              description: null,
+              creationDate: item.creationDate,
+              active: item.active,
+            }))
+          : item.collaborators?.map((item) => item.collaboratorId).join(","),
+        trainerId: item.trainerId,
+        ...(props.isCreating ? {} : { capId: props.data.id }),
+        active: item.active,
+      })),
+      totalColEnrolled,
+      totalSession,
+      costInitial: formData.costUnit * totalColEnrolled,
+      costFinal: formData.costUnit * totalColEnrolled * totalSession,
+    };
     fetcher({
       url: "/capacitation/" + (props.isCreating ? "create" : "update"),
       method: props.isCreating ? "POST" : "PUT",
-      data: {
-        ...formData,
-        tags:
-          Array.isArray(formData.tags) &&
-          formData.tags.map((item) =>
-            item["__isNew__"] ? { ...item, isNew: true } : item
-          ),
-        totalColEnrolled,
-        totalSession,
-        inatecBackground: formData.inatecBackground || 0,
-        sessions: sessions.map((item) => ({
-          dates: item.formattedDate,
-          centerId: item.centerId,
-          timeRange: [
-            moment(item.from).format("HH:mm"),
-            moment(item.to).format("HH:mm"),
-          ],
-          collaborators: item.collaborators?.map((item) => item.id).join(","),
-          trainerId: item.trainerId,
-        })),
-        costInitial: formData.costUnit * formData.totalColEnrolled,
-        costFinal:
-          formData.costUnit * formData.totalColEnrolled * formData.totalSession,
-        totalColFin: 0,
-      },
+      data,
     }).then(({ data }) => {
       if (props.isCreating) {
         router.push(`/admin/capacitaciones/${data.id}`);

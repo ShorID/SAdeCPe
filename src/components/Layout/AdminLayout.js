@@ -60,7 +60,7 @@ const AdminLayout = (props) => {
           <ListGroup className="mb-4">{renderLinks(links.block1)}</ListGroup>
           <ListGroup className="mb-4">
             {renderLinks(links.block2)}
-            <ListGroupItem
+            {/* <ListGroupItem
               action
               href="/admin/solicitudes"
               tag="a"
@@ -70,7 +70,7 @@ const AdminLayout = (props) => {
               <Text>
                 Solicitudes <Badge pill>3</Badge>
               </Text>
-            </ListGroupItem>
+            </ListGroupItem> */}
           </ListGroup>
           <ListGroup>
             <ListGroupItem action href="#" tag="a" className="AdminLayout-link">

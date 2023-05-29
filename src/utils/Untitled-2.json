@@ -1,47 +1,55 @@
 {
-    "id": 25,
-    "stateId": 1,
+    "id": 26,
+    "stateId": 2,
     "levelPrioryId": 1,
     "orgId": 2,
     "reasonId": 1,
-    "name": "Prueba",
-    "description": "xdfxfdxfxf",
+    "name": "Prueba - Edit",
+    "description": "Esto es una prueba - Edit",
     "costUnit": 100,
     "costInitial": 200,
     "costFinal": 200,
     "inatecBackground": 0,
-    "certificated": false,
+    "certificated": true,
     "external": false,
     "sessions": [
         {
-            "id": 24,
-            "capId": 25,
+            "id": 25,
+            "capId": 26,
             "trainerId": 1,
             "centerId": 3,
             "dates": "18/4/2023 - 20/4/2023",
-            "schedule": "18:00 - 20:00",
+            "schedule": "18:00 - 20:30",
             "assistances": [
                 {
-                    "id": 25,
-                    "sessionId": 24,
+                    "id": 26,
+                    "sessionId": 25,
                     "collaboratorId": 1,
                     "qualification": null,
                     "certificate": null,
                     "description": null,
-                    "creationDate": "2023-05-16",
+                    "creationDate": "2023-05-24",
                     "active": true
                 },
                 {
-                    "id": 24,
-                    "sessionId": 24,
+                    "id": 27,
+                    "sessionId": 25,
                     "collaboratorId": 2,
                     "qualification": null,
                     "certificate": null,
                     "description": null,
-                    "creationDate": "2023-05-16",
+                    "creationDate": "2023-05-24",
                     "active": true
                 }
             ]
+        },
+        {
+            "capId": 26,
+            "trainerId": 1,
+            "centerId": 3,
+            "dates": "01/5/2023 - 01/5/2023",
+            "schedule": "13:00 - 14:00",
+            "collaborators": "1"
         }
     ],
     "tags": [
