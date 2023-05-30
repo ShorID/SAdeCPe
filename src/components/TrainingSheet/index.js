@@ -32,10 +32,12 @@ const TrainingSheet = (props) => {
   const [reasons, setReasons] = React.useState([]);
   const [collaborators, setCollaborators] = React.useState([]);
   const [addModal, setAddModal] = React.useState(false);
+  const [centers, setCenters] = React.useState([]);
+  const [trainers, setTrainers] = React.useState([]);
   const [validated, setValidated] = React.useState([]);
 
   const router = useRouter();
-  console.log("prro--------------", sessions);
+
   const handleChange = ({ target: { value, name } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -72,6 +74,7 @@ const TrainingSheet = (props) => {
           });
       }
     });
+
   const getReasons = () =>
     fetcher({ url: "/reason" }).then(({ data }) => {
       if (Array.isArray(data)) {
@@ -83,11 +86,27 @@ const TrainingSheet = (props) => {
       }
     });
 
+  const getCenters = () => {
+    fetcher({ url: "/center" }).then(({ data }) => {
+      if (Array.isArray(data)) setCenters(data);
+    });
+  };
+
+  const getTrainers = () => {
+    fetcher({ url: "/trainer" }).then(({ data }) => {
+      if (Array.isArray(data)) setTrainers(data);
+    });
+  };
+
   React.useEffect(() => {
-    getStates();
-    getOrgs();
-    getPriorities();
-    getReasons();
+    Promise.all([
+      getStates(),
+      getOrgs(),
+      getPriorities(),
+      getReasons(),
+      getCenters(),
+      getTrainers(),
+    ]);
   }, []);
 
   const handleSelect = (selectedItems, { cleanSelected }) => {
@@ -108,25 +127,33 @@ const TrainingSheet = (props) => {
 
   const handleChangeSession = (idx) => (newData) => {
     let total = 0;
-    let totalSessions = 0;
+    let totalSession = 0;
+    let costFinal = 0;
     sessions.forEach(function (a, key) {
-      if (idx === key) {
-        total += Array.isArray(newData.collaborators)
-          ? newData.collaborators.filter((item) => item.active).length
-          : 0;
-        totalSessions += newData.active ? 1 : 0;
-      } else {
-        total += Array.isArray(a.collaborators)
-          ? a.collaborators.filter((item) => item.active).length
-          : 0;
-        totalSessions += a.active ? 1 : 0;
+      if (a.active) {
+        if (idx === key) {
+          total += Array.isArray(newData.collaborators)
+            ? newData.collaborators.filter((item) => item.active).length
+            : 0;
+          totalSession += newData.active ? 1 : 0;
+          costFinal += newData.initialCost;
+        } else {
+          total += Array.isArray(a.collaborators)
+            ? a.collaborators.filter((item) => item.active).length
+            : 0;
+          totalSession += a.active ? 1 : 0;
+          costFinal += a.initialCost;
+        }
       }
     });
-    setFormData((prev) => ({ ...prev, totalSessions }));
+    setFormData((prev) => ({
+      ...prev,
+      totalSession,
+      totalColEnrolled: total,
+      costFinal,
+    }));
     setSessions((prev) =>
-      prev.map((item, key) =>
-        key === idx ? { ...item, ...newData, totalColEnrolled: total } : item
-      )
+      prev.map((item, key) => (key === idx ? { ...item, ...newData } : item))
     );
   };
 
@@ -137,11 +164,9 @@ const TrainingSheet = (props) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
     let allCollaborators = [];
-    let totalColEnrolled = 0;
-    let totalSession =
-      (Array.isArray(sessions) &&
-        sessions.filter((item) => item.active).length) ||
-      0;
+    let totalSession = Array.isArray(sessions)
+      ? sessions.filter((item) => item.active).length
+      : 0;
 
     sessions.forEach((item) => {
       const newCollaborators = allCollaborators.filter(
@@ -151,14 +176,22 @@ const TrainingSheet = (props) => {
           )
       );
       allCollaborators = [...allCollaborators, ...newCollaborators];
-      totalColEnrolled = allCollaborators.length;
     });
+
     const data = {
       ...formData,
       tags:
         Array.isArray(formData.tags) &&
         formData.tags.map((item) =>
-          item["__isNew__"] ? { ...item, isNew: true } : item
+          item["__isNew__"]
+            ? {
+                ...item,
+                isNew: true,
+              }
+            : {
+                ...item,
+                ...(!props.isCreating ? { capId: formData.id } : {}),
+              }
         ),
       inatecBackground: formData.inatecBackground || 0,
       sessions: sessions.map((item) => ({
@@ -185,11 +218,9 @@ const TrainingSheet = (props) => {
         ...(props.isCreating ? {} : { capId: props.data.id }),
         active: item.active,
       })),
-      totalColEnrolled,
       totalSession,
-      costInitial: formData.costUnit * totalColEnrolled,
-      costFinal: formData.costUnit * totalColEnrolled * totalSession,
     };
+
     fetcher({
       url: "/capacitation/" + (props.isCreating ? "create" : "update"),
       method: props.isCreating ? "POST" : "PUT",
@@ -197,8 +228,6 @@ const TrainingSheet = (props) => {
     }).then(({ data }) => {
       if (props.isCreating) {
         router.push(`/admin/capacitaciones/${data.id}`);
-      } else {
-        router.reload();
       }
     });
   };
@@ -386,24 +415,8 @@ const TrainingSheet = (props) => {
         </Col>
         <Col sm="12">
           <CustomInput
-            label="Costo inicial ($)"
-            name="total"
-            value={formatQuantity(
-              formData.costUnit * formData.totalColEnrolled
-            )}
-            onChange={handleChange}
-            disabled
-            required
-          />
-        </Col>
-        <Col sm="12">
-          <CustomInput
             label="Costo final ($)"
-            value={formatQuantity(
-              formData.costUnit *
-                formData.totalColEnrolled *
-                formData.totalSession
-            )}
+            value={formatQuantity(formData.costFinal)}
             disabled
             required
           />
@@ -418,6 +431,10 @@ const TrainingSheet = (props) => {
           data={item}
           onChange={handleChangeSession(key)}
           costUnit={formData.costUnit}
+          centers={centers}
+          trainers={trainers}
+          refreshCenters={getCenters}
+          refreshTrainers={getTrainers}
         />
       ))}
       <Button

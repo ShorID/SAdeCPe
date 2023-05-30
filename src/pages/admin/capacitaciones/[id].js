@@ -26,6 +26,7 @@ TrainingSheetPage.getInitialProps = async ({ asPath, res }) => {
         ...data,
         tags: data.tags.map((item) => ({
           ...item,
+          tagId: item.tag.id,
           label: item.tag.name,
           value: item.tag.id,
         })),

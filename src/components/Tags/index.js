@@ -15,7 +15,12 @@ const Tags = (props) => {
       ({ data }) =>
         Array.isArray(data) &&
         setTrainingTags(
-          data.map((item) => ({ ...item, label: item.name, value: item.id }))
+          data.map((item) => ({
+            ...item,
+            label: item.name,
+            value: item.id,
+            tagId: item.id,
+          }))
         )
     );
   }, []);

@@ -31,6 +31,7 @@ const months = [
 ];
 
 const TrainingSession = (props) => {
+  const { centers = [], trainers = [], refreshTrainers, refreshCenters } = props;
   const [formData, setFormData] = React.useState({
     title: props.title,
     ...(props.data
@@ -42,44 +43,31 @@ const TrainingSession = (props) => {
       : {}),
   });
 
-  const [centers, setCenters] = React.useState([]);
-  const [trainers, setTrainers] = React.useState([]);
   const [isMinimized, setIsMinimized] = React.useState(true);
 
-  const getCenters = () => {
-    fetcher({ url: "/center" }).then(({ data }) => {
-      if (Array.isArray(data)) setCenters(data);
-      if (data.length)
-        handleChange({
-          target: {
-            value: formData.centerId
-              ? data.find((item) => item.id === formData.centerId)
-              : data[0],
-            name: "center",
-          },
-        });
-    });
-  };
-
-  const getTrainers = () => {
-    fetcher({ url: "/trainer" }).then(({ data }) => {
-      if (Array.isArray(data)) setTrainers(data);
-      if (data.length)
-        handleChange({
-          target: {
-            value: formData.trainerId
-              ? data.find((item) => item.id === formData.trainerId)
-              : data[0],
-            name: "trainer",
-          },
-        });
-    });
-  };
+  React.useEffect(() => {
+    if (centers.length)
+      handleChange({
+        target: {
+          value: formData.centerId
+            ? centers.find((item) => item.id === formData.centerId)
+            : centers[0],
+          name: "center",
+        },
+      });
+  }, [centers]);
 
   React.useEffect(() => {
-    getCenters();
-    getTrainers();
-  }, []);
+    if (trainers.length)
+      handleChange({
+        target: {
+          value: formData.trainerId
+            ? trainers.find((item) => item.id === formData.trainerId)
+            : trainers[0],
+          name: "trainer",
+        },
+      });
+  }, [trainers]);
 
   React.useEffect(() => {
     if (props.onChange) props.onChange(formData);
@@ -97,9 +85,9 @@ const TrainingSession = (props) => {
           ...returnObj,
           [name]: value,
           formattedDate: [
-            `${value[0].year}/${value[0].monthIndex}/${value[0].day}`,
+            `${value[0].year}/${value[0].monthIndex + 1}/${value[0].day}`,
             value[1]
-              ? `${value[1].year}/${value[1].monthIndex}/${value[1].day}`
+              ? `${value[1].year}/${value[1].monthIndex + 1}/${value[1].day}`
               : "",
           ],
         };
@@ -129,7 +117,7 @@ const TrainingSession = (props) => {
       initialCost:
         (props.costUnit || 0) *
         (Array.isArray(props.data.collaborators)
-          ? props.data.collaborators.length
+          ? props.data.collaborators.filter((item) => item.active).length
           : 0),
       collaborators: props.data.collaborators,
     }));
@@ -177,6 +165,7 @@ const TrainingSession = (props) => {
           transition: `max-height 0.15s ease-in}`,
           maxHeight: isMinimized ? "0px" : "unset",
           overflow: "hidden",
+          ...(!formData.active ? { display: "none" } : {}),
           ...(isMinimized ? { padding: "0px" } : {}),
         }}
       >
@@ -230,7 +219,7 @@ const TrainingSession = (props) => {
               name="center"
               value={formData.center?.id}
               Drawer={drawerTypes["trainingCenter"]}
-              refreshFunc={getCenters}
+              refreshFunc={refreshCenters}
               required
             >
               {Array.isArray(centers) &&
@@ -248,7 +237,7 @@ const TrainingSession = (props) => {
               name="trainer"
               value={formData.trainer?.id}
               Drawer={drawerTypes["trainer"]}
-              refreshFunc={getTrainers}
+              refreshFunc={refreshTrainers}
               required
             >
               {Array.isArray(trainers) &&
