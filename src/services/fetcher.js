@@ -12,7 +12,9 @@ fetcher.defaults.headers = {
 axios.interceptors.request.use(
   function (config) {
     if (!config.headers.Authorization && typeof window !== "undefined") {
-      config.headers.Authorization = window.sessionStorage.getItem("access_token");
+      config.headers.Authorization = `Bearer ${window.sessionStorage.getItem(
+        "access_token"
+      )}`;
     }
     return config;
   },
@@ -28,7 +30,9 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (error.response?.status === 401 && typeof window !== "undefined") window.location.pathname = "/login";
+    if (error.response?.status === 401 && typeof window !== "undefined") {
+      window.location.pathname = "/login";
+    }
     return Promise.reject(error);
   }
 );

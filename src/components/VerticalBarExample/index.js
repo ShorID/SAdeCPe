@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { getRandomInt } from "@/services/common";
+import fetcher from "@/services/fetcher";
 
 ChartJS.register(
   CategoryScale,
@@ -82,10 +83,35 @@ export const dataPosition = {
 };
 
 export function VerticalBarExample(props) {
+  const [dynamicData, setData] = React.useState();
+  React.useEffect(() => {
+    fetcher({ url: "/stadistics/comp-year" }).then(({ data }) =>
+      setData({
+        labels: data.labels,
+        datasets: [
+          {
+            label: "Año pasado",
+            data: data.lastYear,
+            backgroundColor: "rgba(255, 99, 132, 0.5)",
+          },
+          {
+            label: "Año actual",
+            data: data.currentYear,
+            backgroundColor: "rgba(53, 162, 235, 0.5)",
+          },
+        ],
+      })
+    );
+  }, []);
+
+  console.log("prro", dynamicData);
+
   return (
-    <Bar
-      options={props.position ? optionsposition : options}
-      data={props.position ? dataPosition : data}
-    />
+    dynamicData && (
+      <Bar
+        options={props.position ? optionsposition : options}
+        data={props.position ? dataPosition : dynamicData}
+      />
+    )
   );
 }

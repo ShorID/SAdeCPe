@@ -76,8 +76,6 @@ const EmployeeSheet = (props) => {
     }).then(({ data }) => {
       if (props.isCreating) {
         router.push(`/admin/empleados/${data.id}`);
-      } else {
-        router.reload();
       }
     });
   };

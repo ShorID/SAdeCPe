@@ -49,12 +49,12 @@ const AdminLayout = (props) => {
           <ListGroup className="mb-4">
             <ListGroupItem
               action
-              href="/admin"
-              tag="a"
               active={router.asPath === "/admin"}
               className="AdminLayout-link"
             >
-              <Text>Bienvenido!</Text>
+              <Link to="/admin" withoutClass>
+                <Text>Bienvenido!</Text>
+              </Link>
             </ListGroupItem>
           </ListGroup>
           <ListGroup className="mb-4">{renderLinks(links.block1)}</ListGroup>
