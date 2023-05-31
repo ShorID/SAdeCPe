@@ -1,7 +1,8 @@
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { getRandomInt } from "@/services/common";
+import { getRandomColor, getRandomInt } from "@/services/common";
+import fetcher from "@/services/fetcher";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -40,5 +41,34 @@ export const data = {
 };
 
 export function PieExample() {
-  return <Pie data={data} />;
+  const [dynamicData, setData] = React.useState();
+
+  React.useEffect(() => {
+    fetcher({ url: "/stadistics/cap-dep" }).then(({ data }) =>
+      setData(() => {
+        let colors =[];
+        for (let index = 0; index < data.labels.length; index++) {
+          let newColor = getRandomColor();
+          if(colors.some((item) => item === newColor)){
+            index--
+          }else{
+            colors.push(newColor)
+          }          
+        }
+        return {
+          labels: data.labels,
+          datasets: [
+            {
+              label: "# Capacitaciones",
+              data: data.data,
+              backgroundColor: colors,
+              borderColor: colors,
+            },
+          ],
+        };
+      })
+    );
+  }, []);
+
+  return dynamicData && <Pie data={dynamicData} />;
 }

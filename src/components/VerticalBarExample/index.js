@@ -104,8 +104,6 @@ export function VerticalBarExample(props) {
     );
   }, []);
 
-  console.log("prro", dynamicData);
-
   return (
     dynamicData && (
       <Bar

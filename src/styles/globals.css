@@ -28,8 +28,12 @@
 @import "./TrainingSession.css";
 @import "./AddCollaboratorModal.css";
 
+*:has(.offcanvas.show) {
+  overflow-y: hidden;
+}
+
 :root {
-  --main-color: #1D2C4F;
+  --main-color: #1d2c4f;
   --base-color: #f86409;
   --secundary-color: #382b2b;
   --selection-color: #099df8;
@@ -130,6 +134,6 @@ a {
     opacity: 1;
   }
 }
-.react-datepicker__triangle{
+.react-datepicker__triangle {
   left: -10px !important;
 }

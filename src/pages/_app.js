@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ErrorBoundary>
-      <Component {...pageProps} windowDimensions={windowDimensions} />;
+      <Component {...pageProps} windowDimensions={windowDimensions} />
       <ToastContainer position="bottom-right" />
     </ErrorBoundary>
   );

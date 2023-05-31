@@ -5,6 +5,7 @@
   margin-top: auto;
   flex-grow: initial;
   background-color: var(--base-color);
+  overflow-y: hidden;
 }
 .Drawer-form {
   display: contents;

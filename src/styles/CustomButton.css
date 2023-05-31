@@ -2,7 +2,7 @@
     background-color: var(--main-color) !important;
     border-color: var(--main-color) !important;
     color: white;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 .CustomButton.light{
     background-color: white !important;
