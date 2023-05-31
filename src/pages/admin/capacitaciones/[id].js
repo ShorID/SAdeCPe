@@ -6,23 +6,13 @@ import fetcher from "@/services/fetcher";
 import moment from "moment";
 
 const TrainingSheetPage = (props) => {
-  console.log("prro", props);
-  return (
-    <AdminLayout>
-      <TrainingSheet data={props.data} />
-    </AdminLayout>
-  );
-};
+  const [data, setData] = React.useState();
 
-TrainingSheetPage.getInitialProps = async ({ asPath, res }) => {
-  const arrayFromQuery = asPath.split("/");
-  const newId = +arrayFromQuery.find(Number);
-  try {
-    const { data } = await fetcher({
-      url: "/capacitation/find/" + newId,
-    });
-    return {
-      data: {
+  React.useEffect(() => {
+    fetcher({
+      url: "/capacitation/find/" + props.id,
+    }).then(({ data }) =>
+      setData({
         ...data,
         tags: data.tags.map((item) => ({
           ...item,
@@ -44,16 +34,26 @@ TrainingSheetPage.getInitialProps = async ({ asPath, res }) => {
             to,
           };
         }),
-      },
-    };
-  } catch (e) {
-    res.writeHead(302, {
-      Location: "/login",
-      "Content-Type": "text/html; charset=utf-8",
-    });
-    res.end();
-    return {};
-  }
+      })
+    );
+  }, []);
+  return <AdminLayout>{data && <TrainingSheet data={data} />}</AdminLayout>;
+};
+
+TrainingSheetPage.getInitialProps = async ({ asPath }) => {
+  const arrayFromQuery = asPath.split("/");
+  const newId = +arrayFromQuery.find(Number);
+  // try {
+
+  // } catch (e) {
+  //   res.writeHead(302, {
+  //     Location: "/login",
+  //     "Content-Type": "text/html; charset=utf-8",
+  //   });
+  //   res.end();
+  //   return {};
+  // }
+  return { id: newId };
 };
 
 export default TrainingSheetPage;

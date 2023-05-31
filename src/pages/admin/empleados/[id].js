@@ -5,9 +5,21 @@ import EmployeeSheet from "@/components/EmployeeSheet";
 import fetcher from "@/services/fetcher";
 
 const EmployeesPage = (props) => {
+  const [data, setData] = React.useState();
+
+  React.useEffect(() => {
+    fetcher({
+      url: "/collaborator/findOne/" + props.id,
+    }).then(({ data }) =>
+      setData({
+        ...data,
+        departamentId: data.position.departamentId,
+      })
+    );
+  }, []);
   return (
     <AdminLayout>
-      <EmployeeSheet {...props} />
+      {data && <EmployeeSheet {...props} data={data} />}
     </AdminLayout>
   );
 };
@@ -17,14 +29,7 @@ EmployeesPage.propTypes = {};
 EmployeesPage.getInitialProps = async ({ asPath }) => {
   const arrayFromQuery = asPath.split("/");
   const newId = +arrayFromQuery.find(Number);
-  const data = await fetcher({
-    url: "/collaborator/findOne/" + newId,
-  }).then(({ data }) => ({
-    ...data,
-    departamentId: data.position.departamentId,
-  }));
-
-  return { data };
+  return { id: newId };
 };
 
 export default EmployeesPage;
