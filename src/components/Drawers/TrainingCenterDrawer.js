@@ -7,6 +7,8 @@ import DateInput from "../DateInput";
 import fetcher from "@/services/fetcher";
 import { getFormatedDate } from "@/services/common";
 import FileInput from "../FileInput";
+import { toast } from "react-toastify";
+import { promiseToastMsg } from "@/services/toastService";
 
 const TrainingCenterDrawer = (props) => {
   const [formData, setFormData] = React.useState(
@@ -27,20 +29,27 @@ const TrainingCenterDrawer = (props) => {
     setValidated(true);
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
-    fetcher({
-      url: "/center/" + (props.isCreating ? "create" : "update"),
-      method: props.isCreating ? "POST" : "PUT",
-      data: formData,
-    }).then(() => {
-      props.toggle();
-      props.refresh();
-    });
+    toast.promise(
+      fetcher({
+        url: "/center/" + (props.isCreating ? "create" : "update"),
+        method: props.isCreating ? "POST" : "PUT",
+        data: formData,
+      }).then(() => {
+        props.toggle();
+        props.refresh();
+      }),
+      promiseToastMsg
+    );
   };
 
   return (
     <Drawer
       {...props}
-      header={props.isCreating ? "Crear Centro de Capacitacion" : "Editar Centro de Capacitacion"}
+      header={
+        props.isCreating
+          ? "Crear Centro de Capacitacion"
+          : "Editar Centro de Capacitacion"
+      }
       footer={
         <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
       }

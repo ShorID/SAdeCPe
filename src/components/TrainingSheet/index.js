@@ -13,6 +13,8 @@ import drawerTypes from "../Drawers/drawerTypes";
 import TrainingSession from "../TrainingSession";
 import AddCollaboratorModal from "./AddCollaboratorModal";
 import moment from "moment";
+import { promiseToastMsg } from "@/services/toastService";
+import { toast } from "react-toastify";
 
 const TrainingSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -220,16 +222,18 @@ const TrainingSheet = (props) => {
       })),
       totalSession,
     };
-
-    fetcher({
-      url: "/capacitation/" + (props.isCreating ? "create" : "update"),
-      method: props.isCreating ? "POST" : "PUT",
-      data,
-    }).then(({ data }) => {
-      if (props.isCreating) {
-        router.push(`/admin/capacitaciones/${data.id}`);
-      }
-    });
+    toast.promise(
+      fetcher({
+        url: "/capacitation/" + (props.isCreating ? "create" : "update"),
+        method: props.isCreating ? "POST" : "PUT",
+        data,
+      }).then(({ data }) => {
+        if (props.isCreating) {
+          router.push(`/admin/capacitaciones/${data.id}`);
+        }
+      }),
+      promiseToastMsg
+    );
   };
 
   return (

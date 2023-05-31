@@ -9,6 +9,8 @@ import CustomButton from "../CustomButton";
 import { useRouter } from "next/router";
 import DateInput from "../DateInput";
 import drawerTypes from "../Drawers/drawerTypes";
+import { toast } from "react-toastify";
+import { promiseToastMsg } from "@/services/toastService";
 
 const EmployeeSheet = (props) => {
   const [formData, setFormData] = React.useState(
@@ -42,10 +44,10 @@ const EmployeeSheet = (props) => {
   React.useEffect(() => {
     getDepartments();
     if (props.data)
-    getEmployeesPosition({
-      field: "id",
-      value: props.data.employeePositionId,
-    });
+      getEmployeesPosition({
+        field: "id",
+        value: props.data.employeePositionId,
+      });
   }, []);
 
   const handleChange = async ({ target: { value, name } }) => {
@@ -69,15 +71,18 @@ const EmployeeSheet = (props) => {
     if (form.checkValidity() === false) return console.log("Error");
     let newData = { ...formData };
     delete newData["departamentId"];
-    fetcher({
-      url: "/collaborator/" + (props.isCreating ? "create" : "update"),
-      method: props.isCreating ? "POST" : "PUT",
-      data: newData,
-    }).then(({ data }) => {
-      if (props.isCreating) {
-        router.push(`/admin/empleados/${data.id}`);
-      }
-    });
+    toast.promise(
+      fetcher({
+        url: "/collaborator/" + (props.isCreating ? "create" : "update"),
+        method: props.isCreating ? "POST" : "PUT",
+        data: newData,
+      }).then(({ data }) => {
+        if (props.isCreating) {
+          router.push(`/admin/empleados/${data.id}`);
+        }
+      }),
+      promiseToastMsg
+    );
   };
 
   return (

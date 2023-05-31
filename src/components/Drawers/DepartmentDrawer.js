@@ -8,6 +8,8 @@ import DateInput from "../DateInput";
 import fetcher from "@/services/fetcher";
 import moment from "moment";
 import { getFormatedDate } from "@/services/common";
+import { toast } from "react-toastify";
+import { promiseToastMsg } from "@/services/toastService";
 
 const DepartmentDrawer = (props) => {
   const [formData, setFormData] = React.useState(
@@ -28,14 +30,17 @@ const DepartmentDrawer = (props) => {
     setValidated(true);
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
-    fetcher({
-      url: "/departament/" + (props.isCreating ? "create" : "update"),
-      method: props.isCreating ? "POST" : "PUT",
-      data: formData,
-    }).then(() => {
-      props.toggle();
-      props.refresh();
-    });
+    toast.promise(
+      fetcher({
+        url: "/departament/" + (props.isCreating ? "create" : "update"),
+        method: props.isCreating ? "POST" : "PUT",
+        data: formData,
+      }).then(() => {
+        props.toggle();
+        props.refresh();
+      }),
+      promiseToastMsg
+    );
   };
 
   return (

@@ -5,6 +5,8 @@ import CustomButton from "../CustomButton";
 import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
 import FileInput from "../FileInput";
+import { toast } from "react-toastify";
+import { promiseToastMsg } from "@/services/toastService";
 
 const TrainerDrawer = (props) => {
   const [formData, setFormData] = React.useState(
@@ -31,14 +33,17 @@ const TrainerDrawer = (props) => {
     setValidated(true);
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
-    fetcher({
-      url: "/trainer/" + (props.isCreating ? "create" : "update"),
-      method: props.isCreating ? "POST" : "PUT",
-      data: formData,
-    }).then(() => {
-      props.toggle();
-      props.refresh();
-    });
+    toast.promise(
+      fetcher({
+        url: "/trainer/" + (props.isCreating ? "create" : "update"),
+        method: props.isCreating ? "POST" : "PUT",
+        data: formData,
+      }).then(() => {
+        props.toggle();
+        props.refresh();
+      }),
+      promiseToastMsg
+    );
   };
 
   return (

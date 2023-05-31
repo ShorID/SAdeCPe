@@ -15,6 +15,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import React from "react";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 export default function App({ Component, pageProps }) {
   React.useEffect(() => {
@@ -26,6 +28,7 @@ export default function App({ Component, pageProps }) {
   return (
     <ErrorBoundary>
       <Component {...pageProps} windowDimensions={windowDimensions} />;
+      <ToastContainer position="bottom-right" />
     </ErrorBoundary>
   );
 }
