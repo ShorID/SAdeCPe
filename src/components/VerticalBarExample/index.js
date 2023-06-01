@@ -35,6 +35,11 @@ export const options = {
       text: "Comparativa de capaciaciones Enero-Julio",
     },
   },
+  animation: {
+    onComplete: function () {
+      alert("Line Chart Rendered Completely!");
+    },
+  },
 };
 
 export const optionsposition = {
@@ -121,12 +126,26 @@ export function VerticalBarExample(props) {
   return (
     dynamicData && (
       <div>
-        <div style={{ height: 0, overflow: "hidden" }}>
+        <div>
           <Bar
             ref={ref}
-            options={props.position ? optionsposition : options}
+            options={
+              props.position
+                ? optionsposition
+                : {
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: "top",
+                      },
+                      title: {
+                        display: true,
+                        text: "Comparativa de capaciaciones Enero-Julio",
+                      },
+                    }
+                  }
+            }
             data={props.position ? dataPosition : dynamicData}
-            style={{ visibility: "hidden" }}
           />
         </div>
         <Button onClick={downloadChart}>Descargar</Button>
