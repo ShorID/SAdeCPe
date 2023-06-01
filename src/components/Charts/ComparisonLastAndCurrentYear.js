@@ -51,16 +51,19 @@ const ComparisonLastAndCurrentYear = (props) => {
     );
   }, []);
 
-  const onClick = () => {
-    saveGraph(graphId, ref.current.toBase64Image());
-  };
-
   const downloadChart = () => {
     let link = document.createElement("a");
     link.download = graphId + ".png";
-    link.href = graphsData[graphId];
+    link.href = graphsData[graphId].current.toBase64Image();
     link.click();
   };
+
+  const saveGraphRef = React.useCallback(
+    (chart) => {
+      if (chart.initial) saveGraph(graphId, ref);
+    },
+    [ref.current]
+  );
 
   return (
     dynamicData && (
@@ -79,13 +82,9 @@ const ComparisonLastAndCurrentYear = (props) => {
               },
             },
             animation: {
-              onComplete: function (chart) {
-                if (chart.initial)
-                  saveGraph(graphId, chart.chart.toBase64Image());
-              },
+              onComplete: saveGraphRef,
             },
           }}
-          onClick={onClick}
           data={dynamicData}
         />
         <Button
@@ -96,7 +95,7 @@ const ComparisonLastAndCurrentYear = (props) => {
             position: "absolute",
             top: 10,
             right: 10,
-            display: graphsData[graphId] ? "block" : "none",
+            display: graphsData[graphId]?.current ? "block" : "none",
           }}
           onClick={downloadChart}
         >

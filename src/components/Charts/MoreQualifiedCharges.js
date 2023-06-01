@@ -13,6 +13,8 @@ import {
   Legend,
 } from "chart.js";
 import { getRandomColor } from "@/services/common";
+import { Button } from "reactstrap";
+import Icon from "../Icon";
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +29,7 @@ const graphId = "moreQualifiedCharges";
 
 const MoreQualifiedCharges = (props) => {
   const [dynamicData, setData] = React.useState();
-  const { saveGraph } = React.useContext(ChartContext);
+  const { saveGraph, graphsData } = React.useContext(ChartContext);
   const ref = React.useRef(null);
 
   React.useEffect(() => {
@@ -45,30 +47,57 @@ const MoreQualifiedCharges = (props) => {
     );
   }, []);
 
+  const downloadChart = () => {
+    let link = document.createElement("a");
+    link.download = graphId + ".png";
+    link.href = graphsData[graphId].current.toBase64Image();
+    link.click();
+  };
+
+  const saveGraphRef = React.useCallback(
+    (chart) => {
+      if (chart.initial) saveGraph(graphId, ref);
+    },
+    [ref.current]
+  );
+
   return (
     dynamicData && (
-      <Bar
-        ref={ref}
-        options={{
-          responsive: true,
-          plugins: {
-            legend: {
-              position: "top",
+      <div style={{ position: "relative" }}>
+        <Bar
+          ref={ref}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+              title: {
+                display: true,
+                text: "Participación en capacitaciones por cargo en este año",
+              },
             },
-            title: {
-              display: true,
-              text: "Participación en capacitaciones por cargo en este año",
+            animation: {
+              onComplete: saveGraphRef,
             },
-          },
-          animation: {
-            onComplete: function (chart) {
-              if (chart.initial)
-                saveGraph(graphId, chart.chart.toBase64Image());
-            },
-          },
-        }}
-        data={dynamicData}
-      />
+          }}
+          data={dynamicData}
+        />
+        <Button
+          size="sm"
+          color="success"
+          type="button"
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            display: graphsData[graphId]?.current ? "block" : "none",
+          }}
+          onClick={downloadChart}
+        >
+          <Icon name="faDownload" />
+        </Button>
+      </div>
     )
   );
 };

@@ -4,6 +4,8 @@ import { Pie } from "react-chartjs-2";
 import { getRandomColor } from "@/services/common";
 import fetcher from "@/services/fetcher";
 import ChartContext from "@/contexts/chart-context";
+import { Button } from "reactstrap";
+import Icon from "../Icon";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -11,7 +13,7 @@ const graphId = "trainingByDepartment";
 
 const TrainingByDepartment = (props) => {
   const [dynamicData, setData] = React.useState();
-  const { saveGraph } = React.useContext(ChartContext);
+  const { saveGraph, graphsData } = React.useContext(ChartContext);
   const ref = React.useRef(null);
 
   React.useEffect(() => {
@@ -41,21 +43,48 @@ const TrainingByDepartment = (props) => {
     );
   }, []);
 
+  const downloadChart = () => {
+    let link = document.createElement("a");
+    link.download = graphId + ".png";
+    link.href = graphsData[graphId].current.toBase64Image();
+    link.click();
+  };
+
+  const saveGraphRef = React.useCallback(
+    (chart) => {
+      if (chart.initial) saveGraph(graphId, ref);
+    },
+    [ref.current]
+  );
+
   return (
     dynamicData && (
-      <Pie
-        ref={ref}
-        options={{
-          responsive: true,
-          animation: {
-            onComplete: function (chart) {
-              if (chart.initial)
-                saveGraph(graphId, chart.chart.toBase64Image());
+      <div style={{ position: "relative" }}>
+        <Pie
+          ref={ref}
+          options={{
+            responsive: true,
+            animation: {
+              onComplete: saveGraphRef,
             },
-          },
-        }}
-        data={dynamicData}
-      />
+          }}
+          data={dynamicData}
+        />
+        <Button
+          size="sm"
+          color="success"
+          type="button"
+          style={{
+            position: "absolute",
+            top: -10,
+            right: -10,
+            display: graphsData[graphId]?.current ? "block" : "none",
+          }}
+          onClick={downloadChart}
+        >
+          <Icon name="faDownload" />
+        </Button>
+      </div>
     )
   );
 };
