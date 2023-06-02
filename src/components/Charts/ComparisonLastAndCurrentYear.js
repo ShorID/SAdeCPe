@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import { Button } from "reactstrap";
 import Icon from "../Icon";
+import { getRandomPastelColor } from "@/services/common";
 
 ChartJS.register(
   CategoryScale,
@@ -28,7 +29,7 @@ const graphId = "comparisonLastAndCurrentYear";
 
 const ComparisonLastAndCurrentYear = (props) => {
   const [dynamicData, setData] = React.useState();
-  const { saveGraph, graphsData } = React.useContext(ChartContext);
+  const { saveGraph, graphsData, downloadChart } = React.useContext(ChartContext);
   const ref = React.useRef(null);
 
   React.useEffect(() => {
@@ -39,24 +40,17 @@ const ComparisonLastAndCurrentYear = (props) => {
           {
             label: "Año pasado",
             data: data.lastYear,
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            backgroundColor: getRandomPastelColor(),
           },
           {
             label: "Año actual",
             data: data.currentYear,
-            backgroundColor: "rgba(53, 162, 235, 0.5)",
+            backgroundColor: getRandomPastelColor(),
           },
         ],
       })
     );
   }, []);
-
-  const downloadChart = () => {
-    let link = document.createElement("a");
-    link.download = graphId + ".png";
-    link.href = graphsData[graphId].current.toBase64Image();
-    link.click();
-  };
 
   const saveGraphRef = React.useCallback(
     (chart) => {
@@ -97,7 +91,7 @@ const ComparisonLastAndCurrentYear = (props) => {
             right: 10,
             display: graphsData[graphId]?.current ? "block" : "none",
           }}
-          onClick={downloadChart}
+          onClick={downloadChart(graphId)}
         >
           <Icon name="faDownload" />
         </Button>

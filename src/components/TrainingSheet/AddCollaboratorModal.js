@@ -80,7 +80,6 @@ const AddCollaboratorModal = (props) => {
                 return newData;
               }),
         };
-        console.log("prro FFFFFFFFFFFFFFFFF", { selected, newData });
         props.handleChangeSession(item.value)(newData);
       });
       if (props.onSubmit) props.onSubmit();

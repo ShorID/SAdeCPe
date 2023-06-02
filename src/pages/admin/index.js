@@ -12,13 +12,14 @@ import ComparisonLastAndCurrentYear from "@/components/Charts/ComparisonLastAndC
 import ChartContext from "@/contexts/chart-context";
 import TrainingByDepartment from "@/components/Charts/TrainingByDepartment";
 import MoreQualifiedCharges from "@/components/Charts/MoreQualifiedCharges";
+import GeneralReport from "@/components/FormsToExport/GeneralReport";
 
 const Admin = (props) => {
   const { graphsData } = React.useContext(ChartContext);
 
   const router = useRouter();
   const handleRedirect = () => router.push("/admin/capacitaciones/create");
-  console.log("prro", graphsData)
+  console.log("prro admin", graphsData)
   return (
     <AdminLayout>
       <DefaultList
@@ -154,6 +155,7 @@ const Admin = (props) => {
           <MoreQualifiedCharges />
         </Col>
       </Row>
+      <GeneralReport />
     </AdminLayout>
   );
 };

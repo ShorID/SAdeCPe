@@ -1,7 +1,7 @@
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { getRandomColor } from "@/services/common";
+import { getRandomColor, getRandomPastelColor } from "@/services/common";
 import fetcher from "@/services/fetcher";
 import ChartContext from "@/contexts/chart-context";
 import { Button } from "reactstrap";
@@ -13,7 +13,7 @@ const graphId = "trainingByDepartment";
 
 const TrainingByDepartment = (props) => {
   const [dynamicData, setData] = React.useState();
-  const { saveGraph, graphsData } = React.useContext(ChartContext);
+  const { saveGraph, graphsData, downloadChart } = React.useContext(ChartContext);
   const ref = React.useRef(null);
 
   React.useEffect(() => {
@@ -21,7 +21,7 @@ const TrainingByDepartment = (props) => {
       setData(() => {
         let colors = [];
         for (let index = 0; index < data.labels.length; index++) {
-          let newColor = getRandomColor();
+          let newColor = getRandomPastelColor();
           if (colors.some((item) => item === newColor)) {
             index--;
           } else {
@@ -32,7 +32,6 @@ const TrainingByDepartment = (props) => {
           labels: data.labels,
           datasets: [
             {
-              label: "# Capacitaciones",
               data: data.data,
               backgroundColor: colors,
               borderColor: colors,
@@ -42,13 +41,6 @@ const TrainingByDepartment = (props) => {
       })
     );
   }, []);
-
-  const downloadChart = () => {
-    let link = document.createElement("a");
-    link.download = graphId + ".png";
-    link.href = graphsData[graphId].current.toBase64Image();
-    link.click();
-  };
 
   const saveGraphRef = React.useCallback(
     (chart) => {
@@ -80,7 +72,7 @@ const TrainingByDepartment = (props) => {
             right: -10,
             display: graphsData[graphId]?.current ? "block" : "none",
           }}
-          onClick={downloadChart}
+          onClick={downloadChart(graphId)}
         >
           <Icon name="faDownload" />
         </Button>

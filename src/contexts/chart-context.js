@@ -1,11 +1,8 @@
 import React, { createContext, useEffect, useState } from "react";
-import drawerTypes from "@/components/Drawers/drawerTypes";
-import fetcher from "@/services/fetcher";
-import ListDeleteItemModal from "@/components/List/ListDeleteItemModal";
-import { sortbyOptions } from "@/components/SortBy";
 
 const ChartContext = createContext({
   saveGraph: () => {},
+  downloadChart: () => () => {},
   graphsData: {},
 });
 
@@ -15,11 +12,19 @@ export const ChartProvider = ({ children }) => {
   const saveGraph = (graphId = "", graphData) =>
     setGraphsData((prev) => ({ ...prev, [graphId]: graphData }));
 
+  const downloadChart = (graphId) => () => {
+    let link = document.createElement("a");
+    link.download = graphId + ".png";
+    link.href = graphsData[graphId].current.toBase64Image();
+    link.click();
+  };
+
   return (
     <ChartContext.Provider
       value={{
         saveGraph,
         graphsData,
+        downloadChart,
       }}
     >
       {children}
