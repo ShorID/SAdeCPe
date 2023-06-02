@@ -7,17 +7,14 @@ const DownloadButton = (props) => {
   return (
     <Button
       size="sm"
-      color="success"
+      color="warning"
       type="button"
       style={{
-        position: "absolute",
-        top: -10,
-        right: -10,
         display: props.show ? "block" : "none",
       }}
       onClick={props.onClick}
     >
-      <Icon name="faDownload" />
+      Descargar <Icon name="faDownload" />
     </Button>
   );
 };

@@ -58,10 +58,11 @@ const EmployeeTags = ({ id = "" }) => {
       id={graphId + id}
       endpoint={chartEndpoints["employeeTags"] + id}
       onDownload={downloadChart(graphId + id)}
+      style={{ width: "fit-content" }}
     >
       <Radar
         ref={ref}
-        style={{ maxHeight: "300px" }}
+        style={{ maxHeight: "300px", maxWidth: "500px" }}
         options={{
           responsive: true,
           animation: {
