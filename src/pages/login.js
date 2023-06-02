@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Layout from "@/components/Layout";
-import { Col, Form, Row } from "reactstrap";
+import { Col, Form, Row, Spinner } from "reactstrap";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import fetcher from "@/services/fetcher";
@@ -9,27 +9,32 @@ import { useRouter } from "next/router";
 
 const Login = (props) => {
   const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleChange = ({ target: { value, name } }) =>
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     fetcher({
       url: "/auth/login",
       data: formData,
       method: "post",
-    }).then(({ data }) => {
-      if (data.access_token) {
-        fetcher.defaults.headers[
-          "Authorization"
-        ] = `Bearer ${data.access_token}`;
-        if (typeof window !== "undefined")
-          sessionStorage.setItem("access_token", data.access_token);
-        router.push("/admin");
-      }
-    });
+    })
+      .then(({ data }) => {
+        setLoading(false);
+        if (data.access_token) {
+          fetcher.defaults.headers[
+            "Authorization"
+          ] = `Bearer ${data.access_token}`;
+          if (typeof window !== "undefined")
+            sessionStorage.setItem("access_token", data.access_token);
+          router.push("/admin");
+        }
+      })
+      .catch(() => setLoading(false));
   };
 
   return (
@@ -50,11 +55,12 @@ const Login = (props) => {
                 onChange={handleChange}
                 type="password"
               />
-              <CustomButton
-                text="Acceder"
-                className="w-100 mt-4"
-                type="submit"
-              />
+              <CustomButton className="w-100 mt-4" type="submit">
+                Acceder{" "}
+                {loading && (
+                  <Spinner color="primary" size="sm" className="mx-1" />
+                )}
+              </CustomButton>
             </div>
           </Form>
         </Col>

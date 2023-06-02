@@ -1,39 +1,48 @@
-import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { Line } from 'react-chartjs-2';
+import React from "react";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
 
-const ReportPDF = () => {
+const ReportPDF = (props) => {
+  const ref = React.useRef(null);
   // Datos del gráfico
   const chartData = {
-    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+    labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo"],
     datasets: [
       {
-        label: 'Ventas',
+        label: "Ventas",
         data: [50, 65, 70, 80, 85],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
       },
     ],
   };
 
   return (
-    <Document>
-      <Page style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.title}>Informe PDF</Text>
-          <View style={styles.chartContainer}>
-            <Line data={chartData} />
+    <>
+      <Document>
+        <Page style={styles.page}>
+          <View style={styles.section}>
+            <Text style={styles.title}>Informe PDF</Text>
+            <View style={styles.chartContainer}>
+              <Image src={props.chart} />
+            </View>
           </View>
-        </View>
-      </Page>
-    </Document>
+        </Page>
+      </Document>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Arial',
+    // fontFamily: "Arial",
     fontSize: 12,
     padding: 20,
   },
@@ -42,11 +51,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   chartContainer: {
-    width: '100%',
+    width: "100%",
     height: 300,
   },
 });

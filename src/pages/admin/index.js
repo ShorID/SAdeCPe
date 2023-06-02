@@ -8,14 +8,18 @@ import ReactDatePicker from "react-datepicker";
 import CustomInput from "@/components/CustomInput";
 import { useRouter } from "next/router";
 import DefaultList from "@/components/DefaultList";
+import ComparisonLastAndCurrentYear from "@/components/Charts/ComparisonLastAndCurrentYear";
+import ChartContext from "@/contexts/chart-context";
+import TrainingByDepartment from "@/components/Charts/TrainingByDepartment";
+import MoreQualifiedCharges from "@/components/Charts/MoreQualifiedCharges";
+import GeneralReport from "@/components/FormsToExport/GeneralReport";
 
 const Admin = (props) => {
-  const [startDate, setStartDate] = React.useState(new Date());
-  const [endDate, setEndDate] = React.useState(new Date());
+  const { graphsData } = React.useContext(ChartContext);
 
   const router = useRouter();
   const handleRedirect = () => router.push("/admin/capacitaciones/create");
-
+  console.log("prro admin", graphsData)
   return (
     <AdminLayout>
       <DefaultList
@@ -52,7 +56,7 @@ const Admin = (props) => {
           </CustomInput>
         </Col> */}
         <Col md="12">
-          <VerticalBarExample />
+          <ComparisonLastAndCurrentYear />
           <Text size="sm">
             El gráfico de barras muestra la cantidad total de capacitaciones
             realizadas en diferentes períodos de tiempo. Cada barra representa
@@ -83,7 +87,7 @@ const Admin = (props) => {
           </Text>
         </Col>
         <Col sm="12" md="4">
-          <PieExample />
+          <TrainingByDepartment />
         </Col>
         <Col>
           <Table>
@@ -148,9 +152,10 @@ const Admin = (props) => {
             vertical se muestra la cantidad de empleados de cada cargo que han
             participado en las capacitaciones.
           </Text>
-          <VerticalBarExample position />
+          <MoreQualifiedCharges />
         </Col>
       </Row>
+      <GeneralReport />
     </AdminLayout>
   );
 };

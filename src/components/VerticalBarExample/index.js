@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,6 +11,9 @@ import {
 import { Bar } from "react-chartjs-2";
 import { getRandomInt } from "@/services/common";
 import fetcher from "@/services/fetcher";
+import { Button } from "reactstrap";
+import ReportPDF from "../PDFTest";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 ChartJS.register(
   CategoryScale,
@@ -30,6 +33,11 @@ export const options = {
     title: {
       display: true,
       text: "Comparativa de capaciaciones Enero-Julio",
+    },
+  },
+  animation: {
+    onComplete: function () {
+      alert("Line Chart Rendered Completely!");
     },
   },
 };
@@ -84,6 +92,9 @@ export const dataPosition = {
 
 export function VerticalBarExample(props) {
   const [dynamicData, setData] = React.useState();
+  const [base64, setbase64] = React.useState();
+  const ref = React.useRef(null);
+
   React.useEffect(() => {
     fetcher({ url: "/stadistics/comp-year" }).then(({ data }) =>
       setData({
@@ -104,12 +115,51 @@ export function VerticalBarExample(props) {
     );
   }, []);
 
+  const downloadChart = () => {
+    let link = document.createElement("a");
+    link.download = "wtf.jpg";
+    link.href = ref.current.toBase64Image();
+    setbase64(link.href);
+    link.click();
+  };
+
   return (
     dynamicData && (
-      <Bar
-        options={props.position ? optionsposition : options}
-        data={props.position ? dataPosition : dynamicData}
-      />
+      <div>
+        <div>
+          <Bar
+            ref={ref}
+            options={
+              props.position
+                ? optionsposition
+                : {
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: "top",
+                      },
+                      title: {
+                        display: true,
+                        text: "Comparativa de capaciaciones Enero-Julio",
+                      },
+                    }
+                  }
+            }
+            data={props.position ? dataPosition : dynamicData}
+          />
+        </div>
+        <Button onClick={downloadChart}>Descargar</Button>
+        {base64 && (
+          <PDFDownloadLink
+            document={<ReportPDF chart={base64} />}
+            fileName="reporte.pdf"
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "Generando PDF..." : "Descargar PDF"
+            }
+          </PDFDownloadLink>
+        )}
+      </div>
     )
   );
 }
