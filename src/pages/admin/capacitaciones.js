@@ -13,17 +13,6 @@ const TrainingPage = (props) => {
 
   return (
     <AdminLayout>
-      <VerticalBarExample />
-      {/* {typeof window !== "undefined" && (
-        <PDFDownloadLink
-          document={<ReportPDF download={show} />}
-          fileName="reporte.pdf"
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? "Generando PDF..." : "Descargar PDF"
-          }
-        </PDFDownloadLink>
-      )} */}
       <DefaultList
         title="Capacitaciones"
         listId="training"

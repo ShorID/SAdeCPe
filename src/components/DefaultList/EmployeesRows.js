@@ -9,16 +9,18 @@ import classNames from "classnames";
 import { Badge } from "reactstrap";
 import ListContext from "@/contexts/list-context";
 import { useRouter } from "next/router";
-import { ChartExample } from "../ChartExample";
 import Popup from "../Popup";
-import fetcher from "@/services/fetcher";
 import AvatarRow from "./AvatarRow";
+import EmployeeTags from "../Charts/EmployeeTags";
+import { useState } from "react";
 
 const EmployeesRows = (props) => {
   const router = useRouter();
+  const [showChart, setShowChart] = useState(false);
   const listContext = useContext(ListContext);
 
   const handleEdit = () => router.push(`/admin/empleados/${props.id}`);
+  const handleChart = () => setShowChart((prev) => !prev);
 
   const handleCheck = (isChecked) => {
     listContext.handleSelect(isChecked, props);
@@ -34,7 +36,10 @@ const EmployeesRows = (props) => {
       )}
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
-          <Tooltip tooltip={props.name} className="TrainingListItem-avatarWrapper">
+          <Tooltip
+            tooltip={props.name}
+            className="TrainingListItem-avatarWrapper"
+          >
             <AvatarRow photo={props.photo} name={props.name} />
           </Tooltip>
           <div className="TrainingListItem-title">
@@ -68,11 +73,11 @@ const EmployeesRows = (props) => {
                 </Tooltip>
               </Clickable>
             )}
-            <Popup title="Estadisticas" description={<ChartExample />}>
+            <Clickable onClick={handleChart} className="mx-2">
               <Tooltip tooltip="Ver datos" placement="right">
-                <Icon name="faCubesStacked" />
+                <Icon name={showChart ? "faEyeSlash" : "faEye"} />
               </Tooltip>
-            </Popup>
+            </Clickable>
           </div>
         </div>
         <div className="d-flex mb-2">
@@ -94,6 +99,11 @@ const EmployeesRows = (props) => {
             )}
           </div>
         </div>
+        {showChart && (
+          <div className="w-100">
+            <EmployeeTags id={props.id} />
+          </div>
+        )}
       </div>
     </div>
   );

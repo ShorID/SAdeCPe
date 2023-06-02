@@ -9,7 +9,7 @@ const ChartWrapper = (props) => {
   const { saveGraphRes, graphsData } = React.useContext(ChartContext);
 
   React.useEffect(() => {
-    fetcher({ url: chartEndpoints[props.id] }).then(({ data }) => {
+    fetcher({ url: props.endpoint || chartEndpoints[props.id] }).then(({ data }) => {
       saveGraphRes(props.id, data);
       props.onFinishGet(data);
     });
@@ -33,6 +33,7 @@ ChartWrapper.propTypes = {
   id: PropTypes.string.isRequired,
   onFinishGet: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
+  endpoint: PropTypes.string,
 };
 
 export default ChartWrapper;
