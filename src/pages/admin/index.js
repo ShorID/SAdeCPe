@@ -1,11 +1,7 @@
 import React from "react";
 import AdminLayout from "@/components/Layout/AdminLayout";
-import { PieExample } from "@/components/PieExample";
 import Text from "@/components/Text";
 import { Col, Row, Table } from "reactstrap";
-import { VerticalBarExample } from "@/components/VerticalBarExample";
-import ReactDatePicker from "react-datepicker";
-import CustomInput from "@/components/CustomInput";
 import { useRouter } from "next/router";
 import DefaultList from "@/components/DefaultList";
 import ComparisonLastAndCurrentYear from "@/components/Charts/ComparisonLastAndCurrentYear";
@@ -15,13 +11,16 @@ import MoreQualifiedCharges from "@/components/Charts/MoreQualifiedCharges";
 import GeneralReport from "@/components/FormsToExport/GeneralReport";
 
 const Admin = (props) => {
-  const { graphsData } = React.useContext(ChartContext);
+  const { graphsRes } = React.useContext(ChartContext);
 
   const router = useRouter();
   const handleRedirect = () => router.push("/admin/capacitaciones/create");
-  console.log("prro admin", graphsData)
+
   return (
     <AdminLayout>
+      <div className="d-flex justify-content-end mb-3">
+        <GeneralReport />
+      </div>
       <DefaultList
         title="Capacitaciones Activas"
         listId="training"
@@ -93,43 +92,20 @@ const Admin = (props) => {
           <Table>
             <thead>
               <tr>
-                <th>#</th>
                 <th>Nombre del departamento</th>
-                <th>Sesiones</th>
-                <th>Activo</th>
+                <th className="text-center"># Sesiones</th>
               </tr>
             </thead>
             <tbody style={{ maxHeight: "500px" }}>
-              <tr>
-                <th scope="row">2</th>
-                <td>RRHH</td>
-                <td>10</td>
-                <td>Si</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>TI</td>
-                <td>20</td>
-                <td>Si</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Bodegas</td>
-                <td>5</td>
-                <td>Si</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Contabilidad</td>
-                <td>11</td>
-                <td>Si</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Agentes</td>
-                <td>3</td>
-                <td>Si</td>
-              </tr>
+              {Array.isArray(graphsRes["trainingByDepartment"]?.labels) &&
+                graphsRes["trainingByDepartment"].labels.map((item, key) => (
+                  <tr key={key}>
+                    <td>{item}</td>
+                    <td className="text-center">
+                      {graphsRes["trainingByDepartment"].data[key]}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </Col>
@@ -155,7 +131,6 @@ const Admin = (props) => {
           <MoreQualifiedCharges />
         </Col>
       </Row>
-      <GeneralReport />
     </AdminLayout>
   );
 };

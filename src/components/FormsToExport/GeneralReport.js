@@ -2,133 +2,145 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Document,
-  Font,
   Image,
-  PDFDownloadLink,
   Page,
   StyleSheet,
   Text,
   View,
 } from "@react-pdf/renderer";
 import ChartContext from "@/contexts/chart-context";
+import { reportStyles } from "./formsConst";
+import ReportDownloader from "./ReportDownloader";
 
-Font.register({
-  family: "Arial",
-  src: "https://fonts.cdnfonts.com/css/arial-2",
-});
+const reportId = "generalReport";
 
-const GeneralReport = (props) => {
-  const [refresh, setRefresh] = React.useState(0);
-  const { graphsData } = React.useContext(ChartContext);
+export const GeneralReportDoc = (props) => {
+  const { graphsData, graphsRes } = React.useContext(ChartContext);
 
   const moreQualifiedCharges =
     graphsData["moreQualifiedCharges"]?.current?.toBase64Image();
   const comparisonLastAndCurrentYear =
     graphsData["comparisonLastAndCurrentYear"]?.current?.toBase64Image();
-
-  const handleRefresh = () => {
-    setRefresh((prev) => prev + 1);
-    return true;
-  };
-
-  const DocumentToDownload = ({ graphsData }) => {
-    const moreQualifiedCharges =
-      graphsData["moreQualifiedCharges"]?.current?.toBase64Image();
-    const comparisonLastAndCurrentYear =
-      graphsData["comparisonLastAndCurrentYear"]?.current?.toBase64Image();
-    console.log("prro wtf", {
-      comparisonLastAndCurrentYear,
-      moreQualifiedCharges,
-      graphsData,
-    });
-    return (
-      <Document>
-        <Page style={styles.page} size="LETTER">
-          <View style={styles.section}>
-            <Text style={styles.title}>Informe General de Capacitaciones</Text>
-            <Text style={styles.subtitle}>
-              Total de Capacitaciones realizadas en este año
-            </Text>
-            <Text style={styles.text}>
-              El gráfico de barras muestra la cantidad total de capacitaciones
-              realizadas en diferentes períodos de tiempo. Cada barra representa
-              un período específico, como un mes o un trimestre, y la altura de
-              la barra corresponde al número de capacitaciones realizadas
-              durante ese período.
-            </Text>
-            {comparisonLastAndCurrentYear && (
-              <View style={styles.chartContainer}>
-                <Image src={comparisonLastAndCurrentYear} />
-              </View>
-            )}
-            <Text style={styles.subtitle}>Cargos mas capacitados</Text>
-            <Text style={styles.text}>
-              La gráfica "Participación en capacitaciones por cargo" muestra la
-              distribución de la participación en las capacitaciones según los
-              diferentes cargos dentro de la organización. Este gráfico
-              representa visualmente la proporción de empleados que participan
-              en las capacitaciones en relación con sus cargos.
-            </Text>
-            {moreQualifiedCharges && (
-              <View style={styles.chartContainer}>
-                <Image src={moreQualifiedCharges} />
-              </View>
-            )}
-          </View>
-        </Page>
-      </Document>
-    );
-  };
+  const trainingByDepartment =
+    graphsData["trainingByDepartment"]?.current?.toBase64Image();
 
   return (
-    <div key={refresh}>
-      {comparisonLastAndCurrentYear && moreQualifiedCharges && (
-        <PDFDownloadLink
-          document={DocumentToDownload({
-            comparisonLastAndCurrentYear,
-            moreQualifiedCharges,
-            graphsData,
-          })}
-          // onClick={handleRefresh}
-          fileName="somename.pdf"
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? "Loading document..." : "Download now!"
-          }
-        </PDFDownloadLink>
-      )}
-    </div>
+    <Document>
+      <Page style={reportStyles.page} size="LETTER">
+        <View style={reportStyles.section}>
+          <Text style={reportStyles.title}>
+            Informe General de Capacitaciones
+          </Text>
+          <Text style={reportStyles.subtitle}>
+            Total de Capacitaciones realizadas en este año
+          </Text>
+          <Text style={reportStyles.text}>
+            El gráfico de barras muestra la cantidad total de capacitaciones
+            realizadas en diferentes períodos de tiempo. Cada barra representa
+            un período específico, como un mes o un trimestre, y la altura de la
+            barra corresponde al número de capacitaciones realizadas durante ese
+            período.
+          </Text>
+          {comparisonLastAndCurrentYear && (
+            <View style={reportStyles.chartContainer}>
+              <Image src={comparisonLastAndCurrentYear} />
+            </View>
+          )}
+          <Text style={reportStyles.subtitle}>
+            Capacitaciones realizadas por cada departamento
+          </Text>
+          <Text style={reportStyles.text}>
+            El gráfico circular muestra la distribución de las capacitaciones
+            por departamento en forma de un pastel dividido en secciones. Cada
+            sección del pastel representa un departamento y el tamaño de cada
+            sección refleja la proporción de capacitaciones que se han llevado a
+            cabo en ese departamento en comparación con el total.
+          </Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+            }}
+          >
+            {trainingByDepartment && (
+              <View style={{ width: "50%", maxHeight: 300, marginBottom: 20 }}>
+                <Image src={trainingByDepartment} />
+              </View>
+            )}
+            <View style={styles.table}>
+              <View style={styles.tableRow}>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>Departamento</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}># Sesiones</Text>
+                </View>
+              </View>
+              {Array.isArray(graphsRes["trainingByDepartment"]?.labels) &&
+                graphsRes["trainingByDepartment"].labels.map((item, key) => (
+                  <View style={styles.tableRow} key={key}>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>{item}</Text>
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={styles.tableCell}>
+                        {graphsRes["trainingByDepartment"].data[key]}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+            </View>
+          </View>
+          <Text style={reportStyles.subtitle}>Cargos mas capacitados</Text>
+          <Text style={reportStyles.text}>
+            La gráfica "Participación en capacitaciones por cargo" muestra la
+            distribución de la participación en las capacitaciones según los
+            diferentes cargos dentro de la organización. Este gráfico representa
+            visualmente la proporción de empleados que participan en las
+            capacitaciones en relación con sus cargos.
+          </Text>
+          {moreQualifiedCharges && (
+            <View style={reportStyles.chartContainer}>
+              <Image src={moreQualifiedCharges} />
+            </View>
+          )}
+        </View>
+      </Page>
+    </Document>
   );
 };
 
+const GeneralReport = () => (
+  <ReportDownloader id={reportId} FormComponent={GeneralReportDoc} />
+);
+
 const styles = StyleSheet.create({
-  page: {
-    fontFamily: "Arial",
-    fontSize: 11,
-    padding: "56px 63px",
+  table: {
+    display: "table",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    width: "40%",
+    height: "auto",
   },
-  section: {
-    marginBottom: 20,
+  tableRow: {
+    margin: "auto",
+    flexDirection: "row",
   },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 10,
+  tableCol: {
+    width: "50%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
   },
-  subtitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  text: {
-    fontSize: 11,
-    fontWeight: "normal",
-    textAlign: "justify",
-  },
-  chartContainer: {
-    width: "100%",
-    maxHeight: 300,
-    marginBottom: 20,
+  tableCell: {
+    margin: "auto",
+    marginTop: 5,
+    fontSize: 10,
   },
 });
 
