@@ -24,7 +24,9 @@ const ChartWrapper = (props) => {
       }
     );
 
-  React.useEffect(() => getData(), []);
+  React.useEffect(() => {
+    getData()
+  }, []);
 
   return (
     props.ready && (
@@ -62,7 +64,7 @@ ChartWrapper.propTypes = {
   onFinishGet: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
   endpoint: PropTypes.string,
-  style: PropTypes.shape,
+  style: PropTypes.object,
 };
 
 export default ChartWrapper;

@@ -58,13 +58,17 @@ const EmployeeTags = ({ id = "" }) => {
       id={graphId + id}
       endpoint={chartEndpoints["employeeTags"] + id}
       onDownload={downloadChart(graphId + id)}
-      style={{ width: "fit-content" }}
     >
       <Radar
         ref={ref}
-        style={{ maxHeight: "300px", maxWidth: "500px" }}
         options={{
           responsive: true,
+          maintainAspectRatio: true,
+          scale: {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
           animation: {
             onComplete: saveGraphRef,
           },
@@ -78,5 +82,7 @@ const EmployeeTags = ({ id = "" }) => {
 EmployeeTags.propTypes = {
   id: PropTypes.string.isRequired,
 };
+
+EmployeeTags.graphId = graphId;
 
 export default EmployeeTags;

@@ -75,7 +75,7 @@ export function getRandomPastelColor() {
   colors.btnFocus = `hsl(${newH}, 100%, 95%)`;
 
   const [r, g, b] = HSLtoRGB(hBase, 1, newL * 0.01);
-  
+
   return `rgb(${r}, ${g}, ${b})`;
 }
 
@@ -95,3 +95,16 @@ export const formatQuantity = (
     precision,
   });
 };
+
+export async function toDataUrl(url) {
+  let img = new Image();
+  img.setAttribute("crossOrigin", "anonymous");
+  img.src = url;
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  var dataURL = canvas.toDataURL("image/png");
+  return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
+}

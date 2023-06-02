@@ -9,6 +9,10 @@ export const reportsConst = {
       "comparisonLastAndCurrentYear",
     ],
   },
+  employeeReport: {
+    name: "Reporte General De Empleado",
+    graphs: [],
+  },
 };
 
 export const reportStyles = StyleSheet.create({

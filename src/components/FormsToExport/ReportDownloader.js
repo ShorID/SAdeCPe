@@ -4,7 +4,6 @@ import ChartContext from "@/contexts/chart-context";
 import { Font, PDFDownloadLink } from "@react-pdf/renderer";
 import { reportsConst } from "./formsConst";
 import { Button, ButtonGroup, Spinner } from "reactstrap";
-import Clickable from "../Clickable";
 import Icon from "../Icon";
 
 Font.register({
@@ -25,7 +24,7 @@ Font.register({
   ],
 });
 
-const ReportDownloader = ({ id, FormComponent }) => {
+const ReportDownloader = ({ id, FormComponent, props, graphs }) => {
   const { graphsData, graphsRes } = React.useContext(ChartContext);
   const [refresh, setRefresh] = React.useState(0);
   const isReady = !reportsConst[id].graphs.some(
@@ -38,7 +37,11 @@ const ReportDownloader = ({ id, FormComponent }) => {
     isReady && (
       <ButtonGroup key={refresh}>
         <PDFDownloadLink
-          document={FormComponent({ graphsData, graphsRes })}
+          document={FormComponent({
+            graphsData,
+            graphsRes,
+            ...(props ? props : {}),
+          })}
           fileName={reportsConst[id].name + ".pdf"}
           className="w-100"
         >

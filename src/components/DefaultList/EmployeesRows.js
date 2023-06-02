@@ -20,6 +20,8 @@ const EmployeesRows = (props) => {
   const listContext = useContext(ListContext);
 
   const handleEdit = () => router.push(`/admin/empleados/${props.id}`);
+  const handlePrint = () =>
+    router.push(`/admin/empleados/estadistica/${props.id}`);
   const handleChart = () => setShowChart((prev) => !prev);
 
   const handleCheck = (isChecked) => {
@@ -64,10 +66,7 @@ const EmployeesRows = (props) => {
               </Clickable>
             )}
             {!props.withoutPrint && (
-              <Clickable
-                className="mx-2"
-                onClick={listContext.handleDelete(props)}
-              >
+              <Clickable className="mx-2" onClick={handlePrint}>
                 <Tooltip tooltip="Imprimir?" placement="right">
                   <Icon name="faPrint" size="md2" />
                 </Tooltip>
@@ -100,7 +99,7 @@ const EmployeesRows = (props) => {
           </div>
         </div>
         {showChart && (
-          <div className="w-100">
+          <div className="w-50">
             <EmployeeTags id={props.id} />
           </div>
         )}

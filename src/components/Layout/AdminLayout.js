@@ -34,7 +34,7 @@ const AdminLayout = (props) => {
       <ListGroupItem
         action
         className="AdminLayout-link"
-        active={router.asPath === item.link}
+        active={router.asPath.includes(item.link)}
         key={key}
       >
         <Link to={item.link} withoutClass>

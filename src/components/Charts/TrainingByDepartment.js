@@ -55,6 +55,11 @@ const TrainingByDepartment = (props) => {
         ref={ref}
         options={{
           responsive: true,
+          elements: {
+            line: {
+              borderWidth: 3
+            }
+          },
           animation: {
             onComplete: saveGraphRef,
           },
