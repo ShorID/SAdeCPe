@@ -17,6 +17,7 @@ const links = {
     { label: "Capacitadores", link: "/admin/capacitadores" },
     { label: "Estados", link: "/admin/estados" },
     { label: "Nivel de prioridad", link: "/admin/nivel-de-prioridad" },
+    { label: "Razones de exoneracion", link: "/admin/razones-de-exoneracion" },
   ],
   block2: [
     { label: "Empleados", link: "/admin/empleados" },

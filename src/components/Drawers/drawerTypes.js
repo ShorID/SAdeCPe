@@ -1,5 +1,6 @@
 import DepartmentDrawer from "./DepartmentDrawer";
 import EmployeesPositionDrawer from "./EmployeesPositionDrawer";
+import ExemptionReasonsDrawer from "./ExemptionReasonsDrawer";
 import OrgDrawer from "./OrgDrawer";
 import PriorityLevelDrawer from "./PriorityLevelDrawer";
 import StatesDrawer from "./StatesDrawer";
@@ -14,4 +15,5 @@ export default {
   priorityLevel: PriorityLevelDrawer,
   org: OrgDrawer,
   trainer: TrainerDrawer,
+  exemptionReasons: ExemptionReasonsDrawer,
 };

@@ -9,7 +9,7 @@ import { getFormatedDate } from "@/services/common";
 import { toast } from "react-toastify";
 import { promiseToastMsg } from "@/services/toastService";
 
-const DepartmentDrawer = (props) => {
+const ExemptionReasonsDrawer = (props) => {
   const [formData, setFormData] = React.useState(
     props.data || {
       active: true,
@@ -30,7 +30,7 @@ const DepartmentDrawer = (props) => {
     if (form.checkValidity() === false) return console.log("Error");
     toast.promise(
       fetcher({
-        url: "/departament/" + (props.isCreating ? "create" : "update"),
+        url: "/reason/" + (props.isCreating ? "create" : "update"),
         method: props.isCreating ? "POST" : "PUT",
         data: formData,
       }).then(() => {
@@ -44,7 +44,11 @@ const DepartmentDrawer = (props) => {
   return (
     <Drawer
       {...props}
-      header={props.isCreating ? "Crear Departamento" : "Editar Departamento"}
+      header={
+        props.isCreating
+          ? "Crear Razon de Exoneracion"
+          : "Editar Razon de Exoneracion"
+      }
       footer={
         <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
       }
@@ -91,8 +95,8 @@ const DepartmentDrawer = (props) => {
   );
 };
 
-DepartmentDrawer.propTypes = {
+ExemptionReasonsDrawer.propTypes = {
   data: PropTypes.object,
 };
 
-export default DepartmentDrawer;
+export default ExemptionReasonsDrawer;
