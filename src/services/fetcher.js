@@ -3,7 +3,7 @@ const { default: axios } = require("axios");
 const fetcher = axios;
 
 fetcher.defaults.baseURL =
-  "https://cb7c-2803-2d60-1102-1dc2-35ca-41c-11d5-2bdc.ngrok-free.app/";
+  "https://361d-2803-2d60-1102-1dc2-350b-2097-2a7e-f126.ngrok-free.app/";
 
 fetcher.defaults.headers = {
   "ngrok-skip-browser-warning": true,

@@ -44,4 +44,8 @@ export const reportStyles = StyleSheet.create({
     maxHeight: 300,
     marginBottom: 20,
   },
+  chart: {
+    objectFit: "contain",
+    objectPosition: "center"
+  },
 });

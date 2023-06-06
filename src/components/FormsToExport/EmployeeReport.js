@@ -5,6 +5,7 @@ import { reportStyles } from "./formsConst";
 import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import ReportDownloader from "./ReportDownloader";
 import fetcher from "@/services/fetcher";
+import EmployeeTags from "../Charts/EmployeeTags";
 
 const reportId = "employeeReport";
 
@@ -17,6 +18,9 @@ const EmployeeReportDoc = ({ data }) => {
       <Text>{data[fieldName] || fieldName}</Text>
     </Text>
   );
+
+  const radarChart =
+    graphsData[EmployeeTags.graphId + data.id]?.current?.toBase64Image();
 
   return (
     <Document>
@@ -34,14 +38,14 @@ const EmployeeReportDoc = ({ data }) => {
               justifyContent: "space-between",
             }}
           >
-            <View style={{ width: "50%", maxHeight: 300, marginBottom: 20 }}>
+            <View style={{ width: "40%", maxHeight: 300, marginBottom: 20 }}>
               <Image
-                src={fetcher.defaults.baseURL + data.photo}
+                src={"/mr increible perturbado (2).png" || fetcher.defaults.baseURL + data.photo}
                 alt={data.name}
                 className="mx-auto"
                 style={{
-                  width: "200px",
-                  height: "200px",
+                  width: "100px",
+                  height: "100px",
                   border: "1px gray solid",
                   borderRadius: "50%",
                   objectFit: "cover",
@@ -49,7 +53,7 @@ const EmployeeReportDoc = ({ data }) => {
                 }}
               />
             </View>
-            <View style={{ width: "50%" }}>
+            <View style={{ width: "60%" }}>
               {renderField("Nombre", "name")}
               {renderField("Apellido", "lastName")}
               {renderField("Cedula", "identification")}
@@ -60,17 +64,38 @@ const EmployeeReportDoc = ({ data }) => {
             </View>
           </View>
         </View>
+        <View style={reportStyles.section}>
+          <Text style={reportStyles.subtitle}>Areas de conocimiento</Text>
+          {radarChart && (
+            <View style={reportStyles.chartContainer}>
+              <Image src={radarChart} style={reportStyles.chart} />
+            </View>
+          )}
+          <Text style={reportStyles.text}>
+            El gráfico radial representa los temas en los que un trabajador ha
+            sido capacitado, evaluando la cantidad de veces que ha recibido
+            capacitación en cada uno de ellos. Cada sección del gráfico
+            representa un tema específico, y el tamaño de la sección refleja la
+            frecuencia de capacitación en ese tema.
+          </Text>
+        </View>
       </Page>
     </Document>
   );
 };
 
 const EmployeeReport = (props) => {
-  return <ReportDownloader id={reportId} props={props} FormComponent={EmployeeReportDoc} />;
+  return (
+    <ReportDownloader
+      id={reportId}
+      props={props}
+      FormComponent={EmployeeReportDoc}
+    />
+  );
 };
 
 EmployeeReport.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
 };
 
 export default EmployeeReport;
