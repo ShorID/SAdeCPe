@@ -7,8 +7,11 @@ import organizationData from "@/utils/organization-data.json";
 import TrainingCard from "@/components/TrainingCard";
 import TextSection from "@/components/TextSection";
 import OrganizationCard from "@/components/OrganizationCard";
+import fetcher from "@/services/fetcher";
+import { sortbyOptions } from "@/components/SortBy";
 
-export default function Home() {
+function Home({ orgs, trainingList }) {
+  console.log("prro", { orgs, trainingList });
   return (
     <Layout noContainer>
       <CustomCarousel />
@@ -28,18 +31,17 @@ export default function Home() {
         </Row>
       </Container>
       <TextSection title="Porque es importante la Capacitacion?">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pretium
-        tristique mi ac luctus. Duis porta nisi a tortor rhoncus efficitur.
-        Nulla eget velit tortor. Nulla ut lorem vitae ante tincidunt tempus a
-        non neque. Vivamus tempus gravida velit sed porta. Nullam efficitur quam
-        nec nunc mollis, in venenatis magna dictum. Vestibulum ut diam eleifend,
-        consequat odio sit amet, interdum eros. Morbi vel urna nunc. Fusce leo
-        purus, molestie at sem in, finibus euismod augue. Etiam lacus velit,
-        consectetur et viverra nec, convallis sed leo. Pellentesque a nisl quis
-        eros dignissim molestie a sit amet nibh. Ut vitae lectus justo. Sed ut
-        molestie sapien. Nullam suscipit interdum massa, vel iaculis diam
-        accumsan vitae. Sed erat nibh, mattis viverra justo quis, consectetur
-        molestie sapien. Sed eu pretium dolor, et placerat mauris.
+        La capacitación es un proceso de formación y desarrollo que busca
+        mejorar las habilidades, conocimientos y competencias de los
+        trabajadores en un área específica, con el fin de mejorar su desempeño y
+        productividad en el trabajo. Este proceso puede ser llevado a cabo por
+        la empresa o por entidades especializadas en formación y desarrollo. Es
+        importante destacar que la capacitación no solo beneficia al trabajador
+        en cuanto a su desarrollo personal y profesional, sino que también
+        impacta en la empresa en términos de mejora de la productividad,
+        reducción de errores y accidentes, aumento de la satisfacción del
+        cliente y en general, mejora en la calidad de los productos y servicios
+        ofrecidos.
       </TextSection>
       <Container className="my-4 p-0">
         <TitleBlock title="Organizaciones" />
@@ -55,3 +57,31 @@ export default function Home() {
     </Layout>
   );
 }
+
+Home.getInitialProps = async () => {
+  try {
+    const { data: orgs } = await fetcher({
+      url: "/org/list",
+      params: {
+        page: 1,
+        sortBy: sortbyOptions[0].value,
+        limit: 8,
+      },
+    });
+
+    const { data: trainingList } = await fetcher({
+      url: "/capacitation/list",
+      params: {
+        page: 1,
+        sortBy: sortbyOptions[0].value,
+        limit: 8,
+      },
+    });
+
+    return { orgs, trainingList };
+  } catch (e) {
+    return {};
+  }
+};
+
+export default Home;

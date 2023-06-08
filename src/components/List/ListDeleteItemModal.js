@@ -4,7 +4,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const ListDeleteItemModal = (props) => {
   return (
-    <Modal isOpen={props.isOpen} toggle={props.toggle} {...props}>
+    <Modal isOpen={props.isOpen} toggle={props.toggle}>
       <ModalHeader toggle={props.toggle}>Eliminando registro.</ModalHeader>
       <ModalBody>
         Estas a punto de eliminar el registro "{props.title}", desea continuar?
@@ -21,6 +21,10 @@ const ListDeleteItemModal = (props) => {
   );
 };
 
-ListDeleteItemModal.propTypes = {};
+ListDeleteItemModal.propTypes = {
+  submit: PropTypes.func,
+  toggle: PropTypes.func,
+  title: PropTypes.string,
+};
 
 export default ListDeleteItemModal;

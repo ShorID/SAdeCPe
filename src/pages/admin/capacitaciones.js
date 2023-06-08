@@ -2,10 +2,6 @@ import React from "react";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import DefaultList from "@/components/DefaultList";
 import { useRouter } from "next/router";
-import ReportPDF from "@/components/PDFTest";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { Button } from "reactstrap";
-import { VerticalBarExample } from "@/components/VerticalBarExample";
 
 const TrainingPage = (props) => {
   const router = useRouter();

@@ -38,7 +38,7 @@ ScheduleBadge.propTypes = {
   title: PropTypes.string,
   descripcion: PropTypes.string,
   date: PropTypes.string,
-  id: PropTypes.string,
+  id: PropTypes.number,
   completed: PropTypes.bool,
 };
 

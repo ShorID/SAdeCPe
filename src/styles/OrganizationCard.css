@@ -1,5 +1,6 @@
 .OrganizationCard{
     border: none !important;
+    background-color: transparent;
 }
 .OrganizationCard-imgWrapper{
     border-radius: 50%;

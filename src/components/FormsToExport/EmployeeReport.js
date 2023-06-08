@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ChartContext from "@/contexts/chart-context";
 import { reportStyles } from "./formsConst";
 import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import ReportDownloader from "./ReportDownloader";
@@ -9,9 +8,7 @@ import EmployeeTags from "../Charts/EmployeeTags";
 
 const reportId = "employeeReport";
 
-const EmployeeReportDoc = ({ data }) => {
-  const { graphsData, graphsRes } = React.useContext(ChartContext);
-
+const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
   const renderField = (label, fieldName) => (
     <Text style={reportStyles.text}>
       <Text style={{ fontWeight: "bold" }}>{label}</Text>:{" "}

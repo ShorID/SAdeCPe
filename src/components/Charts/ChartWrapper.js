@@ -39,7 +39,7 @@ const ChartWrapper = (props) => {
         <ButtonGroup style={{ marginBottom: 10 }}>
           <DownloadButton
             onClick={props.onDownload}
-            show={graphsData[props.id]?.current}
+            show={!!graphsData[props.id]?.current}
           />
           <Button
             size="sm"

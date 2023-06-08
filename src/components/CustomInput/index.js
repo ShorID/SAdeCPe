@@ -41,8 +41,7 @@ const CustomInput = (props) => {
   const input = (
     <Input
       placeholder={props.placeholder}
-      type={type}
-      bgSize={size}
+      type={type}      
       role={role}
       className={classNames(
         "CustomInput",
@@ -128,16 +127,16 @@ const CustomInput = (props) => {
 
 CustomInput.propTypes = {
   id: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.string,
   className: PropTypes.string,
   labelClass: PropTypes.string,
   feedback: PropTypes.string,
   hint: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.any,
   size: PropTypes.string,
   tooltip: PropTypes.string,
-  Drawer: PropTypes.node,
+  Drawer: PropTypes.any,
   wrapperClass: PropTypes.string,
   variant: PropTypes.oneOf(["form", "group"]),
   role: PropTypes.string,

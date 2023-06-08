@@ -13,7 +13,7 @@ const CustomPagination = (props) => {
     for (let index = 0; index < listContext.listItems.pageCount; index++) {
       const currentPage = index + 1;
       pages.push(
-        <PaginationItem>
+        <PaginationItem key={index}>
           <PaginationLink
             onClick={handleChangePage(currentPage)}
             // href={`#${currentPage}`}

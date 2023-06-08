@@ -8,15 +8,12 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import ChartContext from "@/contexts/chart-context";
 import { reportStyles } from "./formsConst";
 import ReportDownloader from "./ReportDownloader";
 
 const reportId = "generalReport";
 
-export const GeneralReportDoc = (props) => {
-  const { graphsData, graphsRes } = React.useContext(ChartContext);
-
+export const GeneralReportDoc = ({graphsData, graphsRes}) => {
   const moreQualifiedCharges =
     graphsData["moreQualifiedCharges"]?.current?.toBase64Image();
   const comparisonLastAndCurrentYear =

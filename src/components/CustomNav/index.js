@@ -12,23 +12,13 @@ const CustomNav = (props) => {
     <div className="CustomNav">
       <Nav pills className={classNames("container", "CustomNav")}>
         <NavItem>
-          <NavLink active href="#" className="CustomNav-link">
+          <NavLink active href="/" className="CustomNav-link">
             Inicio
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#" className="CustomNav-link">
-            Capacitaciones
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#" className="CustomNav-link">
-            Organizaciones
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#" className="CustomNav-link">
-            Solicitar Capacitacion
+          <NavLink href="/mis-datos" className="CustomNav-link">
+            Solicitar mi informacion
           </NavLink>
         </NavItem>
         {router.pathname !== "/login" &&
