@@ -13,5 +13,5 @@
     color: white;
 }
 .Footer .Link:hover{
-    color: var(--main-color);
+    color: var(--base-color);
 }

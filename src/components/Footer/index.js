@@ -10,11 +10,15 @@ const Footer = (props) => {
         <Row>
           <Col md="4" className="Footer-links">
             <h5>Contactanos!</h5>
-            <Link>Shoji Uri Delgado</Link>
-            <Link>Michael Alejandro Garcia Romero</Link>
+            <a href="mailto:shojiurid@gmail.com" className="Link">
+              Shoji Uri Delgado
+            </a>
+            <a href="mailto:mikegarcia2397@gmail.com" className="Link">
+              Michael Alejandro Garcia Romero
+            </a>
           </Col>
           <Col md="4" className="Footer-links">
-          <h5>Menu</h5>
+            <h5>Menu</h5>
             <Link to="/">Inicio</Link>
             <Link to="/admin">Administracion</Link>
             <Link to="/mi-datos">Solicitar informacion</Link>
@@ -22,7 +26,8 @@ const Footer = (props) => {
           </Col>
         </Row>
         <p style={{ color: "white" }} className="mt-4">
-          © 2023 Creado por Shoji Delgado y Michael Garcia. Todos los derechos reservados.
+          © 2023 Creado por Shoji Delgado y Michael Garcia. Todos los derechos
+          reservados.
         </p>
       </Container>
     </footer>

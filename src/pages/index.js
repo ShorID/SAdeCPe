@@ -11,7 +11,6 @@ import fetcher from "@/services/fetcher";
 import { sortbyOptions } from "@/components/SortBy";
 
 function Home({ orgs, trainingList }) {
-  console.log("prro", { orgs, trainingList });
   return (
     <Layout noContainer>
       <CustomCarousel />
