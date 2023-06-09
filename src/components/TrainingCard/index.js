@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
+  Badge,
   Card,
   CardBody,
   CardSubtitle,
@@ -8,22 +9,41 @@ import {
   CardTitle,
 } from "reactstrap";
 import CustomButton from "../CustomButton";
+import Text from "../Text";
 
 const TrainingCard = (props) => {
   return (
     <Card>
       <img
-        alt={props.title}
+        alt={props.name}
         src={props.img || "https://picsum.photos/300/200"}
         loading="lazy"
       />
       <CardBody>
-        <CardTitle tag="h5">{props.title}</CardTitle>
+        <CardTitle tag="h5">{props.name}</CardTitle>
         <CardSubtitle className="mb-2 text-muted" tag="h6">
-          {props.subTitle}
+          {props.creationDate}
         </CardSubtitle>
-        <CardText>{props.text}</CardText>
-        <CustomButton>Inscribirse</CustomButton>
+        <CardText>{props.description}</CardText>
+        <span style={{ color: props.state.color, display: "block" }}>
+          {props.state.name}
+        </span>
+        <span
+          style={{
+            color: props.priority.color,
+            display: "block",
+          }}
+        >
+          {props.priority.name}
+        </span>
+        <div>
+          {Array.isArray(props.tags) &&
+            props.tags.map((item, key) => (
+              <Badge key={key} style={{ marginRight: "5px" }}>
+                <Text size="sm">{item.tag.name}</Text>
+              </Badge>
+            ))}
+        </div>
       </CardBody>
     </Card>
   );

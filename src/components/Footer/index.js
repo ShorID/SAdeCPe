@@ -9,18 +9,21 @@ const Footer = (props) => {
       <Container>
         <Row>
           <Col md="4" className="Footer-links">
-            <Link>Lorem ipsum dolor sit amet</Link>
-            <Link>Lorem ipsum dolor sit amet</Link>
-            <Link>Lorem ipsum dolor sit amet</Link>
-            <Link>Lorem ipsum dolor sit amet</Link>
+            <h5>Contactanos!</h5>
+            <Link>Shoji Uri Delgado</Link>
+            <Link>Michael Alejandro Garcia Romero</Link>
           </Col>
           <Col md="4" className="Footer-links">
-            <Link>Lorem ipsum dolor sit amet</Link>
-            <Link>Lorem ipsum dolor sit amet</Link>
-            <Link>Lorem ipsum dolor sit amet</Link>
-            <Link>Lorem ipsum dolor sit amet</Link>
+          <h5>Menu</h5>
+            <Link to="/">Inicio</Link>
+            <Link to="/admin">Administracion</Link>
+            <Link to="/mi-datos">Solicitar informacion</Link>
+            <Link></Link>
           </Col>
         </Row>
+        <p style={{ color: "white" }} className="mt-4">
+          © 2023 Creado por Shoji Delgado y Michael Garcia. Todos los derechos reservados.
+        </p>
       </Container>
     </footer>
   );

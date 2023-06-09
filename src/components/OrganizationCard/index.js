@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 import CustomButton from "../CustomButton";
+import fetcher from "@/services/fetcher";
 
 const OrganizationCard = (props) => {
   return (
@@ -9,17 +10,21 @@ const OrganizationCard = (props) => {
       <div className="OrganizationCard-imgWrapper">
         <img
           alt={props.title}
-          src={props.img || "https://picsum.photos/300/200"}
+          src={
+            props.photo
+              ? `${fetcher.defaults.baseURL}${props.photo}`
+              : "https://picsum.photos/300/200"
+          }
           loading="lazy"
           className="OrganizationCard-img"
         />
       </div>
       <CardBody>
-        <CardTitle tag="h5">{props.title}</CardTitle>
+        <CardTitle tag="h5">{props.name}</CardTitle>
         <CardSubtitle className="mb-2 text-muted" tag="h6">
-          {props.subTitle}
+          {props.creationDate}
         </CardSubtitle>
-        <CardText>{props.text}</CardText>
+        <CardText>{props.description}</CardText>
         {props.button && <CustomButton>Inscribirse</CustomButton>}
       </CardBody>
     </Card>

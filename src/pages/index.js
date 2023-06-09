@@ -18,12 +18,10 @@ function Home({ orgs, trainingList }) {
       <Container className="my-4 p-0">
         <TitleBlock
           title="Capacitaciones Activas"
-          button="Ver mas"
-          buttonLink="/capacitaciones"
         />
         <Row>
-          {Array.isArray(trainingData) &&
-            trainingData.map((item, index) => (
+          {Array.isArray(trainingList.data) &&
+            trainingList.data.map((item, index) => (
               <Col md="3" className="mb-3" key={index}>
                 <TrainingCard {...item} />
               </Col>
@@ -46,8 +44,8 @@ function Home({ orgs, trainingList }) {
       <Container className="my-4 p-0">
         <TitleBlock title="Organizaciones" />
         <Row>
-          {Array.isArray(organizationData) &&
-            organizationData.map((item, index) => (
+          {Array.isArray(orgs?.data) &&
+            orgs.data.map((item, index) => (
               <Col md="3" className="mb-3" key={index}>
                 <OrganizationCard {...item} />
               </Col>
