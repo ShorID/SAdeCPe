@@ -165,20 +165,45 @@ const TrainingSheet = (props) => {
     setValidated(true);
     const form = e.currentTarget;
     if (form.checkValidity() === false) return console.log("Error");
-    let allCollaborators = [];
-    let totalSession = Array.isArray(sessions)
-      ? sessions.filter((item) => item.active).length
-      : 0;
+    let totalSession = {
+      active: 0,
+      total: 0,
+      valid: 0,
+    };
 
     sessions.forEach((item) => {
-      const newCollaborators = allCollaborators.filter(
-        (collaborator) =>
-          !item.collaborators.some(
-            (savedCollaborators) => savedCollaborators.id === collaborator.id
-          )
-      );
-      allCollaborators = [...allCollaborators, ...newCollaborators];
+      if (item.active) {
+        totalSession.active = totalSession.active + 1;
+      }
+      if (
+        item.centerId &&
+        item.trainerId &&
+        item.to &&
+        item.from &&
+        item.initialCost &&
+        Array.isArray(item.collaborators) &&
+        item.collaborators.length > 0
+      ) {
+        totalSession.valid = totalSession.valid + 1;
+      }
+      totalSession.total = totalSession.total + 1;
     });
+
+    if (!totalSession.total) {
+      return toast.error("No has añadido ninguna sesion!");
+    }
+
+    if (totalSession.total !== totalSession.valid) {
+      return toast.error(
+        "Debes de llenar todos los campos de cada sesion para continuar!"
+      );
+    }
+
+    if (!(Array.isArray(formData.tags) && formData.tags.length > 0)) {
+      return toast.error(
+        "Debes de seleccionar al menos un tema para tu capacitacion!"
+      );
+    }
 
     const data = {
       ...formData,
@@ -431,6 +456,7 @@ const TrainingSheet = (props) => {
       </Text>
       {sessions.map((item, key) => (
         <TrainingSession
+          key={key}
           title={`Sesion ${key + 1}`}
           data={item}
           onChange={handleChangeSession(key)}
