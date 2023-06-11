@@ -44,6 +44,16 @@ const TrainingSheet = (props) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const getDefault = React.useCallback(
+    (keyName, arrayofValues) => {
+      return formData[keyName]
+        ? arrayofValues.find((item) => item.id === formData[keyName]).id ||
+            data[0].id
+        : arrayofValues[0].id;
+    },
+    [formData]
+  );
+
   const getStates = () =>
     fetcher({
       url: "/state",
@@ -54,7 +64,12 @@ const TrainingSheet = (props) => {
     }).then(({ data }) => {
       if (Array.isArray(data)) setStates(data);
       if (data.length)
-        handleChange({ target: { value: data[0].id, name: "stateId" } });
+        handleChange({
+          target: {
+            value: getDefault("stateId", data),
+            name: "stateId",
+          },
+        });
     });
 
   const getOrgs = () =>
@@ -62,7 +77,12 @@ const TrainingSheet = (props) => {
       if (Array.isArray(data)) {
         setOrgs(data);
         if (data.length)
-          handleChange({ target: { value: data[0].id, name: "orgId" } });
+          handleChange({
+            target: {
+              value: getDefault("orgId", data),
+              name: "orgId",
+            },
+          });
       }
     });
 
@@ -72,7 +92,10 @@ const TrainingSheet = (props) => {
         setPriorities(data);
         if (data.length)
           handleChange({
-            target: { value: data[0].id, name: "levelPrioryId" },
+            target: {
+              value: getDefault("levelPrioryId", data),
+              name: "levelPrioryId",
+            },
           });
       }
     });
@@ -83,7 +106,7 @@ const TrainingSheet = (props) => {
         setReasons(data);
         if (data.length)
           handleChange({
-            target: { value: data[0].id, name: "reasonId" },
+            target: { value: getDefault("reasonId", data), name: "reasonId" },
           });
       }
     });
