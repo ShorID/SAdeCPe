@@ -258,7 +258,7 @@ const TrainingSheet = (props) => {
             sessionId: item.sessionId,
             collaboratorId: item.collaboratorId,
             qualification: null,
-            certificate: null,
+            certificate: item.certificate || null,
             description: null,
             creationDate: item.creationDate,
             active: item.active,

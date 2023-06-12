@@ -4,6 +4,20 @@ import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
 import { Spinner } from "reactstrap";
 
+export const fileUploader = async (inputEvent) => {
+  const { target = {} } = inputEvent;
+  const value = target && target.files[0];
+  const data = new FormData();
+  data.append("file", value);
+  const { data: fileUploaded } = await fetcher({
+    url: `/image/upload-file`,
+    method: "POST",
+    data,
+  });
+
+  return fileUploaded;
+};
+
 const FileInput = (props) => {
   const inputRef = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
@@ -12,16 +26,8 @@ const FileInput = (props) => {
   );
 
   const handleChange = async (inputEvent) => {
-    const { target = {} } = inputEvent;
-    const value = target && target.files[0];
-    const data = new FormData();
-    data.append("file", value);
     setLoading(true);
-    const { data: fileUploaded } = await fetcher({
-      url: `/image/upload-file`,
-      method: "POST",
-      data,
-    });
+    const fileUploaded = await fileUploader(inputEvent);
     setLoading(false);
     if (inputRef.current) inputRef.current.value = "";
     if (fileUploaded) {
@@ -33,7 +39,7 @@ const FileInput = (props) => {
 
   return (
     <>
-      <CustomInput label="Foto de Perfil" type="file" onChange={handleChange} />
+      <CustomInput label="Foto de Perfil" type="file" accept="image/*" onChange={handleChange} />
       {loading && (
         <Spinner color="primary" size="sm" className="mx-1">
           Loading...

@@ -5,7 +5,6 @@ import Text from "../Text";
 import { Calendar } from "react-multi-date-picker";
 import CustomInput from "../CustomInput";
 import drawerTypes from "../Drawers/drawerTypes";
-import fetcher from "@/services/fetcher";
 import TrainingSessionMember from "./TrainingSessionMember";
 import Collapse from "../Collapse";
 import Clickable from "../Clickable";
@@ -31,7 +30,12 @@ const months = [
 ];
 
 const TrainingSession = (props) => {
-  const { centers = [], trainers = [], refreshTrainers, refreshCenters } = props;
+  const {
+    centers = [],
+    trainers = [],
+    refreshTrainers,
+    refreshCenters,
+  } = props;
   const [formData, setFormData] = React.useState({
     title: props.title,
     ...(props.data
@@ -134,16 +138,18 @@ const TrainingSession = (props) => {
 
   const handleMinimize = () => setIsMinimized((prev) => !prev);
 
-  const handleCollaboratorDisable = (idx) => (disabled) => {
-    if (props.onChange)
-      props.onChange({
-        collaborators: Array.isArray(props.data.collaborators)
-          ? props.data.collaborators.map((item, key) =>
-              key === idx ? { ...item, active: disabled } : item
-            )
-          : [],
-      });
-  };
+  const handleCollaboratorChange =
+    (idx) =>
+    ({ name, value }) => {
+      if (props.onChange)
+        props.onChange({
+          collaborators: Array.isArray(props.data.collaborators)
+            ? props.data.collaborators.map((item, key) =>
+                key === idx ? { ...item, [name]: value } : item
+              )
+            : [],
+        });
+    };
 
   return (
     <Card className="my-2">
@@ -273,7 +279,7 @@ const TrainingSession = (props) => {
                     <TrainingSessionMember
                       key={key + "-collaborator"}
                       {...item}
-                      onDisable={handleCollaboratorDisable(key)}
+                      onChange={handleCollaboratorChange(key)}
                     />
                   ))}
                 </tbody>

@@ -32,6 +32,7 @@ const CustomInput = (props) => {
     name,
     required,
     Drawer,
+    accept,
     refreshFunc = () => {},
   } = props;
   const [isOpen, setIsOpen] = React.useState(false);
@@ -55,6 +56,7 @@ const CustomInput = (props) => {
       onChange={onChange}
       name={name}
       required={required}
+      accept={accept}
     >
       {props.type === "select" ? props.children : undefined}
     </Input>
