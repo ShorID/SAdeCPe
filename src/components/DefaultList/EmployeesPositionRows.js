@@ -35,14 +35,16 @@ const EmployeesPositionRows = (props) => {
                 <Icon name="faEdit" size="md2" />
               </Tooltip>
             </Clickable>
-            <Clickable
-              className="mx-2"
-              onClick={listContext.handleDelete(props)}
-            >
-              <Tooltip tooltip="Eliminar?" placement="right">
-                <Icon name="faTrash" size="md2" />
-              </Tooltip>
-            </Clickable>
+            {listContext.lastFilters?.status !== 0 && (
+              <Clickable
+                className="mx-2"
+                onClick={listContext.handleDelete(props)}
+              >
+                <Tooltip tooltip="Eliminar?" placement="right">
+                  <Icon name="faTrash" size="md2" />
+                </Tooltip>
+              </Clickable>
+            )}
           </div>
         </div>
         <div className="d-block">

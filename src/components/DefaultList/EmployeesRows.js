@@ -55,7 +55,7 @@ const EmployeesRows = (props) => {
                 </Tooltip>
               </Clickable>
             )}
-            {!props.withoutDelete && (
+            {!props.withoutDelete && listContext.lastFilters?.status !== 0 && (
               <Clickable
                 className="mx-2"
                 onClick={listContext.handleDelete(props)}

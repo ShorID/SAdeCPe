@@ -22,6 +22,7 @@ const ListContext = createContext({
   handleSaveSelected: () => {},
   isSelected: (itemData = {}) => console.log(itemData),
   selectedItems: [],
+  lastFilters: {},
 });
 
 export const ListProvider = ({
@@ -126,6 +127,7 @@ export const ListProvider = ({
         selectedItems,
         isSelected,
         handleSaveSelected: onSaveSelected ? handleSaveSelected : undefined,
+        lastFilters
       }}
     >
       {children}

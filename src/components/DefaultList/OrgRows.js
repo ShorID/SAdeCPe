@@ -6,7 +6,6 @@ import Tooltip from "../Tooltip";
 import Text from "../Text";
 import Clickable from "../Clickable";
 import Icon from "../Icon";
-import CustomButton from "../CustomButton";
 import ListContext from "@/contexts/list-context";
 import AvatarRow from "./AvatarRow";
 
@@ -32,14 +31,16 @@ const OrgRows = (props) => {
                 <Icon name="faEdit" size="md2" />
               </Tooltip>
             </Clickable>
-            <Clickable
-              className="mx-2"
-              onClick={listContext.handleDelete(props)}
-            >
-              <Tooltip tooltip="Eliminar?" placement="right">
-                <Icon name="faTrash" size="md2" />
-              </Tooltip>
-            </Clickable>
+            {listContext.lastFilters?.status !== 0 && (
+              <Clickable
+                className="mx-2"
+                onClick={listContext.handleDelete(props)}
+              >
+                <Tooltip tooltip="Eliminar?" placement="right">
+                  <Icon name="faTrash" size="md2" />
+                </Tooltip>
+              </Clickable>
+            )}
           </div>
         </div>
         <div className="d-block">

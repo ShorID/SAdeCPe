@@ -5,8 +5,8 @@ import ListBody from "./ListBody";
 import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
 import ListContext from "@/contexts/list-context";
-import Collapse from "../Collapse";
 import Text from "../Text";
+import { Card, CardBody, Col, Collapse, Row } from "reactstrap";
 
 export const filters = [
   {
@@ -29,6 +29,7 @@ export const filters = [
 const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
   const [filtersData, setFiltersData] = useState([]);
   const [formData, setFormData] = useState();
+  const [showFilters, setShowFilters] = useState(false);
 
   const { refresh } = useContext(ListContext);
 
@@ -69,9 +70,16 @@ const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
     });
   };
 
+  const handleShowFilters = () => setShowFilters((prev) => !prev);
+
   return (
     <ListBody className="ListSearcher">
-      <Searcher onChange={handleChange} />
+      <Searcher
+        onChange={handleChange}
+        withoutFilters={withoutFilters}
+        onFilter={handleShowFilters}
+        showFilters={showFilters}
+      />
       <CustomInput
         label="Mostrar inactivos"
         className="font-sm-size"
@@ -79,34 +87,39 @@ const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
         role="switch"
         name="status"
         onChange={showInactives}
+        size="sm"
       />
       {!withoutFilters && (
-        <div >
-          <Collapse
-            header={<Text>Mas filtros</Text>}
-            className="ListSearcher-moreFilters"
-          >
-            {filtersData.map(
-              (filter, i) =>
-                Array.isArray(filter.options) && (
-                  <CustomInput
-                    type="select"
-                    name={filter.paramName}
-                    size="sm"
-                    className="w-25"
-                    label={filter.label}
-                    key={i}
-                    onChange={handleChange}
-                  >
-                    <option value="0">Todos</option>
-                    {filter.options.map((item) => (
-                      <option value={item.id} key={item.id}>
-                        {item.name || item.nameType}
-                      </option>
-                    ))}
-                  </CustomInput>
-                )
-            )}
+        <div>
+          <Collapse isOpen={showFilters}>
+            <Card className="mb-3">
+              <CardBody>
+                <Row>
+                  {filtersData.map(
+                    (filter, i) =>
+                      Array.isArray(filter.options) && (
+                        <Col sm="12" md="3">
+                          <CustomInput
+                            type="select"
+                            name={filter.paramName}
+                            size="sm"
+                            label={filter.label}
+                            key={i}
+                            onChange={handleChange}
+                          >
+                            <option value="0">Todos</option>
+                            {filter.options.map((item) => (
+                              <option value={item.id} key={item.id}>
+                                {item.name || item.nameType}
+                              </option>
+                            ))}
+                          </CustomInput>
+                        </Col>
+                      )
+                  )}
+                </Row>
+              </CardBody>
+            </Card>
           </Collapse>
         </div>
       )}
