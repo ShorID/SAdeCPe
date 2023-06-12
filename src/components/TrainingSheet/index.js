@@ -252,18 +252,18 @@ const TrainingSheet = (props) => {
           moment(item.from).format("HH:mm"),
           moment(item.to).format("HH:mm"),
         ],
-        [item.id ? "assistances" : "collaborators"]: item.id
-          ? item.collaborators?.map((item) => ({
-              id: item.id,
-              sessionId: item.sessionId,
-              collaboratorId: item.collaboratorId,
-              qualification: null,
-              certificate: null,
-              description: null,
-              creationDate: item.creationDate,
-              active: item.active,
-            }))
-          : item.collaborators?.map((item) => item.collaboratorId).join(","),
+        [item.id ? "assistances" : "collaborators"]: item.collaborators?.map(
+          (item) => ({
+            id: item.id,
+            sessionId: item.sessionId,
+            collaboratorId: item.collaboratorId,
+            qualification: null,
+            certificate: null,
+            description: null,
+            creationDate: item.creationDate,
+            active: item.active,
+          })
+        ),
         trainerId: item.trainerId,
         ...(props.isCreating ? {} : { capId: props.data.id }),
         active: item.active,
