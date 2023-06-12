@@ -30,8 +30,11 @@ const SortBy = (props) => {
     <UncontrolledDropdown group className="SortBy">
       <DropdownToggle color="link" className="SortBy-caret">
         <Tooltip tooltip="Ordenar">
-          <Text>
+          <Text className="d-none d-md-block">
             <Icon name="faBarsStaggered" /> {selected && selected.label}
+          </Text>
+          <Text className="d-block d-md-none">
+            <Icon name="faBarsStaggered" />
           </Text>
         </Tooltip>
       </DropdownToggle>

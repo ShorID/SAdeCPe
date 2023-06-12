@@ -1,4 +1,8 @@
 .ListSearcher{
     padding: 1rem;
     background-color: var(--action-background);
+    padding-bottom: 0;
+}
+.ListSearcher-moreFilters{
+    width: 100%;
 }

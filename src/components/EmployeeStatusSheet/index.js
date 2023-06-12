@@ -19,6 +19,9 @@ const EmployeeStatusSheet = ({ data }) => {
     if (ref.current) {
       setProfileImg(toDataUrl(fetcher.defaults.baseURL + data.photo));
     }
+    fetcher({ url: "/stadistics/info-cap-col/" + data.id }).then(({ data }) =>
+      console.log("prro", data)
+    );
   }, [ref.current]);
 
   const renderField = (label, fieldName) => (

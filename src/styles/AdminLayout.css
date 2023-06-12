@@ -9,6 +9,6 @@
     color: inherit;
 }
 .AdminLayout-link.active{
-    background-color: var(--secundary-color);
-    border-color: var(--secundary-color);
+    background-color: var(--selection-color);
+    border-color: var(--selection-color);
 }

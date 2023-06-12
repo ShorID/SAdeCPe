@@ -407,7 +407,7 @@ const TrainingSheet = (props) => {
       <Tags name="tags" onChange={handleChange} value={formData["tags"]} />
       <Text TagName="h6" className="Form-title" text={`Precios y costos.`} />
       <Row>
-        <Col>
+        <Col sm="12" md="4">
           <CustomInput
             label="Costo unitario por persona ($)"
             name="costUnit"
@@ -417,7 +417,7 @@ const TrainingSheet = (props) => {
             required
           />
         </Col>
-        <Col>
+        <Col sm="12" md="4">
           <CustomInput
             label="Tipo de exoneracion"
             type="select"
@@ -434,7 +434,7 @@ const TrainingSheet = (props) => {
               ))}
           </CustomInput>
         </Col>
-        <Col>
+        <Col sm="12" md="4">
           <CustomInput
             label="Fondo de Exoneracion ($)"
             name="inatecBackground"

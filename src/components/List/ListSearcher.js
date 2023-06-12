@@ -63,12 +63,29 @@ const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
       prev ? { ...prev, [name]: value } : { [name]: value }
     );
 
+  const showInactives = ({ target: { checked } }) => {
+    handleChange({
+      target: { name: "status", value: +!checked },
+    });
+  };
+
   return (
     <ListBody className="ListSearcher">
       <Searcher onChange={handleChange} />
+      <CustomInput
+        label="Mostrar inactivos"
+        className="font-sm-size"
+        type="switch"
+        role="switch"
+        name="status"
+        onChange={showInactives}
+      />
       {!withoutFilters && (
-        <div className="mt-3">
-          <Collapse header={<Text size="sm">Mas filtros</Text>}>
+        <div >
+          <Collapse
+            header={<Text>Mas filtros</Text>}
+            className="ListSearcher-moreFilters"
+          >
             {filtersData.map(
               (filter, i) =>
                 Array.isArray(filter.options) && (
