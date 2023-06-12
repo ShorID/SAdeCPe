@@ -10,16 +10,15 @@ import OrganizationCard from "@/components/OrganizationCard";
 import fetcher from "@/services/fetcher";
 import { sortbyOptions } from "@/components/SortBy";
 
-function Home({ orgs, trainingList }) {
+function Home({ orgs, trainingList, centers }) {
+  console.log("prro", centers)
   return (
     <Layout noContainer>
-      <CustomCarousel />
+      <CustomCarousel data={centers || []} />
       <Container className="my-4 p-0">
-        <TitleBlock
-          title="Capacitaciones Activas"
-        />
+        <TitleBlock title="Capacitaciones Activas" />
         <Row>
-          {Array.isArray(trainingList.data) &&
+          {Array.isArray(trainingList?.data) &&
             trainingList.data.map((item, index) => (
               <Col md="3" className="mb-3" key={index}>
                 <TrainingCard {...item} />
@@ -58,7 +57,7 @@ function Home({ orgs, trainingList }) {
 Home.getInitialProps = async () => {
   try {
     const { data: orgs } = await fetcher({
-      url: "/org/list",
+      url: "/home/org",
       params: {
         page: 1,
         sortBy: sortbyOptions[0].value,
@@ -75,7 +74,23 @@ Home.getInitialProps = async () => {
       },
     });
 
-    return { orgs, trainingList };
+    const centers = await fetcher({
+      url: "/home/center",
+      params: {
+        page: 1,
+        sortBy: sortbyOptions[0].value,
+        limit: 8,
+      },
+    }).then(({ data }) =>
+      data.data.map((item) => ({
+        src: fetcher.defaults.baseURL + item.photo,
+        altText: item.name,
+        caption: item.address,
+        key: item.id,
+      }))
+    );
+
+    return { orgs, trainingList, centers };
   } catch (e) {
     return {};
   }

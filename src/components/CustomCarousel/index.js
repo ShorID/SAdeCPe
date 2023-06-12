@@ -8,9 +8,8 @@ import {
   CarouselCaption,
   Container,
 } from "reactstrap";
-import data from "./customCarousel-data.json";
 
-const CustomCarousel = (props) => {
+const CustomCarousel = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
@@ -55,7 +54,6 @@ const CustomCarousel = (props) => {
       next={next}
       previous={previous}
       className="CustomCarousel"
-      {...props}
     >
       <CarouselIndicators
         items={data}
