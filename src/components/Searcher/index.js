@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Input, InputGroup } from "reactstrap";
 import Icon from "../Icon";
+import Text from "../Text";
 
 const Searcher = (props) => {
   const timeout = React.useRef(null);
@@ -18,7 +19,10 @@ const Searcher = (props) => {
         onClick={props.onFilter}
         disabled={props.withoutFilters}
       >
-        <Icon name="faFilter" /> {props.showFilters? "Ocultar filtros" : "Mas filtros"}
+        <Icon name="faFilter" />{" "}
+        <Text className="d-none d-md-inline">
+          {props.showFilters ? "Ocultar filtros" : "Mas filtros"}
+        </Text>
       </Button>
       <Input
         bsSize="sm"
@@ -28,9 +32,9 @@ const Searcher = (props) => {
         className="Searcher"
         placeholder="Buscar..."
       />
-      <Button size="sm" color="primary">
+      <Button size="sm">
         <Icon name="faSearch" className="mx-1" />
-        Buscar
+        <Text className="d-none d-md-inline">Buscar</Text>
       </Button>
     </InputGroup>
   );

@@ -1,14 +1,30 @@
-.CustomNavbar{
+.CustomNavbar {
   width: 100%;
   max-height: 81px;
   background-color: var(--main-color);
   padding: 0;
 }
-.CustomNavbar .container-lg{
+.CustomNavbar .container-lg {
   padding-left: 0;
 }
-.CustomNavbar-logo{
+.CustomNavbar-logo {
   padding-top: 0;
   padding-bottom: 0;
   width: auto;
+}
+.CustomNavbar-toggle {
+  color: white !important;
+  outline: none;
+}
+.CustomNavbar-toggleContent {
+  background-color: white;
+  max-height: calc(100vh - 81px);
+  width: 100vw;
+  overflow: scroll;
+  position: fixed;
+  top: 81px;
+  bottom: 0;
+  padding: 1rem;
+  width: 100%;
+  z-index: 9999;
 }

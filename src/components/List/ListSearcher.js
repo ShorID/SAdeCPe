@@ -98,13 +98,12 @@ const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
                   {filtersData.map(
                     (filter, i) =>
                       Array.isArray(filter.options) && (
-                        <Col sm="12" md="3">
+                        <Col sm="12" md="3" key={i}>
                           <CustomInput
                             type="select"
                             name={filter.paramName}
                             size="sm"
                             label={filter.label}
-                            key={i}
                             onChange={handleChange}
                           >
                             <option value="0">Todos</option>

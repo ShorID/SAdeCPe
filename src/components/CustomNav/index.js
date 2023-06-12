@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Icon from "../Icon";
 import { useRouter } from "next/router";
 import fetcher from "@/services/fetcher";
+import Text from "../Text";
 
 const CustomNav = (props) => {
   const router = useRouter();
@@ -25,7 +26,8 @@ const CustomNav = (props) => {
           !fetcher.defaults.headers["Authorization"] && (
             <NavItem className="CustomNav-end">
               <NavLink href="/login" className="CustomNav-link">
-                <Icon name="faArrowRightFromBracket" /> Acceder
+                <Icon name="faArrowRightFromBracket" />{" "}
+                <Text className="d-none d-md-inline" TagName="span">Acceder</Text>
               </NavLink>
             </NavItem>
           )}
