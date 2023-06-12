@@ -67,7 +67,7 @@ Home.getInitialProps = async () => {
     });
 
     const { data: trainingList } = await fetcher({
-      url: "/capacitation/list",
+      url: "/home/capacitation",
       params: {
         page: 1,
         sortBy: sortbyOptions[0].value,

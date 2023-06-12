@@ -10,13 +10,14 @@ import {
 } from "reactstrap";
 import CustomButton from "../CustomButton";
 import Text from "../Text";
+import fetcher from "@/services/fetcher";
 
 const TrainingCard = (props) => {
   return (
     <Card>
       <img
         alt={props.name}
-        src={props.img || "https://picsum.photos/300/200"}
+        src={props.nextSession?.center?.photo? fetcher.defaults.baseURL + props.nextSession.center.photo : "https://picsum.photos/300/200"}
         loading="lazy"
       />
       <CardBody>

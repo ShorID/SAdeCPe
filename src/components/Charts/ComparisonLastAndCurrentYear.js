@@ -70,7 +70,7 @@ const ComparisonLastAndCurrentYear = (props) => {
             },
             title: {
               display: true,
-              text: "Comparativa de capaciaciones Enero-Julio",
+              text: "Comparativa de capaciaciones",
             },
           },
           animation: {
@@ -78,6 +78,7 @@ const ComparisonLastAndCurrentYear = (props) => {
           },
         }}
         data={dynamicData}
+        style={{ objectFit: "contain"}}
       />
     </ChartWrapper>
   );

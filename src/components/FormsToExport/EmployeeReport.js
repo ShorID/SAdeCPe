@@ -87,6 +87,7 @@ const EmployeeReport = (props) => {
       id={reportId}
       props={props}
       FormComponent={EmployeeReportDoc}
+      title={`Informe general de ${props.data.name} ${props.data.lastName}.pdf`}
     />
   );
 };

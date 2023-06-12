@@ -7,15 +7,22 @@ import EmployeeStatusSheet from "@/components/EmployeeStatusSheet";
 const EmployeeStatusPage = (props) => {
   const [data, setData] = React.useState();
 
-  React.useEffect(() => {
-    fetcher({
+  const getData = async () => {
+    const { data } = await fetcher({
       url: "/collaborator/findOne/" + props.id,
-    }).then(({ data }) =>
-      setData({
-        ...data,
-        departamentId: data.position.departamentId,
-      })
-    );
+    });
+    const { data: trainingData } = await fetcher({
+      url: "/stadistics/info-cap-col/" + props.id,
+    });
+    setData({
+      ...data,
+      departamentId: data.position.departamentId,
+      trainingData,
+    });
+  };
+
+  React.useEffect(() => {
+    getData();
   }, []);
   return (
     <AdminLayout>

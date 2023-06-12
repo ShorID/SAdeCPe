@@ -73,6 +73,7 @@ const MoreQualifiedCharges = (props) => {
           },
         }}
         data={dynamicData}
+        style={{ objectFit: "contain"}}
       />
     </ChartWrapper>
   );

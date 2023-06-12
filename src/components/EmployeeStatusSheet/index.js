@@ -19,9 +19,6 @@ const EmployeeStatusSheet = ({ data }) => {
     if (ref.current) {
       setProfileImg(toDataUrl(fetcher.defaults.baseURL + data.photo));
     }
-    fetcher({ url: "/stadistics/info-cap-col/" + data.id }).then(({ data }) =>
-      console.log("prro", data)
-    );
   }, [ref.current]);
 
   const renderField = (label, fieldName) => (
@@ -29,6 +26,7 @@ const EmployeeStatusSheet = ({ data }) => {
       <Text bold>{label}</Text>: <Text>{data[fieldName] || fieldName}</Text>
     </Text>
   );
+
   return (
     <div>
       {profileImg && <EmployeeReport data={{ ...data, profileImg }} />}
@@ -113,6 +111,55 @@ const EmployeeStatusSheet = ({ data }) => {
             fortalecer y ampliar aún más las habilidades y conocimientos del
             trabajador.
           </Text>
+        </Col>
+        <Col md="12" style={{ overflow: "auto"}}>
+          <Text
+            TagName="h6"
+            className="Form-title"
+            text={`Historial de Capacitaciones`}
+          />
+          <Table bordered>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th colSpan={2}>Nombre</th>
+                <th>Hr. Pendientes</th>
+                <th>Hr. Fallidas</th>
+                <th>Hr. Completadas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.trainingData.capacitations.map((item, idx) => (
+                <React.Fragment key={idx}>
+                  <tr style={{ backgroundColor: "#f5bc7f" }}>
+                    <th scope="row">CAP-{item.idCap}</th>
+                    <td colSpan={2}>{item.nameCap}</td>
+                    <td>{item.totalHourProjectedDescrip}</td>
+                    <td>{item.totalHourFailedDescrip}</td>
+                    <td>{item.totalHourSuccessDescrip}</td>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th>Fecha</th>
+                    <th>Horario</th>
+                    <th>Total Hrs</th>
+                    <th>Sesion</th>
+                    <th>Estado</th>
+                  </tr>
+                  {item.sessions.map((session) => (
+                    <tr>
+                      <td></td>
+                      <td>{session.dates}</td>
+                      <td>{session.schedule}</td>
+                      <td>{session.durationDescrip}</td>
+                      <td>{session.stateSession}</td>
+                      <td>{session.statusColSession}</td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </Table>
         </Col>
       </Row>
     </div>

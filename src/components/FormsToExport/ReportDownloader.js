@@ -24,7 +24,7 @@ Font.register({
   ],
 });
 
-const ReportDownloader = ({ id, FormComponent, props, graphs }) => {
+const ReportDownloader = ({ id, FormComponent, props, title }) => {
   const { graphsData, graphsRes } = React.useContext(ChartContext);
   const [refresh, setRefresh] = React.useState(0);
   const isReady = !reportsConst[id].graphs.some(
@@ -42,7 +42,7 @@ const ReportDownloader = ({ id, FormComponent, props, graphs }) => {
             graphsRes,
             ...(props ? props : {}),
           })}
-          fileName={reportsConst[id].name + ".pdf"}
+          fileName={title || reportsConst[id].name + ".pdf"}
           className="w-100"
         >
           {({ blob, url, loading, error }) => (
