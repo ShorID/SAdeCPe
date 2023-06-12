@@ -268,7 +268,7 @@ const TrainingSheet = (props) => {
         ...(props.isCreating ? {} : { capId: props.data.id }),
         active: item.active,
       })),
-      totalSession,
+      totalSession: totalSession.active,
     };
     toast.promise(
       fetcher({
