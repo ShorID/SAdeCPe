@@ -4,6 +4,8 @@ import { ListGroup, ListGroupItem } from "reactstrap";
 import Link from "../Link";
 import Text from "../Text";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/auth-context";
 
 const links = {
   block1: [
@@ -27,6 +29,7 @@ const links = {
 
 const AdminOptions = () => {
   const router = useRouter();
+  const { logout } = useContext(AuthContext);
   const renderLinks = (linkArray = []) =>
     linkArray.map((item, key) => (
       <ListGroupItem
@@ -40,8 +43,6 @@ const AdminOptions = () => {
         </Link>
       </ListGroupItem>
     ));
-
-  const handleClean = () => sessionStorage.clear()
 
   return (
     <>
@@ -72,7 +73,13 @@ const AdminOptions = () => {
             </ListGroupItem> */}
       </ListGroup>
       <ListGroup>
-        <ListGroupItem action href="/" tag="a" onClick={handleClean} className="AdminLayout-link">
+        <ListGroupItem
+          action
+          href="/"
+          tag="a"
+          onClick={logout}
+          className="AdminLayout-link"
+        >
           <Text>Cerrar Sesion</Text>
         </ListGroupItem>
       </ListGroup>

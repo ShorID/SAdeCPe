@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 import CustomButton from "../CustomButton";
-import fetcher from "@/services/fetcher";
 
 const OrganizationCard = (props) => {
   return (
@@ -12,7 +11,7 @@ const OrganizationCard = (props) => {
           alt={props.title}
           src={
             props.photo
-              ? `${fetcher.defaults.baseURL}${props.photo}`
+              ? `${process.env.NEXT_PUBLIC_API_URL}${props.photo}`
               : "https://picsum.photos/300/200"
           }
           loading="lazy"

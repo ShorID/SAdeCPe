@@ -22,6 +22,23 @@ const TrainingListItem = (props) => {
     router.push("/admin/capacitaciones/" + props.id);
   };
 
+  const renderOptions = () => (
+    <>
+      <Clickable className="mx-2" onClick={handleRedirect}>
+        <Tooltip tooltip="Editar?" placement="right">
+          <Icon name="faEdit" size="md2" />
+        </Tooltip>
+      </Clickable>
+      {listContext.lastFilters?.status !== 0 && (
+        <Clickable className="mx-2" onClick={listContext.handleDelete(props)}>
+          <Tooltip tooltip="Eliminar?" placement="right">
+            <Icon name="faTrash" size="md2" />
+          </Tooltip>
+        </Clickable>
+      )}
+    </>
+  );
+
   return (
     <div
       className={classNames("TrainingListItem", props.className)}
@@ -30,18 +47,11 @@ const TrainingListItem = (props) => {
       <CustomCheck />
       <div className="TrainingListItem-content">
         <div className="TrainingListItem-mainInfo">
-          <Tooltip
-            tooltip="Organizacion Logo"
-            className="TrainingListItem-avatarWrapper"
-          >
-            <img
-              className="TrainingListItem-avatar"
-              src={props.avatar}
-              alt={props.title}
-            />
-          </Tooltip>
+          <Text className="mx-1" bold>
+            CAP-{props.id}
+          </Text>
           <div className="TrainingListItem-title">
-            <Text>{props.name}</Text> -{" "}
+            <Text>{props.name}</Text>{" "}
             {props.state && (
               <Badge
                 style={{ backgroundColor: props.state.color }}
@@ -51,41 +61,8 @@ const TrainingListItem = (props) => {
               </Badge>
             )}
           </div>
-          {/* <div> */}
-          <div className="mx-auto">
-            <Text size="sm" bold>
-              Organizacion:{" "}
-            </Text>
-            <Text size="sm">{props.org?.name}</Text>
-          </div>
-          <div className="mx-1">
-            <Text size="sm" bold>
-              Personas inscritas:{" "}
-            </Text>
-            <Text size="sm">{props.totalColEnrolled}</Text>
-          </div>
-          <div className="mx-auto">
-            <Text size="sm" bold>
-              Costo final:{" "}
-            </Text>
-            <Text size="sm">{formatQuantity(props.costFinal)}</Text>
-          </div>
-          <div className="TrainingListItem-options">
-            <Clickable className="mx-2" onClick={handleRedirect}>
-              <Tooltip tooltip="Editar?" placement="right">
-                <Icon name="faEdit" size="md2" />
-              </Tooltip>
-            </Clickable>
-            {listContext.lastFilters?.status !== 0 && (
-              <Clickable
-                className="mx-2"
-                onClick={listContext.handleDelete(props)}
-              >
-                <Tooltip tooltip="Eliminar?" placement="right">
-                  <Icon name="faTrash" size="md2" />
-                </Tooltip>
-              </Clickable>
-            )}
+          <div className="TrainingListItem-options d-none d-md-block">
+            {renderOptions()}
           </div>
         </div>
         <div className="pb-2">
@@ -103,6 +80,9 @@ const TrainingListItem = (props) => {
             </Badge>
           )}
           <TrainingListItemSchedule data={props.sessions} />
+          <div className="TrainingListItem-options d-block d-md-none w-100">
+            {renderOptions()}
+          </div>
         </div>
       </div>
     </div>

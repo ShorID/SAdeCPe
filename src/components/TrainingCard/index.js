@@ -8,16 +8,18 @@ import {
   CardText,
   CardTitle,
 } from "reactstrap";
-import CustomButton from "../CustomButton";
 import Text from "../Text";
-import fetcher from "@/services/fetcher";
 
 const TrainingCard = (props) => {
   return (
     <Card>
       <img
         alt={props.name}
-        src={props.nextSession?.center?.photo? fetcher.defaults.baseURL + props.nextSession.center.photo : "https://picsum.photos/300/200"}
+        src={
+          props.nextSession?.center?.photo
+            ? process.env.NEXT_PUBLIC_API_URL + props.nextSession.center.photo
+            : "https://picsum.photos/300/200"
+        }
         loading="lazy"
       />
       <CardBody>

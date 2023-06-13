@@ -2,8 +2,6 @@ import Layout from "@/components/Layout";
 import CustomCarousel from "@/components/CustomCarousel";
 import TitleBlock from "@/components/TitleBlock";
 import { Col, Container, Row } from "reactstrap";
-import trainingData from "@/utils/training-data.json";
-import organizationData from "@/utils/organization-data.json";
 import TrainingCard from "@/components/TrainingCard";
 import TextSection from "@/components/TextSection";
 import OrganizationCard from "@/components/OrganizationCard";
@@ -83,7 +81,7 @@ Home.getInitialProps = async () => {
       },
     }).then(({ data }) =>
       data.data.map((item) => ({
-        src: fetcher.defaults.baseURL + item.photo,
+        src: process.env.NEXT_PUBLIC_API_URL + item.photo,
         altText: item.name,
         caption: item.address,
         key: item.id,

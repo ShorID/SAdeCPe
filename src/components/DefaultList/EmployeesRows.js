@@ -28,6 +28,37 @@ const EmployeesRows = (props) => {
     listContext.handleSelect(isChecked, props);
   };
 
+  const renderOptions = () => (
+    <>
+      {!props.withoutEdit && (
+        <Clickable className="mx-2" onClick={handleEdit}>
+          <Tooltip tooltip="Editar?" placement="right">
+            <Icon name="faEdit" size="md2" />
+          </Tooltip>
+        </Clickable>
+      )}
+      {!props.withoutDelete && listContext.lastFilters?.status !== 0 && (
+        <Clickable className="mx-2" onClick={listContext.handleDelete(props)}>
+          <Tooltip tooltip="Eliminar?" placement="right">
+            <Icon name="faTrash" size="md2" />
+          </Tooltip>
+        </Clickable>
+      )}
+      {!props.withoutPrint && (
+        <Clickable className="mx-2" onClick={handlePrint}>
+          <Tooltip tooltip="Imprimir?" placement="right">
+            <Icon name="faPrint" size="md2" />
+          </Tooltip>
+        </Clickable>
+      )}
+      <Clickable onClick={handleChart} className="mx-2">
+        <Tooltip tooltip="Ver datos" placement="right">
+          <Icon name={showChart ? "faEyeSlash" : "faEye"} />
+        </Tooltip>
+      </Clickable>
+    </>
+  );
+
   return (
     <div className={classNames("TrainingListItem", props.className)}>
       {!props.withoutCheck && (
@@ -47,39 +78,11 @@ const EmployeesRows = (props) => {
           <div className="TrainingListItem-title">
             <Text bold>{`${props.name} ${props.lastName}`}</Text>
           </div>
-          <div className="TrainingListItem-options">
-            {!props.withoutEdit && (
-              <Clickable className="mx-2" onClick={handleEdit}>
-                <Tooltip tooltip="Editar?" placement="right">
-                  <Icon name="faEdit" size="md2" />
-                </Tooltip>
-              </Clickable>
-            )}
-            {!props.withoutDelete && listContext.lastFilters?.status !== 0 && (
-              <Clickable
-                className="mx-2"
-                onClick={listContext.handleDelete(props)}
-              >
-                <Tooltip tooltip="Eliminar?" placement="right">
-                  <Icon name="faTrash" size="md2" />
-                </Tooltip>
-              </Clickable>
-            )}
-            {!props.withoutPrint && (
-              <Clickable className="mx-2" onClick={handlePrint}>
-                <Tooltip tooltip="Imprimir?" placement="right">
-                  <Icon name="faPrint" size="md2" />
-                </Tooltip>
-              </Clickable>
-            )}
-            <Clickable onClick={handleChart} className="mx-2">
-              <Tooltip tooltip="Ver datos" placement="right">
-                <Icon name={showChart ? "faEyeSlash" : "faEye"} />
-              </Tooltip>
-            </Clickable>
+          <div className="TrainingListItem-options d-none d-md-block">
+            {renderOptions()}
           </div>
         </div>
-        <div className="d-flex mb-2">
+        <div className="d-flex mb-2 flex-wrap">
           <div className="mx-2">
             <Text size="sm">Cargo: </Text>
             {props.position && (
@@ -88,7 +91,6 @@ const EmployeesRows = (props) => {
               </Badge>
             )}
           </div>
-          |
           <div className="mx-2">
             <Text size="sm">Departamento: </Text>
             {props.position?.departament && (
@@ -103,6 +105,9 @@ const EmployeesRows = (props) => {
             <EmployeeTags id={props.id} />
           </div>
         )}
+        <div className="TrainingListItem-options d-block d-md-none w-100">
+          {renderOptions()}
+        </div>
       </div>
     </div>
   );

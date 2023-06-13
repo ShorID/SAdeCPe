@@ -4,7 +4,6 @@ import Text from "../Text";
 import { Col, Row, Table } from "reactstrap";
 import EmployeeTags from "../Charts/EmployeeTags";
 import ChartContext from "@/contexts/chart-context";
-import fetcher from "@/services/fetcher";
 import EmployeeReport from "../FormsToExport/EmployeeReport";
 import { toDataUrl } from "@/services/common";
 
@@ -17,7 +16,7 @@ const EmployeeStatusSheet = ({ data }) => {
 
   React.useEffect(() => {
     if (ref.current) {
-      setProfileImg(toDataUrl(fetcher.defaults.baseURL + data.photo));
+      setProfileImg(toDataUrl(process.env.NEXT_PUBLIC_API_URL + data.photo));
     }
   }, [ref.current]);
 
@@ -34,7 +33,7 @@ const EmployeeStatusSheet = ({ data }) => {
       <Row>
         <Col sm="12" md="3">
           <img
-            src={fetcher.defaults.baseURL + data.photo}
+            src={process.env.NEXT_PUBLIC_API_URL + data.photo}
             alt={data.name}
             className="mx-auto"
             ref={ref}

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { reportStyles } from "./formsConst";
 import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import ReportDownloader from "./ReportDownloader";
-import fetcher from "@/services/fetcher";
 import EmployeeTags from "../Charts/EmployeeTags";
 
 const reportId = "employeeReport";
@@ -37,7 +36,7 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
           >
             <View style={{ width: "40%", maxHeight: 300, marginBottom: 20 }}>
               <Image
-                src={"/mr increible perturbado (2).png" || fetcher.defaults.baseURL + data.photo}
+                src={"/mr increible perturbado (2).png" || process.env.NEXT_PUBLIC_API_URL + data.photo}
                 alt={data.name}
                 className="mx-auto"
                 style={{

@@ -18,15 +18,16 @@ const ScheduleBadge = (props) => {
         id={uniqId}
         onMouseEnter={handleShow}
         onMouseLeave={handleShow}
-        className={classNames("ScheduleBadge", props.completed && "completed")}
+        className={classNames("ScheduleBadge", props.statusSession.replace(/\s+/g, '-'))}
       ></span>
       {spanRef.current && (
         <Popover target={uniqId} placement="bottom" toggle={handleShow} isOpen={show}>
           <PopoverHeader>
-            <Text>{props.title}</Text>
+            <Text>{props.statusSession}</Text>
           </PopoverHeader>
           <PopoverBody>
-            <Text>{props.description}</Text>
+            <Text TagName="div">Fechas: {props.dates}</Text>
+            <Text TagName="div">Inscritos: {Array.isArray(props.assistances) && props.assistances.length}</Text>
           </PopoverBody>
         </Popover>
       )}

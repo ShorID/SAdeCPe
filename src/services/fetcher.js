@@ -1,9 +1,10 @@
+import sessionStorageManagment from "./sessionstorageManagment";
+
 const { default: axios } = require("axios");
 
 const fetcher = axios;
 
-fetcher.defaults.baseURL =
-  "https://0029-2803-2d60-1102-1dc2-841e-69b7-a4e-8e17.ngrok-free.app/";
+fetcher.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 fetcher.defaults.headers = {
   "ngrok-skip-browser-warning": true,
@@ -12,7 +13,7 @@ fetcher.defaults.headers = {
 axios.interceptors.request.use(
   function (config) {
     if (!config.headers.Authorization && typeof window !== "undefined") {
-      config.headers.Authorization = `Bearer ${window.sessionStorage.getItem(
+      config.headers.Authorization = `Bearer ${sessionStorageManagment.read(
         "access_token"
       )}`;
     }
@@ -31,6 +32,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     if (error.response?.status === 401 && typeof window !== "undefined") {
+      sessionStorageManagment.write("path", window.location.href);
       window.location.pathname = "/login";
     }
     return Promise.reject(error);

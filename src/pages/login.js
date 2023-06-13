@@ -6,11 +6,15 @@ import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import fetcher from "@/services/fetcher";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/auth-context";
+import sessionStorageManagment from "@/services/sessionstorageManagment";
 
 const Login = (props) => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { login } = useContext(AuthContext);
 
   const handleChange = ({ target: { value, name } }) =>
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -29,9 +33,8 @@ const Login = (props) => {
           fetcher.defaults.headers[
             "Authorization"
           ] = `Bearer ${data.access_token}`;
-          if (typeof window !== "undefined")
-            sessionStorage.setItem("access_token", data.access_token);
-          router.push("/admin");
+          login(true);
+          sessionStorageManagment.write("access_token", data.access_token);
         }
       })
       .catch(() => setLoading(false));

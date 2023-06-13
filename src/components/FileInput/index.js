@@ -22,7 +22,7 @@ const FileInput = (props) => {
   const inputRef = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
   const [value, setValue] = React.useState(
-    props.value ? `${fetcher.defaults.baseURL}${props.value}` : null
+    props.value ? `${process.env.NEXT_PUBLIC_API_URL}${props.value}` : null
   );
 
   const handleChange = async (inputEvent) => {
@@ -33,7 +33,7 @@ const FileInput = (props) => {
     if (fileUploaded) {
       if (props.onChange)
         props.onChange({ target: { value: fileUploaded, name: props.name } });
-      setValue(`${fetcher.defaults.baseURL}${fileUploaded}`);
+      setValue(`${process.env.NEXT_PUBLIC_API_URL}${fileUploaded}`);
     }
   };
 

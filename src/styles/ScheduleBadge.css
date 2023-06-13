@@ -7,7 +7,11 @@
   margin-right: 0.5rem;
   cursor: pointer;
 }
-.ScheduleBadge.completed {
-  border: 1px solid var(--selection-color);
-  background-color: var(--selection-color);
+.ScheduleBadge.En-curso {
+  border: 1px solid var(--base-color);
+  background-color: var(--base-color);
+}
+.ScheduleBadge.Finalizada {
+  border: 1px solid var(--main-color);
+  background-color: var(--main-color);
 }

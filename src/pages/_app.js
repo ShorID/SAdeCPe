@@ -18,6 +18,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { ChartProvider } from "@/contexts/chart-context";
+import AuthProvider from "@/contexts/auth-context";
 
 export default function App({ Component, pageProps }) {
   React.useEffect(() => {
@@ -28,10 +29,12 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ErrorBoundary>
-      <ChartProvider>
-        <Component {...pageProps} windowDimensions={windowDimensions} />
-        <ToastContainer position="bottom-right" />
-      </ChartProvider>
+      <AuthProvider>
+        <ChartProvider>
+          <Component {...pageProps} windowDimensions={windowDimensions} />
+          <ToastContainer position="bottom-right" />
+        </ChartProvider>
+      </AuthProvider>
     </ErrorBoundary>
   );
 }
