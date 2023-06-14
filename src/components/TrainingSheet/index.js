@@ -25,7 +25,7 @@ const TrainingSheet = (props) => {
       totalSession: 0,
       creationDate: getFormatedDate(),
       active: true,
-      comment: ""
+      comment: "",
     }
   );
   const [states, setStates] = React.useState([]);
@@ -37,6 +37,7 @@ const TrainingSheet = (props) => {
   const [addModal, setAddModal] = React.useState(false);
   const [centers, setCenters] = React.useState([]);
   const [trainers, setTrainers] = React.useState([]);
+  const [showInactives, setShowInactives] = React.useState(false);
   const [validated, setValidated] = React.useState([]);
 
   const router = useRouter();
@@ -183,6 +184,10 @@ const TrainingSheet = (props) => {
     );
   };
 
+  const handleInactives = ({ target: { checked } }) => {
+    setShowInactives(checked);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -263,12 +268,13 @@ const TrainingSheet = (props) => {
             description: null,
             creationDate: item.creationDate,
             active: item.active,
-            comment: item.comment
+            comment: item.comment,
           })
         ),
         trainerId: item.trainerId,
         ...(props.isCreating ? {} : { capId: props.data.id }),
         active: item.active,
+        comment: item.comment,
       })),
       totalSession: totalSession.active,
     };
@@ -479,19 +485,32 @@ const TrainingSheet = (props) => {
       <Text TagName="h6" className="Form-title">
         Añade las sesiones que tendra tu capacitacion!
       </Text>
-      {sessions.map((item, key) => (
-        <TrainingSession
-          key={key}
-          title={`Sesion ${key + 1}`}
-          data={item}
-          onChange={handleChangeSession(key)}
-          costUnit={formData.costUnit}
-          centers={centers}
-          trainers={trainers}
-          refreshCenters={getCenters}
-          refreshTrainers={getTrainers}
-        />
-      ))}
+      <CustomInput
+        label="Mostrar inactivos"
+        className="font-sm-size"
+        type="switch"
+        role="switch"
+        name="status"
+        onChange={handleInactives}
+        size="sm"
+      />
+      {sessions.map((item, key) => {
+        if (showInactives && item.active) return <></>;
+        if (!showInactives && !item.active) return <></>;
+        return (
+          <TrainingSession
+            key={key + "-" + item.id}
+            title={`Sesion ${key + 1}`}
+            data={item}
+            onChange={handleChangeSession(key)}
+            costUnit={formData.costUnit}
+            centers={centers}
+            trainers={trainers}
+            refreshCenters={getCenters}
+            refreshTrainers={getTrainers}
+          />
+        );
+      })}
       <Button
         color="warning"
         className="w-100 my-2"

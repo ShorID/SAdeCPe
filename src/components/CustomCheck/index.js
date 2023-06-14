@@ -11,7 +11,7 @@ import Clickable from "../Clickable";
 import Tooltip from "../Tooltip";
 
 const CustomCheck = (props) => {
-  const { id, label, variant = "form" } = props;
+  const { id, label, variant = "form", noDepency = true } = props;
   const [isChecked, setIsChecked] = React.useState(props.checked);
 
   React.useEffect(() => {
@@ -20,7 +20,7 @@ const CustomCheck = (props) => {
 
   const handleCheck = () => {
     if (props.onChange) props.onChange(!isChecked);
-    setIsChecked((prev) => !prev);
+    if (noDepency) setIsChecked((prev) => !prev);
   };
 
   const inputLabel =
@@ -45,6 +45,7 @@ const CustomCheck = (props) => {
         placeholder={props.placeholder}
         type="checkbox"
         checked={isChecked}
+        onChange={() => {}}
         className="d-none"
         disabled={props.disabled}
       />
@@ -79,6 +80,7 @@ CustomCheck.propTypes = {
   variant: PropTypes.oneOf(["form", "group"]),
   checked: PropTypes.bool,
   tooltip: PropTypes.bool,
+  noDepency: PropTypes.bool,
   onChange: PropTypes.func,
 };
 

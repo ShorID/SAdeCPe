@@ -11,6 +11,8 @@ import Clickable from "../Clickable";
 import Icon from "../Icon";
 import ReactDatePicker from "react-datepicker";
 import { formatQuantity } from "@/services/common";
+import DeleteModal from "../DeleteModal";
+import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 
 const weekDays = ["DO", "LU", "MA", "MI", "JU", "VI", "SA"];
 
@@ -46,6 +48,8 @@ const TrainingSession = (props) => {
         }
       : {}),
   });
+  const [show, setShow] = React.useState(false);
+  const [showInactives, setShowInactives] = React.useState(false);
 
   const [isMinimized, setIsMinimized] = React.useState(true);
 
@@ -127,8 +131,23 @@ const TrainingSession = (props) => {
     }));
   }, [props.costUnit, props.data.collaborators]);
 
-  const handleDeleteSession = () =>
-    setFormData((prev) => ({ ...prev, active: !prev.active }));
+  const toggleDeleteModal = () => setShow((prev) => !prev);
+
+  const handleDeleteSession = () => {
+    setFormData((prev) => {
+      if (!prev.active) {
+        return { ...prev, active: true, comment: "" };
+      } else {
+        toggleDeleteModal();
+        return prev;
+      }
+    });
+  };
+
+  const onDelete = (comment) => {
+    setFormData((prev) => ({ ...prev, active: false, comment }));
+    toggleDeleteModal();
+  };
 
   const handleChangeDate = (value) =>
     handleChange({ target: { value, name: "dates" } });
@@ -138,14 +157,25 @@ const TrainingSession = (props) => {
 
   const handleMinimize = () => setIsMinimized((prev) => !prev);
 
+  const handleInactives = ({ target: { checked } }) => {
+    setShowInactives(checked);
+  };
+
   const handleCollaboratorChange =
     (idx) =>
-    ({ name, value }) => {
+    (newData, isObject = false) => {
       if (props.onChange)
         props.onChange({
           collaborators: Array.isArray(props.data.collaborators)
             ? props.data.collaborators.map((item, key) =>
-                key === idx ? { ...item, [name]: value } : item
+                key === idx
+                  ? {
+                      ...item,
+                      ...(isObject
+                        ? newData
+                        : { [newData.name]: newData.value }),
+                    }
+                  : item
               )
             : [],
         });
@@ -192,7 +222,7 @@ const TrainingSession = (props) => {
               value={formatQuantity(formData.initialCost) + "$"}
               disabled
             />
-            <CustomInput label="De: " value={formData.from}>
+            {formData.from && <CustomInput label="De: " value={formData.from}>
               <ReactDatePicker
                 selected={formData.from}
                 onChange={handleChangeTime("from")}
@@ -204,8 +234,8 @@ const TrainingSession = (props) => {
                 className="form-control"
                 required
               />
-            </CustomInput>
-            <CustomInput label="Hasta: " value={formData.to}>
+            </CustomInput>}
+            {formData.to && <CustomInput label="Hasta: " value={formData.to}>
               <ReactDatePicker
                 selected={formData.to}
                 onChange={handleChangeTime("to")}
@@ -217,7 +247,7 @@ const TrainingSession = (props) => {
                 className="form-control"
                 required
               />
-            </CustomInput>
+            </CustomInput>}
             <CustomInput
               label="Centro de capacitacion"
               type="select"
@@ -259,34 +289,47 @@ const TrainingSession = (props) => {
           !!props.data.collaborators.length && (
             <Collapse
               className="TrainingSession-members"
-              contentClass="TrainingSession-membersContainer"
               header={
                 <Text className="w-100" TagName="div">
                   Participantes
                 </Text>
               }
             >
-              <Table className="mb-0">
+              <CustomInput
+                label="Mostrar inactivos"
+                className="font-sm-size"
+                type="switch"
+                role="switch"
+                name="status"
+                onChange={handleInactives}
+                size="sm"
+              />
+              <Table bordered className="mb-0">
                 <thead>
                   <tr>
                     <th className="w-100">Nombre</th>
-                    <th className="text-center">Activo</th>
-                    <th className="text-center">Calificacion?</th>
+                    <th className="text-center px-3">Activo</th>
+                    <th className="text-start px-3">Calificacion?</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {props.data.collaborators.map((item, key) => (
-                    <TrainingSessionMember
-                      key={key + "-collaborator"}
-                      {...item}
-                      onChange={handleCollaboratorChange(key)}
-                    />
-                  ))}
+                  {props.data.collaborators.map((item, key) => {
+                    if (showInactives && item.active) return <></>;
+                    if (!showInactives && !item.active) return <></>;
+                    return (
+                      <TrainingSessionMember
+                        key={key + "-collaborator"}
+                        {...item}
+                        onChange={handleCollaboratorChange(key)}
+                      />
+                    );
+                  })}
                 </tbody>
               </Table>
             </Collapse>
           )}
       </CardBody>
+      {show && <DeleteModal onCancel={toggleDeleteModal} onDelete={onDelete} />}
     </Card>
   );
 };

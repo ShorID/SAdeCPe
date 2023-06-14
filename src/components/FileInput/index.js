@@ -39,7 +39,13 @@ const FileInput = (props) => {
 
   return (
     <>
-      <CustomInput label="Foto de Perfil" type="file" accept="image/*" onChange={handleChange} />
+      <CustomInput
+        disabled={props.disabled}
+        label={props.label || "Foto de Perfil"}
+        type="file"
+        accept="image/*"
+        onChange={handleChange}
+      />
       {loading && (
         <Spinner color="primary" size="sm" className="mx-1">
           Loading...
