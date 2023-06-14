@@ -271,7 +271,7 @@ const TrainingSession = (props) => {
                   <tr>
                     <th className="w-100">Nombre</th>
                     <th className="text-center">Activo</th>
-                    <th className="text-center">Archivos</th>
+                    <th className="text-center">Calificacion?</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -25,6 +25,7 @@ const TrainingSheet = (props) => {
       totalSession: 0,
       creationDate: getFormatedDate(),
       active: true,
+      comment: ""
     }
   );
   const [states, setStates] = React.useState([]);
@@ -145,7 +146,7 @@ const TrainingSheet = (props) => {
   };
 
   const handleAddSession = () => {
-    setSessions((prev) => [...prev, { active: true }]);
+    setSessions((prev) => [...prev, { active: true, comment: "" }]);
   };
 
   const addModalToggle = () => setAddModal((prev) => !prev);
@@ -262,6 +263,7 @@ const TrainingSheet = (props) => {
             description: null,
             creationDate: item.creationDate,
             active: item.active,
+            comment: item.comment
           })
         ),
         trainerId: item.trainerId,

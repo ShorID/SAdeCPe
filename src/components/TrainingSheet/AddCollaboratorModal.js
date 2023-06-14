@@ -64,6 +64,7 @@ const AddCollaboratorModal = (props) => {
                   )
                   .map((item) => {
                     const newData = {
+                      comment: "",
                       ...item,
                       collaboratorId: item.id,
                     };
@@ -73,6 +74,7 @@ const AddCollaboratorModal = (props) => {
               ]
             : props.collaborators.map((item) => {
                 const newData = {
+                  comment: "",
                   ...item,
                   collaboratorId: item.id,
                 };

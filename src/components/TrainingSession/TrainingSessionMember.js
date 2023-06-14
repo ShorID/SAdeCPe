@@ -6,6 +6,7 @@ import Text from "../Text";
 import classNames from "classnames";
 import CustomCheck from "../CustomCheck";
 import { fileUploader } from "../FileInput";
+import CustomInput from "../CustomInput";
 
 const TrainingSessionMember = (props) => {
   const fileInputRef = React.useRef(null);
@@ -28,46 +29,53 @@ const TrainingSessionMember = (props) => {
   };
 
   return (
-    <tr
-      className={classNames(
-        "TrainingSessionMember",
-        !props.active && "TrainingSessionMember-disabled"
-      )}
-    >
-      <td scope="row">{`${props.name} ${props.lastName}`}</td>
-      <td className="text-center">
-        <CustomCheck
-          checked={props.active}
-          onChange={onDisable}
-          tooltip={false}
-        />
-      </td>
-      <td className="text-center">
-        <input
-          type="file"
-          ref={fileInputRef}
-          style={{ display: "none" }}
-          accept="image/*"
-          onChange={handleFileChange}
-        />
-        <Button
-          size="sm"
-          color="primary"
-          type="button"
-          className="mx-1"
-          disabled={!props.active}
-          onClick={handleFileUpload}
-        >
-          {loading ? (
-            <Spinner size="sm" className="mx-1" />
-          ) : (
-            <Icon
-              name={props.certificate ? "faCloudArrowDown" : "faCloudUpload"}
-            />
-          )}
-        </Button>
-      </td>
-    </tr>
+    <>
+      <tr
+        className={classNames(
+          "TrainingSessionMember",
+          !props.active && "TrainingSessionMember-disabled"
+        )}
+      >
+        <td scope="row">{`${props.name} ${props.lastName}`}</td>
+        <td className="text-center">
+          <CustomCheck
+            checked={props.active}
+            onChange={onDisable}
+            tooltip={false}
+          />
+        </td>
+        <td>
+          <CustomInput name="qualification" size="sm" />
+        </td>
+      </tr>
+      <tr>
+      <td colSpan={3}>
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <Button
+            size="sm"
+            color="primary"
+            type="button"
+            className="mx-1"
+            disabled={!props.active}
+            onClick={handleFileUpload}
+          >
+            {loading ? (
+              <Spinner size="sm" className="mx-1" />
+            ) : (
+              <Icon
+                name={props.certificate ? "faCloudArrowDown" : "faCloudUpload"}
+              />
+            )}
+          </Button>
+        </td>
+      </tr>
+    </>
   );
 };
 
