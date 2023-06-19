@@ -4,6 +4,7 @@ import AdminLayout from "@/components/Layout/AdminLayout";
 import TrainingSheet from "@/components/TrainingSheet";
 import fetcher from "@/services/fetcher";
 import moment from "moment";
+import withAuthValidation from "@/hocs/withAuthValidation";
 
 const TrainingSheetPage = (props) => {
   const [data, setData] = React.useState();
@@ -56,4 +57,4 @@ TrainingSheetPage.getInitialProps = async ({ asPath }) => {
   return { id: newId };
 };
 
-export default TrainingSheetPage;
+export default withAuthValidation(TrainingSheetPage);

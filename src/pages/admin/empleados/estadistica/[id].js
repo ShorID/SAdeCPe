@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import fetcher from "@/services/fetcher";
 import EmployeeStatusSheet from "@/components/EmployeeStatusSheet";
+import withAuthValidation from "@/hocs/withAuthValidation";
 
 const EmployeeStatusPage = (props) => {
   const [data, setData] = React.useState();
@@ -39,4 +40,4 @@ EmployeeStatusPage.getInitialProps = async ({ asPath }) => {
   return { id: newId };
 };
 
-export default EmployeeStatusPage;
+export default withAuthValidation(EmployeeStatusPage);

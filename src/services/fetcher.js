@@ -32,6 +32,8 @@ axios.interceptors.response.use(
   },
   function (error) {
     if (error.response?.status === 401 && typeof window !== "undefined") {
+      sessionStorageManagment.write("isAuth", "");
+      sessionStorageManagment.write("access_token", "");
       sessionStorageManagment.write("path", window.location.href);
       window.location.pathname = "/login";
     }

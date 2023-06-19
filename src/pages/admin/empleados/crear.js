@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import EmployeeSheet from "@/components/EmployeeSheet";
+import withAuthValidation from "@/hocs/withAuthValidation";
 
 const CraetingEmployee = (props) => {
   return (
@@ -13,4 +14,4 @@ const CraetingEmployee = (props) => {
 
 CraetingEmployee.propTypes = {};
 
-export default CraetingEmployee;
+export default withAuthValidation(CraetingEmployee);

@@ -2,6 +2,7 @@ import React from "react";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import DefaultList from "@/components/DefaultList";
 import { useRouter } from "next/router";
+import withAuthValidation from "@/hocs/withAuthValidation";
 
 const TrainingPage = (props) => {
   const router = useRouter();
@@ -22,4 +23,4 @@ const TrainingPage = (props) => {
 
 TrainingPage.propTypes = {};
 
-export default TrainingPage;
+export default withAuthValidation(TrainingPage);

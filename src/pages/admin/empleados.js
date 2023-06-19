@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import DefaultList from "@/components/DefaultList";
 import { useRouter } from "next/router";
+import withAuthValidation from "@/hocs/withAuthValidation";
 
 const Employees = (props) => {
   const router = useRouter();
@@ -24,4 +25,4 @@ const Employees = (props) => {
 
 Employees.propTypes = {};
 
-export default Employees;
+export default withAuthValidation(Employees);

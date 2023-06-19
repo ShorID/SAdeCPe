@@ -36,7 +36,7 @@ const Tags = (props) => {
 
   return (
     <CustomInput
-      label="Escoga los temas de esta capacitacion"
+      label="Escoja los temas de esta capacitacion"
       hint="Puedes añadir tu tema tan solo presionando 'Enter'"
     >
       <CreatableSelect

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import DefaultList from "@/components/DefaultList";
+import withAuthValidation from "@/hocs/withAuthValidation";
 
 const ReasonsForExemption = (props) => {
   return (
@@ -18,4 +19,4 @@ const ReasonsForExemption = (props) => {
 
 ReasonsForExemption.propTypes = {};
 
-export default ReasonsForExemption;
+export default withAuthValidation(ReasonsForExemption);

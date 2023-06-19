@@ -36,7 +36,7 @@ const CustomNav = (props) => {
         )}
         <NavItem>
           <NavLink
-            active={router.basePath === "/mis-datos"}
+            active={router.asPath.includes("/mis-datos")}
             href="/mis-datos"
             className="CustomNav-link"
           >

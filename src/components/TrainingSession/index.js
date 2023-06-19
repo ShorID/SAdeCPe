@@ -40,11 +40,13 @@ const TrainingSession = (props) => {
   } = props;
   const [formData, setFormData] = React.useState({
     title: props.title,
+    from: new Date("01/01/1970"),
+    to: new Date("01/01/1970"),
     ...(props.data
       ? {
           ...props.data,
-          from: props.data.from && new Date("01/01/1970 " + props.data.from),
-          to: props.data.to && new Date("01/01/1970 " + props.data.to),
+          from: props.data.from? new Date("01/01/1970 " + props.data.from) : new Date("01/01/1970"),
+          to: props.data.to? new Date("01/01/1970 " + props.data.to): new Date("01/01/1970"),
         }
       : {}),
   });
@@ -222,32 +224,36 @@ const TrainingSession = (props) => {
               value={formatQuantity(formData.initialCost) + "$"}
               disabled
             />
-            {formData.from && <CustomInput label="De: " value={formData.from}>
-              <ReactDatePicker
-                selected={formData.from}
-                onChange={handleChangeTime("from")}
-                showTimeSelect
-                showTimeSelectOnly
-                // timeIntervals={15}
-                timeCaption="Time"
-                dateFormat="HH:mm"
-                className="form-control"
-                required
-              />
-            </CustomInput>}
-            {formData.to && <CustomInput label="Hasta: " value={formData.to}>
-              <ReactDatePicker
-                selected={formData.to}
-                onChange={handleChangeTime("to")}
-                showTimeSelect
-                showTimeSelectOnly
-                // timeIntervals={15}
-                timeCaption="Time"
-                dateFormat="HH:mm"
-                className="form-control"
-                required
-              />
-            </CustomInput>}
+            {
+              <CustomInput label="De: " value={formData.from}>
+                <ReactDatePicker
+                  selected={formData.from}
+                  onChange={handleChangeTime("from")}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  // timeIntervals={15}
+                  timeCaption="Time"
+                  dateFormat="HH:mm"
+                  className="form-control"
+                  required
+                />
+              </CustomInput>
+            }
+            {
+              <CustomInput label="Hasta: " value={formData.to}>
+                <ReactDatePicker
+                  selected={formData.to}
+                  onChange={handleChangeTime("to")}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  // timeIntervals={15}
+                  timeCaption="Time"
+                  dateFormat="HH:mm"
+                  className="form-control"
+                  required
+                />
+              </CustomInput>
+            }
             <CustomInput
               label="Centro de capacitacion"
               type="select"

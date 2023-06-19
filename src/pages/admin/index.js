@@ -9,6 +9,7 @@ import ChartContext from "@/contexts/chart-context";
 import TrainingByDepartment from "@/components/Charts/TrainingByDepartment";
 import MoreQualifiedCharges from "@/components/Charts/MoreQualifiedCharges";
 import GeneralReport from "@/components/FormsToExport/GeneralReport";
+import withAuthValidation from "@/hocs/withAuthValidation";
 
 const Admin = (props) => {
   const { graphsRes } = React.useContext(ChartContext);
@@ -137,4 +138,4 @@ const Admin = (props) => {
 
 Admin.propTypes = {};
 
-export default Admin;
+export default withAuthValidation(Admin);

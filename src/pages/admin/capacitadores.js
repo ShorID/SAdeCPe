@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import AdminLayout from '@/components/Layout/AdminLayout'
 import DefaultList from '@/components/DefaultList'
+import withAuthValidation from '@/hocs/withAuthValidation'
 
 const Trainers = props => {
   return (
@@ -13,4 +14,4 @@ const Trainers = props => {
 
 Trainers.propTypes = {}
 
-export default Trainers
+export default withAuthValidation(Trainers)

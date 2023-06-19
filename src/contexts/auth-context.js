@@ -7,6 +7,7 @@ export const AuthContext = createContext({
   login: () => {},
   logout: () => {},
   path: "",
+  setIsAuth: () => {},
 });
 
 const AuthProvider = ({ children }) => {
@@ -23,7 +24,7 @@ const AuthProvider = ({ children }) => {
     setIsAuth(isLogin);
     sessionStorageManagment.write("isAuth", isLogin);
     const prevPath = sessionStorageManagment.read("path", "");
-    router.push(isLogin ? prevPath || "/admin" : "/");
+    router.push(isLogin ? prevPath || "/admin" : "/login");
     sessionStorageManagment.write("path", "");
   };
 
@@ -40,6 +41,7 @@ const AuthProvider = ({ children }) => {
         isAuth,
         logout: handleLogout,
         path,
+        setIsAuth
       }}
     >
       {children}

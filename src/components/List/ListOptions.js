@@ -35,15 +35,15 @@ const ListOptions = ({ onCreate }) => {
             <Icon name="faPlus" />
             <Text className="mx-2">Crear nuevo registro</Text>
           </DropdownItem>
+          <DropdownItem divider />
           <DropdownItem>
             <Icon name="faFileExport" />
             <Text className="mx-2">Exportar lista</Text>
           </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>
+          {/* <DropdownItem>
             <Icon name="faBorderAll" />
             <Text className="mx-2">Seleccionar todos</Text>
-          </DropdownItem>
+          </DropdownItem> */}
         </DropdownMenu>
       </UncontrolledDropdown>
     </>

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import TrainingSheet from "@/components/TrainingSheet";
+import withAuthValidation from "@/hocs/withAuthValidation";
 
 const CreateTraining = (props) => {
   return (
@@ -13,4 +14,4 @@ const CreateTraining = (props) => {
 
 CreateTraining.propTypes = {};
 
-export default CreateTraining;
+export default withAuthValidation(CreateTraining);

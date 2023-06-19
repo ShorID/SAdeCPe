@@ -18,11 +18,36 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { ChartProvider } from "@/contexts/chart-context";
-import AuthProvider from "@/contexts/auth-context";
+import AuthProvider, { AuthContext } from "@/contexts/auth-context";
+import { useContext } from "react";
 
 export default function App({ Component, pageProps }) {
+  const listContext = useContext(AuthContext);
   React.useEffect(() => {
     moment.locale("es-mx");
+  }, []);
+
+  React.useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log("prro", {
+        val: event.storageArea === sessionStorage && event.key === "isAuth",
+        value: event.newValue,
+      //   event,
+      });
+      if (
+        event.storageArea === sessionStorage &&
+        event.key === "isAuth" &&
+        !event.newValue
+      ) {
+        listContext.setIsAuth(false);
+      }
+    };
+    if (typeof window !== "undefined")
+      window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const windowDimensions = useWindowDimensions();

@@ -544,7 +544,7 @@ const TrainingSheet = (props) => {
         withoutDelete
         onSaveSelected={handleSelect}
       />
-      <CustomButton text="Guardar" type="submit" />
+      <CustomButton text="Guardar cambios" type="submit" className="d-block ml-auto" />
     </Form>
   );
 };
