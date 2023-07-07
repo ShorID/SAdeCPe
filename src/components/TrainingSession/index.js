@@ -39,16 +39,9 @@ const TrainingSession = (props) => {
     refreshCenters,
   } = props;
   const [formData, setFormData] = React.useState({
-    title: props.title,
-    from: new Date("01/01/1970"),
-    to: new Date("01/01/1970"),
-    ...(props.data
-      ? {
-          ...props.data,
-          from: props.data.from? new Date("01/01/1970 " + props.data.from) : new Date("01/01/1970"),
-          to: props.data.to? new Date("01/01/1970 " + props.data.to): new Date("01/01/1970"),
-        }
-      : {}),
+    ...props.data,
+    from: props.data.from? props.data.from : new Date(),
+    to: props.data.to? props.data.to : new Date(),
   });
   const [show, setShow] = React.useState(false);
   const [showInactives, setShowInactives] = React.useState(false);

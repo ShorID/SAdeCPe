@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import TrainingSheet from "@/components/TrainingSheet";
 import fetcher from "@/services/fetcher";
-import moment from "moment";
 import withAuthValidation from "@/hocs/withAuthValidation";
 
 const TrainingSheetPage = (props) => {
@@ -22,7 +21,11 @@ const TrainingSheetPage = (props) => {
           value: item.tag.id,
         })),
         sessions: data.sessions.map((item) => {
-          const [from, to] = item.schedule.split(" - ");
+          const [startTimeString, endTimeString] = item.schedule.split(" - ");
+          const currentDate = new Date();
+          const from = new Date(currentDate.toDateString() + " " + startTimeString);
+          const to = new Date(currentDate.toDateString() + " " + endTimeString);
+
           return {
             ...item,
             collaborators: item.assistances.map((item) => ({
