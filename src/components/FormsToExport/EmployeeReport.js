@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { reportStyles } from "./formsConst";
+import { base64DocFormatt, reportStyles } from "./formsConst";
 import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import ReportDownloader from "./ReportDownloader";
 import EmployeeTags from "../Charts/EmployeeTags";
+import reportSources from "./reportSources";
 
 const reportId = "employeeReport";
 
 const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
   const renderField = (label, fieldName) => (
-    <Text style={reportStyles.text}>
+    <Text style={{...reportStyles.text, marginBottom: "5px"}}>
       <Text style={{ fontWeight: "bold" }}>{label}</Text>:{" "}
       <Text>{data[fieldName] || fieldName}</Text>
     </Text>
@@ -21,6 +22,7 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
   return (
     <Document>
       <Page style={reportStyles.page} size="LETTER">
+      <Image src={reportSources.background} style={reportStyles.background} />
         <View style={reportStyles.section}>
           <Text style={reportStyles.title}>
             {`Informe general de ${data.name} ${data.lastName}`}

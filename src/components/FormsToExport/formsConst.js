@@ -1,4 +1,5 @@
 import { StyleSheet } from "@react-pdf/renderer";
+import reportSources from "./reportSources";
 
 export const reportsConst = {
   generalReport: {
@@ -15,11 +16,23 @@ export const reportsConst = {
   },
 };
 
+
 export const reportStyles = StyleSheet.create({
   page: {
+    position: "relative",
     fontFamily: "Roboto",
     fontSize: 11,
     padding: "56px 63px",
+  },
+  background: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100vw',
+    height: '100vh',
+    zIndex: -10,
   },
   section: {
     marginBottom: 20,
