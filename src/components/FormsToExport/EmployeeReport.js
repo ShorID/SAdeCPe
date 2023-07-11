@@ -42,6 +42,32 @@ const tableStyles = StyleSheet.create({
   },
 });
 
+const styles = StyleSheet.create({
+  page: {
+    padding: 20,
+  },
+  table: {
+    marginBottom: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    alignItems: 'center',
+    height: 24,
+  },
+  cell: {
+    flex: 1,
+    borderRightWidth: 1,
+    borderRightColor: '#000',
+    padding: 5,
+  },
+  header: {
+    backgroundColor: '#f2f2f2',
+    fontWeight: 'bold',
+  },
+});
+
 const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
   const renderField = (label, fieldName) => (
     <Text style={[reportStyles.text, { marginBottom: "5px" }]}>
@@ -136,6 +162,49 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
                 </View>
               </View>
             ))}
+        </View>
+        <View style={reportStyles.section}>
+          <Text style={reportStyles.subtitle}>
+            Historial de Capacitaciones
+          </Text>
+          <View style={styles.table}>
+            <View style={[styles.row, styles.header]}>
+              <Text style={[styles.cell]}>#</Text>
+              <Text style={[styles.cell, { flex: 2 }]}>Nombre</Text>
+              <Text style={[styles.cell]}>Hr. Pendientes</Text>
+              <Text style={[styles.cell]}>Hr. Fallidas</Text>
+              <Text style={[styles.cell]}>Hr. Completadas</Text>
+            </View>
+            {data.trainingData.capacitations.map((item, key) => (
+              <React.Fragment>
+                <View key={key + "-1"} style={[styles.row, { backgroundColor: "#f5bc7f" }]}>
+                  <Text style={styles.cell}>CAP-{item.idCap}</Text>
+                  <Text style={[styles.cell, { flex: 2 }]}>{item.nameCap}</Text>
+                  <Text style={styles.cell}>{item.totalHourProjectedDescrip}</Text>
+                  <Text style={styles.cell}>{item.totalHourFailedDescrip}</Text>
+                  <Text style={styles.cell}>{item.totalHourSuccessDescrip}</Text>
+                </View>
+                <View key={key + "-2"} style={styles.row}>
+                  <Text style={styles.cell}></Text>
+                  <Text style={styles.cell}>Fecha</Text>
+                  <Text style={styles.cell}>Horario</Text>
+                  <Text style={styles.cell}>Total Hrs</Text>
+                  <Text style={styles.cell}>Sesion</Text>
+                  <Text style={styles.cell}>Estado</Text>
+                </View>
+                {item.sessions.map((session, sKey) => (
+                  <View key={key + "-3-" + sKey} style={styles.row}>
+                    <Text style={styles.cell}></Text>
+                    <Text style={styles.cell}>{session.dates}</Text>
+                    <Text style={styles.cell}>{session.schedule}</Text>
+                    <Text style={styles.cell}>{session.durationDescrip}</Text>
+                    <Text style={styles.cell}>{session.stateSession}</Text>
+                    <Text style={styles.cell}>{session.statusColSession}</Text>
+                  </View>
+                ))}
+              </React.Fragment>
+            ))}
+          </View>
         </View>
       </Page>
     </Document>
