@@ -9,11 +9,11 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/auth-context";
 import sessionStorageManagment from "@/services/sessionstorageManagment";
+import { toast } from "react-toastify";
 
 const Login = (props) => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const { login } = useContext(AuthContext);
 
   const handleChange = ({ target: { value, name } }) =>
@@ -22,22 +22,29 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    fetcher({
-      url: "/auth/login",
-      data: formData,
-      method: "post",
-    })
-      .then(({ data }) => {
-        setLoading(false);
-        if (data.access_token) {
-          fetcher.defaults.headers[
-            "Authorization"
-          ] = `Bearer ${data.access_token}`;
-          login(true);
-          sessionStorageManagment.write("access_token", data.access_token);
-        }
+    toast.promise(
+      fetcher({
+        url: "/auth/login",
+        data: formData,
+        method: "post",
       })
-      .catch(() => setLoading(false));
+        .then(({ data }) => {
+          setLoading(false);
+          if (data.access_token) {
+            fetcher.defaults.headers[
+              "Authorization"
+            ] = `Bearer ${data.access_token}`;
+            login(true);
+            sessionStorageManagment.write("access_token", data.access_token);
+          }
+        })
+        .catch(() => setLoading(false)),
+        {
+          pending: "Iniciando sesion...",
+          success: "Bienvenido!",
+          error: "Ocurrio un error!",
+        }
+    );
   };
 
   return (

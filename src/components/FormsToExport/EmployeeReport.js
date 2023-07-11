@@ -10,7 +10,7 @@ const reportId = "employeeReport";
 
 const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
   const renderField = (label, fieldName) => (
-    <Text style={{...reportStyles.text, marginBottom: "5px"}}>
+    <Text style={{ ...reportStyles.text, marginBottom: "5px" }}>
       <Text style={{ fontWeight: "bold" }}>{label}</Text>:{" "}
       <Text>{data[fieldName] || fieldName}</Text>
     </Text>
@@ -22,7 +22,11 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
   return (
     <Document>
       <Page style={reportStyles.page} size="LETTER">
-      <Image src={reportSources.background} style={reportStyles.background} />
+        <Image
+          src="\Formato de Documentos FETESA.jpg"
+          style={reportStyles.background}
+          fixed
+        />
         <View style={reportStyles.section}>
           <Text style={reportStyles.title}>
             {`Informe general de ${data.name} ${data.lastName}`}
@@ -38,7 +42,7 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
           >
             <View style={{ width: "40%", maxHeight: 300, marginBottom: 20 }}>
               <Image
-                src={"/mr increible perturbado (2).png" || process.env.NEXT_PUBLIC_API_URL + data.photo}
+                src={process.env.NEXT_PUBLIC_API_URL + data.photo}
                 alt={data.name}
                 className="mx-auto"
                 style={{

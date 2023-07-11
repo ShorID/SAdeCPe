@@ -13,7 +13,7 @@ import ReportDownloader from "./ReportDownloader";
 
 const reportId = "generalReport";
 
-export const GeneralReportDoc = ({graphsData, graphsRes}) => {
+export const GeneralReportDoc = ({ graphsData, graphsRes }) => {
   const moreQualifiedCharges =
     graphsData["moreQualifiedCharges"]?.current?.toBase64Image();
   const comparisonLastAndCurrentYear =
@@ -24,6 +24,11 @@ export const GeneralReportDoc = ({graphsData, graphsRes}) => {
   return (
     <Document>
       <Page style={reportStyles.page} size="LETTER">
+        <Image
+          src="\Formato de Documentos FETESA.jpg"
+          style={reportStyles.background}
+          fixed
+        />
         <View style={reportStyles.section}>
           <Text style={reportStyles.title}>
             Informe General de Capacitaciones

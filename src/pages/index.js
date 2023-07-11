@@ -9,19 +9,23 @@ import fetcher from "@/services/fetcher";
 import { sortbyOptions } from "@/components/SortBy";
 
 function Home({ orgs, trainingList, centers }) {
-
   return (
     <Layout noContainer>
       <CustomCarousel data={centers || []} />
       <Container className="my-4 p-0">
         <TitleBlock title="Capacitaciones Activas" />
         <Row>
-          {Array.isArray(trainingList?.data) &&
+          {Array.isArray(trainingList?.data) && trainingList?.data.length ? (
             trainingList.data.map((item, index) => (
               <Col md="3" className="mb-3" key={index}>
                 <TrainingCard {...item} />
               </Col>
-            ))}
+            ))
+          ) : (
+            <Col md="12" className="mb-3 text-center">
+              No hay capacitaciones activas
+            </Col>
+          )}
         </Row>
       </Container>
       <TextSection title="Porque es importante la Capacitacion?">
@@ -40,12 +44,17 @@ function Home({ orgs, trainingList, centers }) {
       <Container className="my-4 p-0">
         <TitleBlock title="Organizaciones" />
         <Row>
-          {Array.isArray(orgs?.data) &&
+          {Array.isArray(orgs?.data) && orgs.data.length ? (
             orgs.data.map((item, index) => (
               <Col md="3" className="mb-3" key={index}>
                 <OrganizationCard {...item} />
               </Col>
-            ))}
+            ))
+          ) : (
+            <Col md="12" className="mb-3 text-center">
+              No hay organizaciones disponibles
+            </Col>
+          )}
         </Row>
       </Container>
     </Layout>

@@ -10,7 +10,7 @@ function withAuthValidation(WrappedComponent) {
 
     React.useEffect(() => {
       if (!listContext.isAuth) {
-        router.push("/login");
+        // router.push("/login");
       }
     }, [listContext.isAuth]);
 
