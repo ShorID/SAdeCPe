@@ -17,6 +17,7 @@ const CustomPagination = (props) => {
           <PaginationLink
             onClick={handleChangePage(currentPage)}
             // href={`#${currentPage}`}
+            type="button"
           >
             {currentPage}
           </PaginationLink>
