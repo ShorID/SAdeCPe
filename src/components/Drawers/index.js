@@ -11,7 +11,7 @@ const Drawer = (props) => {
       isOpen={props.isOpen}
       className="Drawer"
     >
-      <Form noValidate className="Drawer-form" {...form}>
+      <Form className="Drawer-form" {...form}>
         <OffcanvasHeader toggle={props.toggle}>{props.header}</OffcanvasHeader>
         <OffcanvasBody>{props.children}</OffcanvasBody>
         {props.footer && (

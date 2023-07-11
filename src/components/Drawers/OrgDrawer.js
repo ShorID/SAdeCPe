@@ -50,7 +50,6 @@ const OrgDrawer = (props) => {
         <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
       }
       form={{
-        validated,
         onSubmit: handleSubmit,
       }}
     >
@@ -70,7 +69,7 @@ const OrgDrawer = (props) => {
         value={formData["description"]}
       />
       <CustomInput
-        label="Direcion"
+        label="Direccion"
         type="textarea"
         onChange={handleChange}
         name="address"

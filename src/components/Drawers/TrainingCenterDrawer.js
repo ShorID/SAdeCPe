@@ -17,7 +17,7 @@ const TrainingCenterDrawer = (props) => {
       creationDate: getFormatedDate(),
     }
   );
-  const [validated, setValidated] = React.useState([]);
+  const [validated, setValidated] = React.useState(false);
 
   const handleChange = ({ target: { value, name } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -54,7 +54,6 @@ const TrainingCenterDrawer = (props) => {
         <CustomButton text="Enviar" className="d-block ml-auto" type="submit" />
       }
       form={{
-        validated,
         onSubmit: handleSubmit,
       }}
     >
@@ -66,7 +65,7 @@ const TrainingCenterDrawer = (props) => {
         value={formData["name"]}
       />
       <CustomInput
-        label="Direcion"
+        label="Direccion"
         type="textarea"
         onChange={handleChange}
         name="address"

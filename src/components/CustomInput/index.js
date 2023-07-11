@@ -15,6 +15,26 @@ import Text from "../Text";
 import Icon from "../Icon";
 import Tooltip from "../Tooltip";
 
+const getMaxLetters = (name) => {
+  switch (name) {
+    case "name":
+      return 50;
+    case "lastName":
+      return 100;
+    case "description":
+    case "comment":
+      return 200;
+    case "color":
+      return 20;
+    case "identification":
+      return 16;
+    case "address":
+      return 200;
+    default:
+      return null;
+  }
+}
+
 const CustomInput = (props) => {
   const {
     id,
@@ -33,16 +53,16 @@ const CustomInput = (props) => {
     required,
     Drawer,
     accept,
-    refreshFunc = () => {},
+    refreshFunc = () => { },
   } = props;
   const [isOpen, setIsOpen] = React.useState(false);
-
+  const maxLength = getMaxLetters(name);
   const openCreateModal = () => setIsOpen((prev) => !prev);
 
   const input = (
     <Input
       placeholder={props.placeholder}
-      type={type}      
+      type={type}
       role={role}
       className={classNames(
         "CustomInput",
@@ -57,6 +77,7 @@ const CustomInput = (props) => {
       name={name}
       required={required}
       accept={accept}
+      maxLength={maxLength}
     >
       {props.type === "select" ? props.children : undefined}
     </Input>
@@ -101,6 +122,7 @@ const CustomInput = (props) => {
         )}
         {input}
         {props.type !== "select" && props.children}
+        {maxLength && typeof value === "string" && <FormText style={{ position: "absolute", right: "16px" }} ><span style={(maxLength <= (value || "").length ? { color: "red" } : {})}>{`${(value || "").length}/${maxLength}`}</span></FormText>}
         {feedback && <FormFeedback valid>{feedback}</FormFeedback>}
         {hint && <FormText>{hint}</FormText>}
       </FormGroup>

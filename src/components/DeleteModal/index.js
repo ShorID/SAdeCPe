@@ -19,7 +19,6 @@ const DeleteModal = (props) => {
         Antes de eliminar este registro, deseas agregar una razon?
         <CustomInput
           type="textarea"
-          hint={`Maximo 200 caracteres (${value.length}/200)`}
           onChange={handleChange}
           name="comment"
           value={value}
