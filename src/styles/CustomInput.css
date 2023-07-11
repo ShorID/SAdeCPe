@@ -1,5 +1,6 @@
 .CustomInput{
     border-radius: 3px !important;
+    position: relative;
 }
 .CustomInput-createBtn{
     margin: 0 .5rem;

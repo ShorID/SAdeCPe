@@ -1,23 +1,57 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { base64DocFormatt, reportStyles } from "./formsConst";
-import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
+import { reportStyles } from "./formsConst";
+import { Document, Image, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import ReportDownloader from "./ReportDownloader";
 import EmployeeTags from "../Charts/EmployeeTags";
-import reportSources from "./reportSources";
 
 const reportId = "employeeReport";
 
+const tableStyles = StyleSheet.create({
+  table: {
+    display: "table",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderLeft: "unset",
+    borderTop: "unset",
+    borderRight: "unset",
+  },
+  tableRow: {
+    margin: "auto",
+    flexDirection: "row",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "black",
+    borderLeft: "unset",
+    borderTop: "unset",
+    borderBottom: "unset"
+  },
+  tableCol: {
+    width: "50%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    // borderLeftWidth: 0,
+    // borderTopWidth: 0,
+    borderRight: "unset",
+    borderBottom: "unset"
+  },
+  tableCell: {
+    margin: "auto",
+    marginTop: 5,
+    fontSize: 10,
+  },
+});
+
 const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
   const renderField = (label, fieldName) => (
-    <Text style={{ ...reportStyles.text, marginBottom: "5px" }}>
+    <Text style={[reportStyles.text, { marginBottom: "5px" }]}>
       <Text style={{ fontWeight: "bold" }}>{label}</Text>:{" "}
       <Text>{data[fieldName] || fieldName}</Text>
     </Text>
   );
-
+  const id = EmployeeTags.graphId + data.id;
   const radarChart =
-    graphsData[EmployeeTags.graphId + data.id]?.current?.toBase64Image();
+    graphsData[id]?.current?.toBase64Image();
 
   return (
     <Document>
@@ -80,6 +114,28 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
             representa un tema específico, y el tamaño de la sección refleja la
             frecuencia de capacitación en ese tema.
           </Text>
+        </View>
+      </Page>
+      <Page style={reportStyles.page} size="LETTER">
+        <Image
+          src="\Formato de Documentos FETESA.jpg"
+          style={reportStyles.background}
+          fixed
+        />
+        <View style={reportStyles.section}>
+          {Array.isArray(graphsRes[id]?.labels) && Array.isArray(graphsRes[id]?.points) &&
+            graphsRes[id].labels.map((item, key) => (
+              <View style={tableStyles.tableRow} key={key}>
+                <View style={tableStyles.tableCol}>
+                  <Text style={tableStyles.tableCell}>{item}</Text>
+                </View>
+                <View style={tableStyles.tableCol}>
+                  <Text style={tableStyles.tableCell}>
+                    {graphsRes[id].points[key]}
+                  </Text>
+                </View>
+              </View>
+            ))}
         </View>
       </Page>
     </Document>

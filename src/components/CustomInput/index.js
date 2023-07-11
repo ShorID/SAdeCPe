@@ -114,7 +114,7 @@ const CustomInput = (props) => {
         {props.type !== "select" && props.children}
       </InputGroup>
     ) : (
-      <FormGroup switch={type === "switch"} className={props.wrapperClass}>
+      <FormGroup switch={type === "switch"} className={props.wrapperClass} style={{ position: "relative" }}>
         {label && (
           <Label for={id} className={props.labelClass}>
             {labelText}
@@ -122,7 +122,7 @@ const CustomInput = (props) => {
         )}
         {input}
         {props.type !== "select" && props.children}
-        {maxLength && typeof value === "string" && <FormText style={{ position: "absolute", right: "16px" }} ><span style={(maxLength <= (value || "").length ? { color: "red" } : {})}>{`${(value || "").length}/${maxLength}`}</span></FormText>}
+        {maxLength && typeof value === "string" && <FormText style={{ position: "absolute", right: "0" }} ><span style={(maxLength <= (value || "").length ? { color: "red" } : {})}>{`${(value || "").length}/${maxLength}`}</span></FormText>}
         {feedback && <FormFeedback valid>{feedback}</FormFeedback>}
         {hint && <FormText>{hint}</FormText>}
       </FormGroup>

@@ -118,6 +118,7 @@ const EmployeeSheet = (props) => {
             name="refNumber"
             value={formData["refNumber"]}
             className="w-100"
+            type="number"
             required
           />
         </div>
