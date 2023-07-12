@@ -61,3 +61,39 @@ export const reportStyles = StyleSheet.create({
     objectPosition: "center"
   },
 });
+
+
+export const reportTableStyles = StyleSheet.create({
+  page: {
+    padding: 20,
+  },
+  table: {
+    marginBottom: 10,
+  },
+  row: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
+    alignItems: "center",
+    height: 24,
+  },
+  cell: {
+    flex: 1,
+    borderRightWidth: 1,
+    borderRightColor: "#000",
+    padding: 5,
+    flexGrow: 1,
+  },
+  subRow: {
+    flexGrow: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  header: {
+    backgroundColor: "#f2f2f2",
+    fontWeight: "bold",
+  },
+});
+

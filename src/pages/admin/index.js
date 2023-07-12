@@ -11,7 +11,7 @@ import withAuthValidation from "@/hocs/withAuthValidation";
 import OrgEffectiveness from "@/components/Charts/OrgEffectiveness";
 import fetcher from "@/services/fetcher";
 
-const months = [
+export const months = [
   'Enero',
   'Febrero',
   'Marzo',
@@ -53,7 +53,7 @@ const Admin = (props) => {
         </Col>
         <Col sm="12" md="6">
           <div className="d-flex justify-content-end mb-3">
-            <GeneralReport />
+            <GeneralReport data={data} />
           </div>
         </Col>
       </Row>

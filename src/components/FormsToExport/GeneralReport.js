@@ -8,12 +8,13 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { reportStyles } from "./formsConst";
+import { reportStyles, reportTableStyles } from "./formsConst";
 import ReportDownloader from "./ReportDownloader";
+import { months } from "@/pages/admin";
 
 const reportId = "generalReport";
 
-export const GeneralReportDoc = ({ graphsData, graphsRes }) => {
+export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
   const moreQualifiedCharges =
     graphsData["moreQualifiedCharges"]?.current?.toBase64Image();
   const comparisonLastAndCurrentYear =
@@ -114,7 +115,16 @@ export const GeneralReportDoc = ({ graphsData, graphsRes }) => {
           <Text style={reportStyles.subtitle}>
             Efectividad de las organizaciones activas actualmente.
           </Text>
+          <Text style={reportStyles.text}>
+            Para evaluar la efectividad de cada sesión de capacitación, se puede utilizar la siguiente fórmula:
+            "Porcentaje de sesión completada = (Número de colaboradores que completaron la sesión / Número total de colaboradores) * 100".
 
+            Una vez obtenido el porcentaje de sesiones completadas, se puede calcular un promedio para determinar qué tan completa fue la capacitación en general.
+
+            Además, se puede obtener un promedio general considerando todas las capacitaciones que la organización ha impartido, lo que nos brinda una visión de la efectividad global de las capacitaciones.
+
+            En resumen, siguiendo estos pasos, se puede evaluar la efectividad de cada sesión de capacitación, calcular la efectividad promedio de la capacitación en general y obtener un promedio general de todas las capacitaciones impartidas por la organización.
+          </Text>
           {orgEffectiveness && (
             <View
               style={{
@@ -153,12 +163,93 @@ export const GeneralReportDoc = ({ graphsData, graphsRes }) => {
           </View>
         </View>
       </Page>
+      <Page style={[reportStyles.page, { paddingLeft: 30, paddingRight: 30 }]} size="LETTER" >
+        <Image
+          src="\Formato de Documentos FETESA.jpg"
+          style={reportStyles.background}
+          fixed
+        />
+        <View style={reportStyles.section}>
+          <Text style={reportStyles.subtitle}>
+            Costo de inversiones
+          </Text>
+          <View style={reportTableStyles.table}>
+            {Array.isArray(data.trainingCosts) && data.trainingCosts.map((item, idx) => (
+              <React.Fragment key={idx}>
+                <View style={[reportTableStyles.row, reportTableStyles.header, { backgroundColor: "#f5bc7f" }]}>
+                  <Text style={[reportTableStyles.cell, { flexGrow: 13 }]}>{item.name}</Text>
+                </View>
+                <View style={[reportTableStyles.row, reportTableStyles.header]}>
+                  <Text style={[reportTableStyles.cell, { flexGrow: 4 }]}>Capacitacion</Text>
+                  <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>Costo Unitario</Text>
+                  <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>Participantes</Text>
+                  <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>Costo Final</Text>
+                </View>
+                {Array.isArray(item.details) && item.details.map((detail) => <React.Fragment>
+                  <View style={[reportTableStyles.row]}>
+                    <Text style={[reportTableStyles.cell, { flexGrow: 4 }]}>{detail.name}</Text>
+                    <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>{detail.costUnit}</Text>
+                    <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>{detail.capAssis}</Text>
+                    <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>{detail.costFinal}</Text>
+                  </View>
+                  <View style={[reportTableStyles.row]}>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow, { flexGrow: 4 }]}>
+                      <Text style={[reportTableStyles.cell]}> </Text>
+                      <Text style={[reportTableStyles.cell]}>Enero</Text>
+                      <Text style={[reportTableStyles.cell]}>Febrero</Text>
+                      <Text style={[reportTableStyles.cell, { borderRight: "unset", paddingRight: 0 }]}>Marzo</Text>
+                    </View>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow, { flexGrow: 3 }]}>
+                      <Text style={[reportTableStyles.cell]}>Abril</Text>
+                      <Text style={[reportTableStyles.cell]}>Mayo</Text>
+                      <Text style={[reportTableStyles.cell, { borderRight: "unset", paddingRight: 0 }]}>Junio</Text>
+                    </View>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow, { flexGrow: 3 }]}>
+                      <Text style={[reportTableStyles.cell]}>Julio</Text>
+                      <Text style={[reportTableStyles.cell]}>Agosto</Text>
+                      <Text style={[reportTableStyles.cell, { borderRight: "unset", paddingRight: 0 }]}>Septiembre</Text>
+                    </View>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow, { flexGrow: 3 }]}>
+                      <Text style={[reportTableStyles.cell]}>Octubre</Text>
+                      <Text style={[reportTableStyles.cell]}>Noviembre</Text>
+                      <Text style={[reportTableStyles.cell, { borderRight: "unset", paddingRight: 0 }]}>Diciembre</Text>
+                    </View>
+                  </View>
+                  <View style={[reportTableStyles.row]}>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow, { flexGrow: 4 }]}>
+                      <Text style={[reportTableStyles.cell]}>Costo</Text>
+                      <Text style={[reportTableStyles.cell]}>{detail.infoMonths && detail.infoMonths["Enero"]?.sessionCost}</Text>
+                      <Text style={[reportTableStyles.cell]}>{detail.infoMonths && detail.infoMonths["Febrero"]?.sessionCost}</Text>
+                      <Text style={[reportTableStyles.cell, { borderRight: "unset", paddingRight: 0 }]}>{detail.infoMonths && detail.infoMonths["Marzo"]?.sessionCost}</Text>
+                    </View>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow, { flexGrow: 3 }]}>
+                      <Text style={[reportTableStyles.cell]}>{detail.infoMonths && detail.infoMonths["Abril"]?.sessionCost}</Text>
+                      <Text style={[reportTableStyles.cell]}>{detail.infoMonths && detail.infoMonths["Mayo"]?.sessionCost}</Text>
+                      <Text style={[reportTableStyles.cell, { borderRight: "unset", paddingRight: 0 }]}>{detail.infoMonths && detail.infoMonths["Junio"]?.sessionCost}</Text>
+                    </View>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow, { flexGrow: 3 }]}>
+                      <Text style={[reportTableStyles.cell]}>{detail.infoMonths && detail.infoMonths["Julio"]?.sessionCost}</Text>
+                      <Text style={[reportTableStyles.cell]}>{detail.infoMonths && detail.infoMonths["Agosto"]?.sessionCost}</Text>
+                      <Text style={[reportTableStyles.cell, { borderRight: "unset", paddingRight: 0 }]}>{detail.infoMonths && detail.infoMonths["Septiembre"]?.sessionCost}</Text>
+                    </View>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow, { flexGrow: 3 }]}>
+                      <Text style={[reportTableStyles.cell]}>{detail.infoMonths && detail.infoMonths["Octubre"]?.sessionCost}</Text>
+                      <Text style={[reportTableStyles.cell]}>{detail.infoMonths && detail.infoMonths["Noviembre"]?.sessionCost}</Text>
+                      <Text style={[reportTableStyles.cell, { borderRight: "unset", paddingRight: 0 }]}>{detail.infoMonths && detail.infoMonths["Diciembre"]?.sessionCost}</Text>
+                    </View>
+                  </View>
+                </React.Fragment>)}
+              </React.Fragment>
+            ))}
+          </View>
+        </View>
+      </Page>
     </Document>
   );
 };
 
-const GeneralReport = () => (
-  <ReportDownloader id={reportId} FormComponent={GeneralReportDoc} />
+const GeneralReport = (props) => (
+  <ReportDownloader id={reportId} props={props} FormComponent={GeneralReportDoc} />
 );
 
 const styles = StyleSheet.create({

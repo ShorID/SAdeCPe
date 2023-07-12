@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { reportStyles } from "./formsConst";
+import { reportStyles, reportTableStyles } from "./formsConst";
 import {
   Document,
   Image,
@@ -46,40 +46,6 @@ const tableStyles = StyleSheet.create({
     margin: "auto",
     marginTop: 5,
     fontSize: 10,
-  },
-});
-
-const styles = StyleSheet.create({
-  page: {
-    padding: 20,
-  },
-  table: {
-    marginBottom: 10,
-  },
-  row: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "#000",
-    alignItems: "center",
-    height: 24,
-  },
-  cell: {
-    flex: 1,
-    borderRightWidth: 1,
-    borderRightColor: "#000",
-    padding: 5,
-    flexGrow: 1,
-  },
-  subRow: {
-    flexGrow: 2,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0,
-  },
-  header: {
-    backgroundColor: "#f2f2f2",
-    fontWeight: "bold",
   },
 });
 
@@ -180,69 +146,69 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
         </View>
         <View style={reportStyles.section}>
           <Text style={reportStyles.subtitle}>Historial de Capacitaciones</Text>
-          <View style={styles.table}>
-            <View style={[styles.row, styles.header]}>
-              <Text style={[styles.cell]}>#</Text>
-              <Text style={[styles.cell, { flexGrow: 2 }]}>Nombre</Text>
-              <Text style={[styles.cell]}>Hr. Pendientes</Text>
-              <Text style={[styles.cell]}>Hr. Fallidas</Text>
-              <Text style={[styles.cell]}>Hr. Completadas</Text>
+          <View style={reportTableStyles.table}>
+            <View style={[reportTableStyles.row, reportTableStyles.header]}>
+              <Text style={[reportTableStyles.cell]}>#</Text>
+              <Text style={[reportTableStyles.cell, { flexGrow: 2 }]}>Nombre</Text>
+              <Text style={[reportTableStyles.cell]}>Hr. Pendientes</Text>
+              <Text style={[reportTableStyles.cell]}>Hr. Fallidas</Text>
+              <Text style={[reportTableStyles.cell]}>Hr. Completadas</Text>
             </View>
             {data.trainingData.capacitations.map((item, key) => (
               <React.Fragment>
                 <View
                   key={key + "-1"}
-                  style={[styles.row, { backgroundColor: "#f5bc7f" }]}
+                  style={[reportTableStyles.row, { backgroundColor: "#f5bc7f" }]}
                 >
-                  <Text style={styles.cell}>CAP-{item.idCap}</Text>
-                  <Text style={[styles.cell, { flexGrow: 2 }]}>
+                  <Text style={reportTableStyles.cell}>CAP-{item.idCap}</Text>
+                  <Text style={[reportTableStyles.cell, { flexGrow: 2 }]}>
                     {item.nameCap}
                   </Text>
-                  <Text style={styles.cell}>
+                  <Text style={reportTableStyles.cell}>
                     {item.totalHourProjectedDescrip}
                   </Text>
-                  <Text style={styles.cell}>{item.totalHourFailedDescrip}</Text>
-                  <Text style={styles.cell}>
+                  <Text style={reportTableStyles.cell}>{item.totalHourFailedDescrip}</Text>
+                  <Text style={reportTableStyles.cell}>
                     {item.totalHourSuccessDescrip}
                   </Text>
                 </View>
                 <View
                   key={key + "-2"}
-                  style={[styles.row, { fontWeight: "bold" }]}
+                  style={[reportTableStyles.row, { fontWeight: "bold" }]}
                 >
-                  <Text style={styles.cell}> </Text>
-                  <View style={[styles.cell, styles.subRow]}>
-                    <Text style={styles.cell}>Fecha</Text>
+                  <Text style={reportTableStyles.cell}> </Text>
+                  <View style={[reportTableStyles.cell, reportTableStyles.subRow]}>
+                    <Text style={reportTableStyles.cell}>Fecha</Text>
                     <Text
                       style={[
-                        styles.cell,
+                        reportTableStyles.cell,
                         { borderRight: "unset", paddingRight: 0 },
                       ]}
                     >
                       Horario
                     </Text>
                   </View>
-                  <Text style={styles.cell}>Total Hrs</Text>
-                  <Text style={styles.cell}>Sesion</Text>
-                  <Text style={styles.cell}>Estado</Text>
+                  <Text style={reportTableStyles.cell}>Total Hrs</Text>
+                  <Text style={reportTableStyles.cell}>Sesion</Text>
+                  <Text style={reportTableStyles.cell}>Estado</Text>
                 </View>
                 {item.sessions.map((session, sKey) => (
-                  <View key={key + "-3-" + sKey} style={styles.row}>
-                    <Text style={styles.cell}> </Text>
-                    <View style={[styles.cell, styles.subRow]}>
-                      <Text style={styles.cell}>{session.dates}</Text>
+                  <View key={key + "-3-" + sKey} style={reportTableStyles.row}>
+                    <Text style={reportTableStyles.cell}> </Text>
+                    <View style={[reportTableStyles.cell, reportTableStyles.subRow]}>
+                      <Text style={reportTableStyles.cell}>{session.dates}</Text>
                       <Text
                         style={[
-                          styles.cell,
+                          reportTableStyles.cell,
                           { borderRight: "unset", paddingRight: 0 },
                         ]}
                       >
                         {session.schedule}
                       </Text>
                     </View>
-                    <Text style={styles.cell}>{session.durationDescrip}</Text>
-                    <Text style={styles.cell}>{session.stateSession}</Text>
-                    <Text style={styles.cell}>{session.statusColSession}</Text>
+                    <Text style={reportTableStyles.cell}>{session.durationDescrip}</Text>
+                    <Text style={reportTableStyles.cell}>{session.stateSession}</Text>
+                    <Text style={reportTableStyles.cell}>{session.statusColSession}</Text>
                   </View>
                 ))}
               </React.Fragment>
