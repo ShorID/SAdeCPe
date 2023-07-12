@@ -9,9 +9,41 @@ import MoreQualifiedCharges from "@/components/Charts/MoreQualifiedCharges";
 import GeneralReport from "@/components/FormsToExport/GeneralReport";
 import withAuthValidation from "@/hocs/withAuthValidation";
 import OrgEffectiveness from "@/components/Charts/OrgEffectiveness";
+import fetcher from "@/services/fetcher";
+
+const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+];
 
 const Admin = (props) => {
   const { graphsRes } = React.useContext(ChartContext);
+  const [data, setData] = React.useState({});
+
+  const getData = async () => {
+    const { data: trainingCosts } = await fetcher({
+      url: "/stadistics/costs/",
+    });
+    setData({
+      trainingCosts,
+    });
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  const monthToRender = months.map((month) => <td>{month}</td>)
 
   return (
     <AdminLayout>
@@ -157,6 +189,56 @@ const Admin = (props) => {
         </Col>
         <Col sm="12" md="4">
           <OrgEffectiveness />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Text
+            TagName="h6"
+            className="Form-title"
+            text={`Costo de inversiones`}
+          />
+          <div style={{ overflow: "auto" }}>
+
+            <Table bordered>
+              <tbody>
+                {Array.isArray(data.trainingCosts) && data.trainingCosts.map((item, idx) => (
+                  <React.Fragment key={idx}>
+                    <tr style={{ backgroundColor: "#f5bc7f" }}>
+                      <th scope="row" colSpan={13}>{item.name}</th>
+                    </tr>
+                    <tr>
+                      <th colSpan={4}>Capacitacion</th>
+                      <th colSpan={3}>Costo Unitario</th>
+                      <th colSpan={3}>Participantes</th>
+                      <th colSpan={3}>Costo Final</th>
+                    </tr>
+                    {Array.isArray(item.details) && item.details.map((detail) => <React.Fragment>
+                      <tr>
+                        <td colSpan={4} style={{ borderBottom: "2px solid black" }}>{detail.name}</td>
+                        <td colSpan={3} style={{ borderBottom: "2px solid black" }}>{detail.costUnit}</td>
+                        <td colSpan={3} style={{ borderBottom: "2px solid black" }}>{detail.capAssis}</td>
+                        <td colSpan={3} style={{ borderBottom: "2px solid black" }}>{detail.costFinal}</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        {monthToRender}
+                      </tr>
+                      <tr>
+                        <td>Costo</td>
+                        {months.map((month) => (
+                          <td>
+                            {/* <div>Perdida: {detail.infoMonths && detail.infoMonths[month]?.lostSessionAmount}</div> */}
+                            {detail.infoMonths && detail.infoMonths[month]?.sessionCost}
+                          </td>
+                        ))}
+                      </tr>
+                    </React.Fragment>)}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </Table>
+          </div>
         </Col>
       </Row>
     </AdminLayout>
