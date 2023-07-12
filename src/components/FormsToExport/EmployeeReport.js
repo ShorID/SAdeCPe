@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { reportStyles } from "./formsConst";
-import { Document, Image, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
+import {
+  Document,
+  Image,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
 import ReportDownloader from "./ReportDownloader";
 import EmployeeTags from "../Charts/EmployeeTags";
 
@@ -24,7 +31,7 @@ const tableStyles = StyleSheet.create({
     borderColor: "black",
     borderLeft: "unset",
     borderTop: "unset",
-    borderBottom: "unset"
+    borderBottom: "unset",
   },
   tableCol: {
     width: "50%",
@@ -33,7 +40,7 @@ const tableStyles = StyleSheet.create({
     // borderLeftWidth: 0,
     // borderTopWidth: 0,
     borderRight: "unset",
-    borderBottom: "unset"
+    borderBottom: "unset",
   },
   tableCell: {
     margin: "auto",
@@ -50,21 +57,29 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: '#000',
-    alignItems: 'center',
+    borderBottomColor: "#000",
+    alignItems: "center",
     height: 24,
   },
   cell: {
     flex: 1,
     borderRightWidth: 1,
-    borderRightColor: '#000',
+    borderRightColor: "#000",
     padding: 5,
+    flexGrow: 1,
+  },
+  subRow: {
+    flexGrow: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 0,
+    paddingBottom: 0,
   },
   header: {
-    backgroundColor: '#f2f2f2',
-    fontWeight: 'bold',
+    backgroundColor: "#f2f2f2",
+    fontWeight: "bold",
   },
 });
 
@@ -76,8 +91,7 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
     </Text>
   );
   const id = EmployeeTags.graphId + data.id;
-  const radarChart =
-    graphsData[id]?.current?.toBase64Image();
+  const radarChart = graphsData[id]?.current?.toBase64Image();
 
   return (
     <Document>
@@ -149,7 +163,8 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
           fixed
         />
         <View style={reportStyles.section}>
-          {Array.isArray(graphsRes[id]?.labels) && Array.isArray(graphsRes[id]?.points) &&
+          {Array.isArray(graphsRes[id]?.labels) &&
+            Array.isArray(graphsRes[id]?.points) &&
             graphsRes[id].labels.map((item, key) => (
               <View style={tableStyles.tableRow} key={key}>
                 <View style={tableStyles.tableCol}>
@@ -164,39 +179,67 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
             ))}
         </View>
         <View style={reportStyles.section}>
-          <Text style={reportStyles.subtitle}>
-            Historial de Capacitaciones
-          </Text>
+          <Text style={reportStyles.subtitle}>Historial de Capacitaciones</Text>
           <View style={styles.table}>
             <View style={[styles.row, styles.header]}>
               <Text style={[styles.cell]}>#</Text>
-              <Text style={[styles.cell, { flex: 2 }]}>Nombre</Text>
+              <Text style={[styles.cell, { flexGrow: 2 }]}>Nombre</Text>
               <Text style={[styles.cell]}>Hr. Pendientes</Text>
               <Text style={[styles.cell]}>Hr. Fallidas</Text>
               <Text style={[styles.cell]}>Hr. Completadas</Text>
             </View>
             {data.trainingData.capacitations.map((item, key) => (
               <React.Fragment>
-                <View key={key + "-1"} style={[styles.row, { backgroundColor: "#f5bc7f" }]}>
+                <View
+                  key={key + "-1"}
+                  style={[styles.row, { backgroundColor: "#f5bc7f" }]}
+                >
                   <Text style={styles.cell}>CAP-{item.idCap}</Text>
-                  <Text style={[styles.cell, { flex: 2 }]}>{item.nameCap}</Text>
-                  <Text style={styles.cell}>{item.totalHourProjectedDescrip}</Text>
+                  <Text style={[styles.cell, { flexGrow: 2 }]}>
+                    {item.nameCap}
+                  </Text>
+                  <Text style={styles.cell}>
+                    {item.totalHourProjectedDescrip}
+                  </Text>
                   <Text style={styles.cell}>{item.totalHourFailedDescrip}</Text>
-                  <Text style={styles.cell}>{item.totalHourSuccessDescrip}</Text>
+                  <Text style={styles.cell}>
+                    {item.totalHourSuccessDescrip}
+                  </Text>
                 </View>
-                <View key={key + "-2"} style={styles.row}>
-                  <Text style={styles.cell}></Text>
-                  <Text style={styles.cell}>Fecha</Text>
-                  <Text style={styles.cell}>Horario</Text>
+                <View
+                  key={key + "-2"}
+                  style={[styles.row, { fontWeight: "bold" }]}
+                >
+                  <Text style={styles.cell}> </Text>
+                  <View style={[styles.cell, styles.subRow]}>
+                    <Text style={styles.cell}>Fecha</Text>
+                    <Text
+                      style={[
+                        styles.cell,
+                        { borderRight: "unset", paddingRight: 0 },
+                      ]}
+                    >
+                      Horario
+                    </Text>
+                  </View>
                   <Text style={styles.cell}>Total Hrs</Text>
                   <Text style={styles.cell}>Sesion</Text>
                   <Text style={styles.cell}>Estado</Text>
                 </View>
                 {item.sessions.map((session, sKey) => (
                   <View key={key + "-3-" + sKey} style={styles.row}>
-                    <Text style={styles.cell}></Text>
-                    <Text style={styles.cell}>{session.dates}</Text>
-                    <Text style={styles.cell}>{session.schedule}</Text>
+                    <Text style={styles.cell}> </Text>
+                    <View style={[styles.cell, styles.subRow]}>
+                      <Text style={styles.cell}>{session.dates}</Text>
+                      <Text
+                        style={[
+                          styles.cell,
+                          { borderRight: "unset", paddingRight: 0 },
+                        ]}
+                      >
+                        {session.schedule}
+                      </Text>
+                    </View>
                     <Text style={styles.cell}>{session.durationDescrip}</Text>
                     <Text style={styles.cell}>{session.stateSession}</Text>
                     <Text style={styles.cell}>{session.statusColSession}</Text>

@@ -2,33 +2,29 @@ import React from "react";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import Text from "@/components/Text";
 import { Col, Row, Table } from "reactstrap";
-import { useRouter } from "next/router";
-import DefaultList from "@/components/DefaultList";
 import ComparisonLastAndCurrentYear from "@/components/Charts/ComparisonLastAndCurrentYear";
 import ChartContext from "@/contexts/chart-context";
 import TrainingByDepartment from "@/components/Charts/TrainingByDepartment";
 import MoreQualifiedCharges from "@/components/Charts/MoreQualifiedCharges";
 import GeneralReport from "@/components/FormsToExport/GeneralReport";
 import withAuthValidation from "@/hocs/withAuthValidation";
+import OrgEffectiveness from "@/components/Charts/OrgEffectiveness";
 
 const Admin = (props) => {
   const { graphsRes } = React.useContext(ChartContext);
 
-  const router = useRouter();
-  const handleRedirect = () => router.push("/admin/capacitaciones/create");
-
   return (
     <AdminLayout>
-      <div className="d-flex justify-content-end mb-3">
-        <GeneralReport />
-      </div>
-      <DefaultList
-        title="Capacitaciones Activas"
-        listId="training"
-        endpoint="/capacitation"
-        onCreate={handleRedirect}
-        filters="stateType"
-      />
+      <Row>
+        <Col>
+          <Text TagName="h5" text={`Informe General de Capacitaciones`} />
+        </Col>
+        <Col sm="12" md="6">
+          <div className="d-flex justify-content-end mb-3">
+            <GeneralReport />
+          </div>
+        </Col>
+      </Row>
       <Text
         TagName="h6"
         className="Form-title"
@@ -130,6 +126,37 @@ const Admin = (props) => {
             participado en las capacitaciones.
           </Text>
           <MoreQualifiedCharges />
+        </Col>
+      </Row>
+      <Text
+        TagName="h6"
+        className="Form-title"
+        text={`Efectividad de las organizaciones activas actualmente.`}
+      />
+      <Row>
+        <Col>
+          <Table>
+            <thead>
+              <tr>
+                <th>Nombre de la organizacion</th>
+                <th className="text-center">Porcentaje de efectividad</th>
+              </tr>
+            </thead>
+            <tbody style={{ maxHeight: "500px" }}>
+              {Array.isArray(graphsRes["orgEffectiveness"]?.labels) &&
+                graphsRes["orgEffectiveness"].labels.map((item, key) => (
+                  <tr key={key}>
+                    <td>{item}</td>
+                    <td className="text-center">
+                      {graphsRes["orgEffectiveness"].effective[key]}%
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </Col>
+        <Col sm="12" md="4">
+          <OrgEffectiveness />
         </Col>
       </Row>
     </AdminLayout>

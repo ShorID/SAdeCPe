@@ -20,6 +20,8 @@ export const GeneralReportDoc = ({ graphsData, graphsRes }) => {
     graphsData["comparisonLastAndCurrentYear"]?.current?.toBase64Image();
   const trainingByDepartment =
     graphsData["trainingByDepartment"]?.current?.toBase64Image();
+  const orgEffectiveness =
+    graphsData["orgEffectiveness"]?.current?.toBase64Image();
 
   return (
     <Document>
@@ -58,42 +60,41 @@ export const GeneralReportDoc = ({ graphsData, graphsRes }) => {
             sección refleja la proporción de capacitaciones que se han llevado a
             cabo en ese departamento en comparación con el total.
           </Text>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-            }}
-          >
-            {trainingByDepartment && (
-              <View style={{ width: "50%", maxHeight: 300, marginBottom: 20 }}>
-                <Image src={trainingByDepartment} />
-              </View>
-            )}
-            <View style={styles.table}>
-              <View style={styles.tableRow}>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>Departamento</Text>
-                </View>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}># Sesiones</Text>
-                </View>
-              </View>
-              {Array.isArray(graphsRes["trainingByDepartment"]?.labels) &&
-                graphsRes["trainingByDepartment"].labels.map((item, key) => (
-                  <View style={styles.tableRow} key={key}>
-                    <View style={styles.tableCol}>
-                      <Text style={styles.tableCell}>{item}</Text>
-                    </View>
-                    <View style={styles.tableCol}>
-                      <Text style={styles.tableCell}>
-                        {graphsRes["trainingByDepartment"].data[key]}
-                      </Text>
-                    </View>
-                  </View>
-                ))}
+          {trainingByDepartment && (
+            <View
+              style={{
+                width: "50%",
+                maxHeight: 300,
+                margin: "auto",
+                marginTop: 0,
+                marginBottom: 20,
+              }}
+            >
+              <Image src={trainingByDepartment} />
             </View>
+          )}
+          <View style={styles.table}>
+            <View style={styles.tableRow}>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>Departamento</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}># Sesiones</Text>
+              </View>
+            </View>
+            {Array.isArray(graphsRes["trainingByDepartment"]?.labels) &&
+              graphsRes["trainingByDepartment"].labels.map((item, key) => (
+                <View style={styles.tableRow} key={key}>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{item}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>
+                      {graphsRes["trainingByDepartment"].data[key]}
+                    </Text>
+                  </View>
+                </View>
+              ))}
           </View>
           <Text style={reportStyles.subtitle}>Cargos mas capacitados</Text>
           <Text style={reportStyles.text}>
@@ -108,6 +109,48 @@ export const GeneralReportDoc = ({ graphsData, graphsRes }) => {
               <Image src={moreQualifiedCharges} />
             </View>
           )}
+        </View>
+        <View style={reportStyles.section}>
+          <Text style={reportStyles.subtitle}>
+            Efectividad de las organizaciones activas actualmente.
+          </Text>
+
+          {orgEffectiveness && (
+            <View
+              style={{
+                width: "50%",
+                maxHeight: 300,
+                margin: "auto",
+                marginTop: 0,
+                marginBottom: 20,
+              }}
+            >
+              <Image src={orgEffectiveness} />
+            </View>
+          )}
+          <View style={styles.table}>
+            <View style={styles.tableRow}>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>Nombre de la organizacion</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>Porcentaje de efectividad</Text>
+              </View>
+            </View>
+            {Array.isArray(graphsRes["orgEffectiveness"]?.labels) &&
+              graphsRes["orgEffectiveness"].labels.map((item, key) => (
+                <View style={styles.tableRow} key={key}>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>{item}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCell}>
+                      {graphsRes["orgEffectiveness"].effective[key]}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+          </View>
         </View>
       </Page>
     </Document>
@@ -125,8 +168,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRightWidth: 0,
     borderBottomWidth: 0,
-    width: "40%",
     height: "auto",
+    marginBottom: 20,
   },
   tableRow: {
     margin: "auto",
