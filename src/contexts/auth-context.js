@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
     setIsAuth(isLogin);
     sessionStorageManagment.write("isAuth", isLogin);
     const prevPath = sessionStorageManagment.read("path", "");
-    router.push(isLogin ? "/admin" : "/login");
+    router.push(isLogin ? prevPath || "/admin" : "/login");
     sessionStorageManagment.write("path", "");
   };
 
