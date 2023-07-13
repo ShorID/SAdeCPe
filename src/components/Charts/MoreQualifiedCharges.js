@@ -34,7 +34,7 @@ const MoreQualifiedCharges = (props) => {
       labels: data.labels,
       datasets: [
         {
-          label: "Capacitaciones",
+          label: "Sesiones",
           data: data.countSessions,
           backgroundColor: getRandomPastelColor(),
         },
