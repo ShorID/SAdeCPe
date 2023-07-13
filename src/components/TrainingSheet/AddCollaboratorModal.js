@@ -124,7 +124,7 @@ const AddCollaboratorModal = (props) => {
           className="Form-title mt-0"
           text={`Empleados seleccionados (${
             Array.isArray(props.collaborators)
-              ? props.collaborators.length + 1
+              ? props.collaborators.length
               : 0
           }).`}
         />

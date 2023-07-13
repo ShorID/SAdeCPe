@@ -42,6 +42,7 @@ const DefaultList = ({
   itemsQuantity,
   onCreate,
   onSaveSelected,
+  onRefresh
 }) => {
   const RowComponent = rowsTypes[listId];
   return (
@@ -50,6 +51,7 @@ const DefaultList = ({
       endpoint={endpoint}
       onSaveSelected={onSaveSelected}
       itemsQuantity={itemsQuantity}
+      onRefresh={onRefresh}
     >
       <ListHeader title={title} onCreate={onCreate}></ListHeader>
       <ListSearcher filters={filters} withoutFilters={withoutFilters} />
@@ -87,6 +89,7 @@ DefaultList.propTypes = {
   withoutFilters: PropTypes.bool,
   onCreate: PropTypes.func,
   onSaveSelected: PropTypes.func,
+  onRefresh: PropTypes.func,
   withoutEdit: PropTypes.bool,
   withoutDelete: PropTypes.bool,
   withoutCheck: PropTypes.bool,

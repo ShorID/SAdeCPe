@@ -3,17 +3,23 @@ import React, { createContext, useEffect, useState } from "react";
 const ChartContext = createContext({
   saveGraph: () => {},
   saveGraphRes: () => {},
+  saveGraphRefresh: () => {},
   downloadChart: () => () => {},
   graphsData: {},
   graphsRes: {},
+  graphsRefresh: {},
 });
 
 export const ChartProvider = ({ children }) => {
   const [graphsData, setGraphsData] = useState({});
   const [graphsRes, setGraphsRes] = useState({});
+  const [graphsRefresh, setGraphRefresh] = useState({});
 
   const saveGraph = (graphId = "", graphData) =>
     setGraphsData((prev) => ({ ...prev, [graphId]: graphData }));
+
+  const saveGraphRefresh = (graphId = "", refreshFunc) =>
+    setGraphRefresh((prev) => ({ ...prev, [graphId]: refreshFunc }));
 
   const saveGraphRes = (graphId = "", graphData) =>
     setGraphsRes((prev) => ({ ...prev, [graphId]: graphData }));
@@ -33,6 +39,8 @@ export const ChartProvider = ({ children }) => {
         downloadChart,
         graphsRes,
         saveGraphRes,
+        graphsRefresh,
+        saveGraphRefresh,
       }}
     >
       {children}

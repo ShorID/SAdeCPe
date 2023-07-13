@@ -61,7 +61,7 @@ const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
 
   const handleChange = ({ target: { value, name } }) =>
     setFormData((prev) =>
-      prev ? { ...prev, [name]: value } : { [name]: value }
+      prev ? { ...prev, [name]: value, page: 1 } : { [name]: value, page: 1 }
     );
 
   const showInactives = ({ target: { checked } }) => {

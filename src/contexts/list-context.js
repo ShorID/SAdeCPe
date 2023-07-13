@@ -31,6 +31,7 @@ export const ListProvider = ({
   endpoint = "",
   onSaveSelected,
   itemsQuantity = 10,
+  onRefresh,
 }) => {
   const [searchVal, setSearchVal] = useState();
   const [isCreateModalOpen, setOpenCreateModal] = useState(false);
@@ -77,7 +78,7 @@ export const ListProvider = ({
       method: "DELETE",
     }).then(() => {
       setOpenDeleteModal(null);
-      getData();
+      handleRefresh();
     });
 
   const handleDelete = (itemData) => () => {
@@ -104,6 +105,11 @@ export const ListProvider = ({
     });
   };
 
+  const handleRefresh = () => {
+    getData();
+    if (onRefresh) onRefresh();
+  };
+
   const isSelected = (itemData) =>
     selectedItems.some((item) => item?.id === itemData?.id);
 
@@ -127,18 +133,23 @@ export const ListProvider = ({
         selectedItems,
         isSelected,
         handleSaveSelected: onSaveSelected ? handleSaveSelected : undefined,
-        lastFilters
+        lastFilters,
       }}
     >
       {children}
       {Drawer && isCreateModalOpen && (
-        <Drawer isOpen toggle={openCreateModal} isCreating refresh={getData} />
+        <Drawer
+          isOpen
+          toggle={openCreateModal}
+          isCreating
+          refresh={handleRefresh}
+        />
       )}
       {Drawer && editModalData && (
         <Drawer
           isOpen
           toggle={openEditModal()}
-          refresh={getData}
+          refresh={handleRefresh}
           data={editModalData}
         />
       )}

@@ -12,6 +12,7 @@ const List = (props) => {
         endpoint={props.endpoint}
         onSaveSelected={props.onSaveSelected}
         itemsQuantity={props.itemsQuantity}
+        onRefresh={props.onRefresh}
       >
         <>{props.children}</>
       </ListProvider>
@@ -24,6 +25,7 @@ List.propTypes = {
   formId: PropTypes.string,
   endpoint: PropTypes.string,
   onSaveSelected: PropTypes.func,
+  onRefresh: PropTypes.func,
 };
 
 export default List;

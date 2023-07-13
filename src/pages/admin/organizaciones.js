@@ -9,7 +9,7 @@ import Text from "@/components/Text";
 import ChartContext from "@/contexts/chart-context";
 
 const Organizations = (props) => {
-  const { graphsRes } = React.useContext(ChartContext);
+  const { graphsRes, graphsRefresh } = React.useContext(ChartContext);
   return (
     <AdminLayout>
       <Text
@@ -52,6 +52,7 @@ const Organizations = (props) => {
         title="Organizaciones"
         endpoint="/org"
         listId="org"
+        onRefresh={graphsRefresh["orgEffectiveness"]}
         withoutFilters
       />
     </AdminLayout>

@@ -8,7 +8,8 @@ import Icon from "../Icon";
 import { Button, ButtonGroup } from "reactstrap";
 
 const ChartWrapper = (props) => {
-  const { saveGraphRes, graphsData } = React.useContext(ChartContext);
+  const { saveGraphRes, graphsData, saveGraphRefresh } =
+    React.useContext(ChartContext);
   const [refresh, setRefresh] = React.useState(0);
 
   const handleRefresh = () => {
@@ -16,16 +17,18 @@ const ChartWrapper = (props) => {
     getData();
   };
 
-  const getData = () =>
+  const getData = React.useCallback(() => {
     fetcher({ url: props.endpoint || chartEndpoints[props.id] }).then(
       ({ data }) => {
         saveGraphRes(props.id, data);
         props.onFinishGet(data);
       }
     );
+  }, [props.endpoint, chartEndpoints[props.id]]);
 
   React.useEffect(() => {
-    getData()
+    saveGraphRefresh(props.id, getData);
+    getData();
   }, []);
 
   return (

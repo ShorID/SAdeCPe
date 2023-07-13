@@ -22,13 +22,13 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    toast.promise(
-      fetcher({
-        url: "/auth/login",
-        data: formData,
-        method: "post",
-      })
-        .then(({ data }) => {
+    try {
+      await toast.promise(
+        fetcher({
+          url: "/auth/login",
+          data: formData,
+          method: "post",
+        }).then(({ data }) => {
           setLoading(false);
           if (data.access_token) {
             fetcher.defaults.headers[
@@ -37,14 +37,16 @@ const Login = (props) => {
             login(true);
             sessionStorageManagment.write("access_token", data.access_token);
           }
-        })
-        .catch(() => setLoading(false)),
+        }),
         {
           pending: "Iniciando sesion...",
           success: "Bienvenido!",
           error: "Ocurrio un error!",
         }
-    );
+      );
+    } catch (e) {
+      setLoading(false);
+    }
   };
 
   return (

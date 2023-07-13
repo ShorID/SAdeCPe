@@ -30,19 +30,19 @@ const CustomPagination = (props) => {
 
   return (
     <Pagination>
-      <PaginationItem>
+      {/* <PaginationItem>
         <PaginationLink first href="#" />
       </PaginationItem>
       <PaginationItem>
         <PaginationLink href="#" previous />
-      </PaginationItem>
+      </PaginationItem> */}
       {renderPageLink()}
-      <PaginationItem>
+      {/* <PaginationItem>
         <PaginationLink href="#" next />
       </PaginationItem>
       <PaginationItem>
         <PaginationLink href="#" last />
-      </PaginationItem>
+      </PaginationItem> */}
     </Pagination>
   );
 };
