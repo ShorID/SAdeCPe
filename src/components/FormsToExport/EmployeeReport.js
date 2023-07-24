@@ -155,9 +155,9 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
               <Text style={[reportTableStyles.cell]}>Hr. Completadas</Text>
             </View>
             {data.trainingData.capacitations.map((item, key) => (
-              <React.Fragment>
+              <React.Fragment key={key + "-1"}>
                 <View
-                  key={key + "-1"}
+                  
                   style={[reportTableStyles.row, { backgroundColor: "#f5bc7f" }]}
                 >
                   <Text style={reportTableStyles.cell}>CAP-{item.idCap}</Text>

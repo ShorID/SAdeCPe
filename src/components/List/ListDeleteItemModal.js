@@ -7,7 +7,7 @@ const ListDeleteItemModal = (props) => {
     <Modal isOpen={props.isOpen} toggle={props.toggle}>
       <ModalHeader toggle={props.toggle}>Eliminando registro.</ModalHeader>
       <ModalBody>
-        Estas a punto de eliminar el registro "{props.title}", desea continuar?
+        Estas a punto de eliminar el registro &apos;{props.title}&apos;, desea continuar?
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={props.submit}>

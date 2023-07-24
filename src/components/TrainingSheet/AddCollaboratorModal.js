@@ -139,8 +139,8 @@ const AddCollaboratorModal = (props) => {
           </thead>
           <tbody style={{ maxHeight: "500px" }}>
             {Array.isArray(props.collaborators) &&
-              props.collaborators.map((item) => (
-                <tr>
+              props.collaborators.map((item, key) => (
+                <tr key={key}>
                   <th scope="row">{item.id}</th>
                   <td>{`${item.name} ${item.lastName}`}</td>
                   <td>Todas las sesiones.</td>

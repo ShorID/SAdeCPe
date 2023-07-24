@@ -1,12 +1,12 @@
 import { AuthContext } from "@/contexts/auth-context";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import React from "react";
 import { useContext } from "react";
 
 function withAuthValidation(WrappedComponent) {
-  const hocComponent = (props) => {
+  const HocComponent = (props) => {
     const listContext = useContext(AuthContext);
-    const router = useRouter();
+    // const router = useRouter();
 
     React.useEffect(() => {
       if (!listContext.isAuth) {
@@ -17,10 +17,10 @@ function withAuthValidation(WrappedComponent) {
     return <WrappedComponent {...props} />;
   };
 
-  hocComponent.propTypes = WrappedComponent.propTypes;
-  hocComponent.getInitialProps = WrappedComponent.getInitialProps;
+  HocComponent.propTypes = WrappedComponent.propTypes;
+  HocComponent.getInitialProps = WrappedComponent.getInitialProps;
 
-  return hocComponent;
+  return HocComponent;
 }
 
 export default withAuthValidation;

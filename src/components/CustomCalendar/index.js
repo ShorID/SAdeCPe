@@ -185,6 +185,7 @@ const CustomCalendar = (props) => {
                 <Clickable
                   onClick={showItem(key)}
                   className="CustomCalendar-session"
+                  key={key + item.date.day}
                 >
                   <Text bold text={`Sesion ${key + 1}:`} />
                   <Text className="mx-2">{`${item.date.day}/${item.date.monthIndex}/${item.date.year}`}</Text>

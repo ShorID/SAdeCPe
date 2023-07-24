@@ -147,8 +147,8 @@ const EmployeeStatusSheet = ({ data }) => {
                       <th>Sesion</th>
                       <th>Estado</th>
                     </tr>
-                    {item.sessions.map((session) => (
-                      <tr>
+                    {item.sessions.map((session, key) => (
+                      <tr key={key}>
                         <td></td>
                         <td>{session.dates}</td>
                         <td>{session.schedule}</td>

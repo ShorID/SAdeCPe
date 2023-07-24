@@ -43,7 +43,7 @@ const Admin = (props) => {
     getData();
   }, []);
 
-  const monthToRender = months.map((month) => <td>{month}</td>)
+  const monthToRender = months.map((month, key) => <td key={key}>{month}</td>)
 
   return (
     <AdminLayout>
@@ -147,13 +147,13 @@ const Admin = (props) => {
       <Row>
         <Col>
           <Text size="sm">
-            La gráfica "Participación en capacitaciones por cargo" muestra la
+            La gráfica &apos;Participación en capacitaciones por cargo&apos; muestra la
             distribución de la participación en las capacitaciones según los
             diferentes cargos dentro de la organización. Este gráfico representa
             visualmente la proporción de empleados que participan en las
             capacitaciones en relación con sus cargos. En el eje horizontal del
-            gráfico se encuentran los diferentes cargos, como "Gerente",
-            "Supervisor", "Ejecutivo", "Asistente", entre otros. En el eje
+            gráfico se encuentran los diferentes cargos, como &apos;Gerente&apos;,
+            &apos;Supervisor&apos;, &apos;Ejecutivo&apos;, &apos;Asistente&apos;, entre otros. En el eje
             vertical se muestra la cantidad de empleados de cada cargo que han
             participado en las capacitaciones.
           </Text>
@@ -213,7 +213,7 @@ const Admin = (props) => {
                       <th colSpan={3}>Participantes</th>
                       <th colSpan={3}>Costo Final</th>
                     </tr>
-                    {Array.isArray(item.details) && item.details.map((detail) => <React.Fragment>
+                    {Array.isArray(item.details) && item.details.map((detail, key) => <React.Fragment key={key}>
                       <tr>
                         <td colSpan={4} style={{ borderBottom: "2px solid black" }}>{detail.name}</td>
                         <td colSpan={3} style={{ borderBottom: "2px solid black" }}>{detail.costUnit}</td>
@@ -226,8 +226,8 @@ const Admin = (props) => {
                       </tr>
                       <tr>
                         <td>Costo</td>
-                        {months.map((month) => (
-                          <td>
+                        {months.map((month, key) => (
+                          <td key={key}>
                             {/* <div>Perdida: {detail.infoMonths && detail.infoMonths[month]?.lostSessionAmount}</div> */}
                             {detail.infoMonths && detail.infoMonths[month]?.sessionCost}
                           </td>

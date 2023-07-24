@@ -99,7 +99,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
           </View>
           <Text style={reportStyles.subtitle}>Cargos mas capacitados</Text>
           <Text style={reportStyles.text}>
-            La gráfica "Participación en capacitaciones por cargo" muestra la
+            La gráfica &apos;Participación en capacitaciones por cargo&apos; muestra la
             distribución de la participación en las capacitaciones según los
             diferentes cargos dentro de la organización. Este gráfico representa
             visualmente la proporción de empleados que participan en las
@@ -117,7 +117,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
           </Text>
           <Text style={reportStyles.text}>
             Para evaluar la efectividad de cada sesión de capacitación, se puede utilizar la siguiente fórmula:
-            "Porcentaje de sesión completada = (Número de colaboradores que completaron la sesión / Número total de colaboradores) * 100".
+            &apos;Porcentaje de sesión completada = (Número de colaboradores que completaron la sesión / Número total de colaboradores) * 100&apos;.
 
             Una vez obtenido el porcentaje de sesiones completadas, se puede calcular un promedio para determinar qué tan completa fue la capacitación en general.
 
@@ -185,7 +185,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
                   <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>Participantes</Text>
                   <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>Costo Final</Text>
                 </View>
-                {Array.isArray(item.details) && item.details.map((detail) => <React.Fragment>
+                {Array.isArray(item.details) && item.details.map((detail, key) => <React.Fragment key={key}>
                   <View style={[reportTableStyles.row]}>
                     <Text style={[reportTableStyles.cell, { flexGrow: 4 }]}>{detail.name}</Text>
                     <Text style={[reportTableStyles.cell, { flexGrow: 3 }]}>{detail.costUnit}</Text>

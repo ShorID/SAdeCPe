@@ -11,8 +11,8 @@ const CL = (props) => {
       <Text TagName="h2">Icons</Text>
       <div className="row">
         {SolidIcons &&
-          Object.keys(SolidIcons).map((item) => (
-            <Text className="col-2 mb-4 text-center">
+          Object.keys(SolidIcons).map((item, key) => (
+            <Text className="col-2 mb-4 text-center" key={key}>
               <Icon name={item} className="d-block mx-auto" />
               {item}
             </Text>
