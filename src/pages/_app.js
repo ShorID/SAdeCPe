@@ -48,6 +48,7 @@ export default function App({ Component, pageProps }) {
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const windowDimensions = useWindowDimensions();

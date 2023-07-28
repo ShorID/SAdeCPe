@@ -50,6 +50,7 @@ const ComparisonLastAndCurrentYear = (props) => {
     (chart) => {
       if (chart.initial) saveGraph(graphId, ref);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [ref.current]
   );
 

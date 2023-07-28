@@ -7,6 +7,7 @@ const DefaultDataProvider = ({ getDefaultProps, children }) => {
   React.useEffect(() => {
     if (typeof getDefaultProps === "function")
       setDefaultProps(getDefaultProps());
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -28,6 +28,7 @@ const Tags = (props) => {
   React.useEffect(() => {
     if (props.onChange)
       props.onChange({ target: { value: selected, name: props.name } });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   const handleSelect = (newValue) => {

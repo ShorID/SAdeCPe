@@ -7,7 +7,7 @@ import StatesDrawer from "./StatesDrawer";
 import TrainerDrawer from "./TrainerDrawer";
 import TrainingCenterDrawer from "./TrainingCenterDrawer";
 
-export default {
+export const drawerTypes = {
   states: StatesDrawer,
   departments: DepartmentDrawer,
   employeesPosition: EmployeesPositionDrawer,
@@ -17,3 +17,5 @@ export default {
   trainer: TrainerDrawer,
   exemptionReasons: ExemptionReasonsDrawer,
 };
+
+export default drawerTypes;

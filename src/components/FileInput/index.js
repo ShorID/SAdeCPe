@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
 import { Spinner } from "reactstrap";
+import Image from "next/image";
 
 export const fileUploader = async (inputEvent) => {
   const { target = {} } = inputEvent;
@@ -52,7 +53,7 @@ const FileInput = (props) => {
         </Spinner>
       )}
       {value && !loading && (
-        <img
+        <Image
           key={value}
           src={`${value}`}
           style={{

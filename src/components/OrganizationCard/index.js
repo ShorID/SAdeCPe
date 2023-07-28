@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 import CustomButton from "../CustomButton";
+import Image from "next/image";
 
 const OrganizationCard = (props) => {
   return (
     <Card className="OrganizationCard">
       <div className="OrganizationCard-imgWrapper">
-        <img
+        <Image
           alt={props.title}
           src={
             props.photo

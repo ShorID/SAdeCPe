@@ -6,6 +6,7 @@ import EmployeeTags from "../Charts/EmployeeTags";
 import ChartContext from "@/contexts/chart-context";
 import EmployeeReport from "../FormsToExport/EmployeeReport";
 import { toDataUrl } from "@/services/common";
+import Image from "next/image";
 
 const EmployeeStatusSheet = ({ data }) => {
   const { graphsRes } = React.useContext(ChartContext);
@@ -18,6 +19,7 @@ const EmployeeStatusSheet = ({ data }) => {
     if (ref.current) {
       setProfileImg(toDataUrl(process.env.NEXT_PUBLIC_API_URL + data.photo));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref.current]);
 
   const renderField = (label, fieldName) => (
@@ -32,7 +34,7 @@ const EmployeeStatusSheet = ({ data }) => {
       <Text TagName="h6" className="Form-title" text={`Datos Generales`} />
       <Row>
         <Col sm="12" md="3">
-          <img
+          <Image
             src={process.env.NEXT_PUBLIC_API_URL + data.photo}
             alt={data.name}
             className="mx-auto"

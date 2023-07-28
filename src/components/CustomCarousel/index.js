@@ -8,6 +8,7 @@ import {
   CarouselCaption,
   Container,
 } from "reactstrap";
+import Image from "next/image";
 
 const CustomCarousel = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -37,7 +38,7 @@ const CustomCarousel = ({ data }) => {
         onExited={() => setAnimating(false)}
         key={item.id || item.src}
       >
-        <img src={item.src} alt={item.altText} className="CustomCarousel-img" />
+        <Image src={item.src} alt={item.altText} className="CustomCarousel-img" />
         <Container className="position-relative">
           <CarouselCaption
             captionText={item.caption}

@@ -31,7 +31,7 @@ const ReportPDF = (props) => {
           <View style={styles.section}>
             <Text style={styles.title}>Informe PDF</Text>
             <View style={styles.chartContainer}>
-              <Image src={props.chart} />
+              <Image src={props.chart} alt="test" />
             </View>
           </View>
         </Page>

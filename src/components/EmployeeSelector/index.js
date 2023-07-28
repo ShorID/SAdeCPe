@@ -6,6 +6,7 @@ import { filters } from "../List/ListSearcher";
 import { useEffect } from "react";
 import CustomInput from "../CustomInput";
 import fetcher from "@/services/fetcher";
+import Image from "next/image";
 
 const options = [
   { value: "England", label: "England", icon: "/check.svg" },
@@ -15,7 +16,7 @@ const options = [
 const { Option } = components;
 const IconOption = (props) => (
   <Option {...props}>
-    <img
+    <Image
       src={props.data.icon}
       style={{ width: 36 }}
       alt={props.data.label}

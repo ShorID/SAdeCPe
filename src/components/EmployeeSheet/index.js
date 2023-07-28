@@ -48,6 +48,7 @@ const EmployeeSheet = (props) => {
         field: "id",
         value: props.data.employeePositionId,
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = async ({ target: { value, name } }) => {

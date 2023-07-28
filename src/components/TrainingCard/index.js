@@ -9,11 +9,12 @@ import {
   CardTitle,
 } from "reactstrap";
 import Text from "../Text";
+import Image from "next/image";
 
 const TrainingCard = (props) => {
   return (
     <Card>
-      <img
+      <Image
         alt={props.name}
         src={
           props.nextSession?.center?.photo

@@ -53,10 +53,12 @@ const ListSearcher = ({ filters: allowedFilters = "", withoutFilters }) => {
       setFiltersData([]);
       getFiltersData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (formData) refresh(formData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   const handleChange = ({ target: { value, name } }) =>

@@ -29,6 +29,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
       <Page style={reportStyles.page} size="LETTER">
         <Image
           src="\Formato de Documentos FETESA.jpg"
+          alt="alt format"
           style={reportStyles.background}
           fixed
         />
@@ -48,7 +49,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
           </Text>
           {comparisonLastAndCurrentYear && (
             <View style={reportStyles.chartContainer}>
-              <Image src={comparisonLastAndCurrentYear} />
+              <Image src={comparisonLastAndCurrentYear} alt="comparisonLastAndCurrentYear" />
             </View>
           )}
           <Text style={reportStyles.subtitle}>
@@ -71,7 +72,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
                 marginBottom: 20,
               }}
             >
-              <Image src={trainingByDepartment} />
+              <Image src={trainingByDepartment} alt="trainingByDepartment" />
             </View>
           )}
           <View style={styles.table}>
@@ -107,7 +108,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
           </Text>
           {moreQualifiedCharges && (
             <View style={reportStyles.chartContainer}>
-              <Image src={moreQualifiedCharges} />
+              <Image src={moreQualifiedCharges} alt="moreQualifiedCharges" />
             </View>
           )}
         </View>
@@ -135,7 +136,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
                 marginBottom: 20,
               }}
             >
-              <Image src={orgEffectiveness} />
+              <Image src={orgEffectiveness} alt="orgEffectiveness" />
             </View>
           )}
           <View style={styles.table}>
@@ -167,6 +168,7 @@ export const GeneralReportDoc = ({ graphsData, graphsRes, data }) => {
         <Image
           src="\Formato de Documentos FETESA.jpg"
           style={reportStyles.background}
+          alt="page format"
           fixed
         />
         <View style={reportStyles.section}>

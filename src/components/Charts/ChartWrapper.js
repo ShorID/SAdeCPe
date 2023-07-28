@@ -24,11 +24,13 @@ const ChartWrapper = (props) => {
         props.onFinishGet(data);
       }
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.endpoint, chartEndpoints[props.id]]);
 
   React.useEffect(() => {
     saveGraphRefresh(props.id, getData);
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

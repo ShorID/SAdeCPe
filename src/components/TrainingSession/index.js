@@ -59,6 +59,7 @@ const TrainingSession = (props) => {
           name: "center",
         },
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [centers]);
 
   React.useEffect(() => {
@@ -71,10 +72,12 @@ const TrainingSession = (props) => {
           name: "trainer",
         },
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trainers]);
 
   React.useEffect(() => {
     if (props.onChange) props.onChange(formData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   const handleChange = ({ target: { value, name } }) => {

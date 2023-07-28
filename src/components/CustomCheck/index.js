@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
 import Clickable from "../Clickable";
 import Tooltip from "../Tooltip";
+import Image from "next/image";
 
 const CustomCheck = (props) => {
   const { id, label, variant = "form", noDepency = true } = props;
@@ -35,7 +36,7 @@ const CustomCheck = (props) => {
         style={{ opacity: props.disabled ? ".3" : "1" }}
         className={props.className}
       >
-        <img
+        <Image
           className="CustomCheck"
           alt="select item"
           src={isChecked ? "/checkboxFilled.svg" : "/checkboxEmpty.svg"}

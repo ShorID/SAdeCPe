@@ -5,6 +5,7 @@ import AdminOptions from "../Layout/AdminOptions";
 import Clickable from "../Clickable";
 import Icon from "../Icon";
 import { Helmet } from "react-helmet";
+import Image from "next/image";
 
 const CustomNavbar = (props) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -17,7 +18,7 @@ const CustomNavbar = (props) => {
         }
       />
       <NavbarBrand href="/" className="CustomNavbar-logo">
-        <img
+        <Image
           alt="logo"
           src="/LOGO FETESA.png"
           style={{

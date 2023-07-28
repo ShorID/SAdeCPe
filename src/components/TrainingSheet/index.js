@@ -134,6 +134,7 @@ const TrainingSheet = (props) => {
       getCenters(),
       getTrainers(),
     ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSelect = (selectedItems, { cleanSelected }) => {

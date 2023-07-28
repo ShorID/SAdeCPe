@@ -48,6 +48,7 @@ const EmployeeTags = ({ id = "" }) => {
     (chart) => {
       if (chart.initial) saveGraph(graphId + id, ref);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [ref.current]
   );
 

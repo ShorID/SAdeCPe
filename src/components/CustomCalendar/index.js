@@ -65,6 +65,7 @@ const CustomCalendar = (props) => {
       1000
     );
     return () => clearTimeout(changeRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dates]);
 
   const handleAdd = (clickedDate) => {

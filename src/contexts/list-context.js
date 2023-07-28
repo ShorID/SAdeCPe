@@ -65,6 +65,7 @@ export const ListProvider = ({
 
   useEffect(() => {
     if (endpoint) getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endpoint, page]);
 
   const handleSortBy = (id) => {

@@ -9,7 +9,7 @@ import StateRows from "./StateRows";
 import TrainerRows from "./TrainerRows";
 import TrainingCenterRows from "./TrainingCenterRows";
 
-export default {
+export const rowsTypes = {
   training: TrainingListItem,
   states: StateRows,
   priorityLevel: PriorityRows,
@@ -19,5 +19,7 @@ export default {
   org: OrgRows,
   trainer: TrainerRows,
   employees: EmployeesRows,
-  exemptionReasons: ReasonsExemptionRow
+  exemptionReasons: ReasonsExemptionRow,
 };
+
+export default rowsTypes;

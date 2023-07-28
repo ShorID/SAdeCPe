@@ -65,6 +65,7 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
         <Image
           src="\Formato de Documentos FETESA.jpg"
           style={reportStyles.background}
+          alt="Page Format"
           fixed
         />
         <View style={reportStyles.section}>
@@ -110,7 +111,7 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
           <Text style={reportStyles.subtitle}>Areas de conocimiento</Text>
           {radarChart && (
             <View style={reportStyles.chartContainer}>
-              <Image src={radarChart} style={reportStyles.chart} />
+              <Image src={radarChart} style={reportStyles.chart} alt="radarChart" />
             </View>
           )}
           <Text style={reportStyles.text}>
@@ -126,6 +127,7 @@ const EmployeeReportDoc = ({ data, graphsData, graphsRes }) => {
         <Image
           src="\Formato de Documentos FETESA.jpg"
           style={reportStyles.background}
+          alt="page format"
           fixed
         />
         <View style={reportStyles.section}>
