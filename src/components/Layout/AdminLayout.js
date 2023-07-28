@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Layout from ".";
 import { Col, Row } from "reactstrap";
 import AdminOptions from "./AdminOptions";
@@ -9,7 +8,7 @@ const AdminLayout = (props) => {
     <Layout>
       <Row className="my-4">
         <Col sm="12" md="3" className="AdminLayout d-none d-md-block">
-          <AdminOptions />
+          <AdminOptions style={{ position: "sticky", top: 0 }} />
         </Col>
         <Col sm="12" md="9">
           {props.children}

@@ -27,7 +27,7 @@ const links = {
   ],
 };
 
-const AdminOptions = () => {
+const AdminOptions = (props) => {
   const router = useRouter();
   const { logout } = useContext(AuthContext);
   const renderLinks = (linkArray = []) =>
@@ -45,7 +45,7 @@ const AdminOptions = () => {
     ));
 
   return (
-    <>
+    <div style={props.style}>
       <ListGroup className="mb-4">
         <ListGroupItem
           action
@@ -83,7 +83,7 @@ const AdminOptions = () => {
           <Text>Cerrar Sesion</Text>
         </ListGroupItem>
       </ListGroup>
-    </>
+    </div>
   );
 };
 

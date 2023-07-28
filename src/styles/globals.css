@@ -93,10 +93,10 @@
   margin: 0;
 }
 
-html,
+/* html,
 body {
   overflow-x: hidden;
-}
+} */
 
 body {
   color: rgb(var(--foreground-rgb));
