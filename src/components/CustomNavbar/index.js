@@ -25,6 +25,7 @@ const CustomNavbar = (props) => {
           }}
         />
       </NavbarBrand>
+      <div className="CustomNavbar-title d-none d-md-block">SISTEMA DE CAPACITACION</div>
       <Clickable
         onClick={toggle}
         className="CustomNavbar-toggle d-block d-md-none"

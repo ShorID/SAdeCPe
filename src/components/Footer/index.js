@@ -21,7 +21,7 @@ const Footer = (props) => {
             <h5>Menu</h5>
             <Link to="/">Inicio</Link>
             <Link to="/admin">Administracion</Link>
-            <Link to="/mi-datos">Solicitar informacion</Link>
+            <Link to="/mis-datos">Solicitar informacion</Link>
             <Link></Link>
           </Col>
         </Row>
